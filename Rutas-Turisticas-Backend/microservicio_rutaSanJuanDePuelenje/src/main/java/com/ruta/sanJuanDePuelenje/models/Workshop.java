@@ -6,16 +6,16 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "charla")
+@Table(name = "workshop")
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor 
+public class Workshop {
 
-public class Charla {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "charla_id")
+	@Column(name = "taller_id")
 	private Integer id;
 	
 	@Column(nullable = false, length = 45)
@@ -40,9 +40,13 @@ public class Charla {
 	private Double totalPrice;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "workshop_type_id")
+	private WorkshopType workshopType;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "finca_id")
 	private Finca finca;
 	
-	@OneToMany(mappedBy = "charla")
-	private List<Reserve> LstReserve;
+	@OneToMany(mappedBy = "workshop")
+	private List<Reserve> LstReserve ;
 }

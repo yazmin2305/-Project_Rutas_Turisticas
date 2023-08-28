@@ -6,31 +6,30 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "charla")
+@Table(name = "lodging")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
-public class Charla {
+public class Lodging {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "charla_id")
+	@Column(name = "hospedaje_id")
 	private Integer id;
 	
-	@Column(nullable = false, length = 45)
+	@Column(nullable = false, length = 50)
 	private String name;
 	
 	@Column(nullable = false, length = 200)
 	private String description;
 	
-	@Column(nullable = false)
-	private Integer duration;
+	@Column(name = "beds_available" ,nullable = false)
+	private Integer bedsAvailable;
 	
-	@Column(nullable = false)
-	private Boolean availability;
+	@Column(name = "number_night" ,nullable = true)
+	private Integer numberNight;
 	
-	@Column(name = "max_amount_person", nullable = false)
+	@Column(name = "cant_max_personas", nullable = false)
 	private Integer MaxAmountPerson;
 	
 	@Column(name =  "unit_price" ,nullable = false)
@@ -43,6 +42,6 @@ public class Charla {
 	@JoinColumn(name = "finca_id")
 	private Finca finca;
 	
-	@OneToMany(mappedBy = "charla")
-	private List<Reserve> LstReserve;
+	@OneToMany(mappedBy = "hospedaje")
+	private List<Reserve> LstReserva ;
 }
