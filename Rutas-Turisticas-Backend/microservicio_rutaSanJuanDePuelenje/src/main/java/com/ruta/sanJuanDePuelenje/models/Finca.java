@@ -18,26 +18,26 @@ public class Finca {
 	private Integer id;
 	
 	@Column(nullable = false, length = 50)
-	private String nombre;
+	private String name;
 	
 	@Column(nullable = false, length = 200)
-	private String descripcion;
+	private String description;
 	
 	@Column(nullable = false, length = 200)
-	private String ubicacion;
+	private String location;
 	
 	@OneToMany(mappedBy = "finca")
-	private List<Charla> ListCharla;
+	private List<Talking> LstTalking;
 	
 	@OneToMany(mappedBy = "finca")
-	private List<Taller> ListTaller;
+	private List<Workshop> LstWorkshop;
 
 	@OneToMany(mappedBy = "finca")
-	private List<Recreacion> ListRecreacion;
+	private List<Recreation> LstRecreation;
 	
 	@OneToMany(mappedBy = "finca")
-	private List<Hospedaje> ListHospedaje;
+	private List<Lodging> LstLodging;
 	
 	@OneToMany(mappedBy = "finca")
-	private List<Festival> ListFestival;
+	private List<Festival> LstFestival;
 }
