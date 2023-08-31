@@ -14,5 +14,5 @@ public interface ILodgingService {
 	
 	public Lodging updateLodging(Integer lodgingId, Lodging lodging);
 	
-	public Lodging disableLodging(Integer lodgingId);
+	public void disableLodging(Integer lodgingId);
 }

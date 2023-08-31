@@ -22,6 +22,9 @@ public class Reserve {
 	@Column(name = "total_price" , nullable = false)
 	private Double totalPrice;
 	
+	@Column(nullable = false)
+	private Boolean state;
+	
 	//fechas falta 
 	
 	@ManyToOne(fetch = FetchType.EAGER)

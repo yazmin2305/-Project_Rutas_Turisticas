@@ -32,12 +32,21 @@ public class FestivalServiceImpl implements IFestivalService{
 		Festival festival1 = this.findByFestivalId(festivalId);
 		festival1.setName(festival.getName());
 		festival1.setDescription(festival.getDescription());
-		return null;
+		festival1.setDate(festival.getDate());
+		festival1.setFinca(festival.getFinca());
+		festival1.setLstReserve(festival.getLstReserve());
+		festival.setState(festival.getState());
+		return festival1;
 	}
 
 	@Override
-	public Festival disableFestival(Integer festivalId) {
-		return null;
+	public Boolean disableFestival(Integer festivalId) {
+		Festival festival = this.findByFestivalId(festivalId);
+		if(festival != null) {
+			festival.setState(false);
+			return true;
+		}
+		return false;
 	}
 
 }

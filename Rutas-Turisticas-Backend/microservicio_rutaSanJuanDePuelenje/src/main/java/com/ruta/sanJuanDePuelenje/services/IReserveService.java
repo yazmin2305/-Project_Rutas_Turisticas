@@ -15,7 +15,8 @@ public interface IReserveService {
 	
 	public Reserve updateReserve(Integer reserveId, Reserve reserve);
 	
-	public Reserve disableReserve(Integer reserveId);
-	//se deshabilita o elimina ?
+	public Boolean disableReserve(Integer reserveId);
+	
+	public Boolean deleteReserve(Integer reserveId);
 
 }

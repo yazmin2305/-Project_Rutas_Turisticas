@@ -14,5 +14,5 @@ public interface ILunchService {
 	
 	public Lunch updateLunch(Integer lunchId, Lunch lunch);
 	
-	public Lunch disableLunch(Integer lunchId);
+	public void disableLunch(Integer lunchId);
 }

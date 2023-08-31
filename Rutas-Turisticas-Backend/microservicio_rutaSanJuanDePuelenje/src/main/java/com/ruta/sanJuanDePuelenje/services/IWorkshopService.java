@@ -7,13 +7,13 @@ import com.ruta.sanJuanDePuelenje.models.Workshop;
 
 public interface IWorkshopService {
 	
-	public List<Workshop> findAllTalking();
+	public List<Workshop> findAllWorkshop();
 	
-	public Workshop findByTalkingId(Integer workshopId);
+	public Workshop findByWorkshopId(Integer workshopId);
 	
-	public Workshop saveTalking(Workshop workshop);
+	public Workshop saveWorkshop(Workshop workshop);
 	
-	public Workshop updateTalking(Integer workshopId, Workshop workshop);
+	public Workshop updateWorkshop(Integer workshopId, Workshop workshop);
 	
-	public Workshop disableTalking(Integer workshopId);
+	public void disableWorkshop(Integer workshopId);
 }

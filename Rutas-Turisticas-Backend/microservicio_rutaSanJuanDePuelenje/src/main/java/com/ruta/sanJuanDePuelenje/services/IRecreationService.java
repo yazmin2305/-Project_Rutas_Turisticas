@@ -14,5 +14,5 @@ public interface IRecreationService {
 	
 	public Recreation updateRecreation(Integer recreationId, Recreation recreation);
 	
-	public Recreation disableRecreation(Integer recreationId);
+	public void disableRecreation(Integer recreationId);
 }

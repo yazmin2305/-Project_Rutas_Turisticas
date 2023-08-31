@@ -39,6 +39,9 @@ public class Recreation {
 	@Column(name = "total_price" , nullable = true)
 	private Double totalPrice;
 	
+	@Column(nullable = false)
+	private Boolean state;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "finca_id")
 	private Finca finca;

@@ -25,9 +25,11 @@ public class Festival {
 	private String description;
 	
 	@Column(nullable = false)
-	
 	private Date date;
 	//@Temporal(TemporalType.timestamp)
+	
+	@Column(nullable = false)
+	private Boolean state;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "finca_id")

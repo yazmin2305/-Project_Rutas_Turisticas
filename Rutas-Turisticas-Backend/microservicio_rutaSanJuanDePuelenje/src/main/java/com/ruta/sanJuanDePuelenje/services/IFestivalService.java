@@ -14,5 +14,5 @@ public interface IFestivalService {
 	
 	public Festival updateFestival(Integer festivalId, Festival festival);
 	
-	public Festival disableFestival(Integer festivalId);
+	public Boolean disableFestival(Integer festivalId);
 }

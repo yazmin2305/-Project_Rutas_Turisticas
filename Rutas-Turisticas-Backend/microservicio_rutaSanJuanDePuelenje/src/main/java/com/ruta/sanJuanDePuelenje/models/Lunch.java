@@ -26,6 +26,9 @@ public class Lunch {
 	@Column(name = "total_price" , nullable = true)
 	private Double totalPrice;
 	
+	@Column(nullable = false)
+	private Boolean state;
+	
 	@OneToMany(mappedBy = "lunch")
 	private List<Reserve> LstReserve ;
 }

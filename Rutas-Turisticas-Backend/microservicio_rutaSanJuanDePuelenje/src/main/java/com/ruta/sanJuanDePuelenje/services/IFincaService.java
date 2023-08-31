@@ -14,5 +14,5 @@ public interface IFincaService {
 	
 	public Finca updateFinca(Integer fincaId, Finca finca);
 	
-	public Finca disableFinca(Integer fincaId);
+	public Boolean disableFinca(Integer fincaId);
 }
