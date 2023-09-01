@@ -45,9 +45,13 @@ public class RecreationServiceImpl implements IRecreationService{
 	}
 
 	@Override
-	public void disableRecreation(Integer recreationId) {
+	public Boolean disableRecreation(Integer recreationId) {
 		Recreation recreation = this.findByRecreationId(recreationId);
-		recreation.setState(false);
+		if (recreation != null) {
+			recreation.setState(false);
+			return true;
+		}
+		return false;
 	}
 
 }

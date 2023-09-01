@@ -42,9 +42,13 @@ public final class LodgingServiceImpl implements ILodgingService{
 	}
 
 	@Override
-	public void disableLodging(Integer lodgingId) {
+	public Boolean disableLodging(Integer lodgingId) {
 		Lodging lodging = this.findByLodgingId(lodgingId);
-		lodging.setState(false);
+		if(lodging != null) {
+			lodging.setState(false);
+			return true;
+		}
+		return false;
 	}
 
 }

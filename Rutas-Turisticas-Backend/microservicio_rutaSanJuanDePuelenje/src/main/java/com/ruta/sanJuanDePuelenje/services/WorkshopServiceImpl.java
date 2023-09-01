@@ -46,9 +46,13 @@ public class WorkshopServiceImpl implements IWorkshopService{
 	}
 
 	@Override
-	public void disableWorkshop(Integer workshopId) {
+	public Boolean disableWorkshop(Integer workshopId) {
 		Workshop workshop = this.findByWorkshopId(workshopId);
-		workshop.setState(false);
+		if (workshop != null) {
+			workshop.setState(false);
+			return true;
+		}
+		return false;
 	}
 
 

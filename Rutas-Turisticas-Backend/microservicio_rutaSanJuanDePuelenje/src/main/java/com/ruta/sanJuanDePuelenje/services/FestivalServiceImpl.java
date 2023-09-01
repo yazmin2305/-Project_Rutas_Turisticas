@@ -2,33 +2,40 @@ package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ruta.sanJuanDePuelenje.DTO.FestivalDTO;
 import com.ruta.sanJuanDePuelenje.models.Festival;
 import com.ruta.sanJuanDePuelenje.repository.IFestivalRepository;
 
 public class FestivalServiceImpl implements IFestivalService{
 	@Autowired
 	private IFestivalRepository iFestivalRepository;
-
+	@Autowired
+	private ModelMapper modelMapper;
+	
 	@Override
-	public List<Festival> findAllFestival() {
-		return (List<Festival>) iFestivalRepository.findAll();
+	public List<FestivalDTO> findAllFestival() {
+		List<Festival> festivalEntity = this.iFestivalRepository.findAll();
+		List<FestivalDTO> festivalDTO = this.modelMapper.map(festivalEntity, FestivalDTO);
+				
+		return festivalDTO;
 	}
 
 	@Override
-	public Festival findByFestivalId(Integer festivalId) {
+	public FestivalDTO findByFestivalId(Integer festivalId) {
 		Festival festival = iFestivalRepository.findById(festivalId).orElse(null);
 		return festival;
 	}
 
 	@Override
-	public Festival saveFestival(Festival festival) {
+	public FestivalDTO saveFestival(Festival festival) {
 		return iFestivalRepository.save(festival);
 	}
 
 	@Override
-	public Festival updateFestival(Integer festivalId, Festival festival) {
+	public FestivalDTO updateFestival(Integer festivalId, Festival festival) {
 		Festival festival1 = this.findByFestivalId(festivalId);
 		festival1.setName(festival.getName());
 		festival1.setDescription(festival.getDescription());

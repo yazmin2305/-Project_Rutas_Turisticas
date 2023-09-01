@@ -20,6 +20,9 @@ public class WorkshopType {
 	@Column(name = "name_workshop_type", nullable = false, length = 45)
 	private String name;
 	
+	@Column(nullable = false)
+	private Boolean state;
+	
 	@OneToMany(mappedBy = "workshopType")
 	private List<Workshop> lstWorkshops;
 	

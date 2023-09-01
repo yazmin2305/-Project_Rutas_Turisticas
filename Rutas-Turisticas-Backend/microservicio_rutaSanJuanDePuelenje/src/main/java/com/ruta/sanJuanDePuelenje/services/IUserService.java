@@ -15,5 +15,5 @@ public interface IUserService {
 	
 	public User updateUser(Integer userId, User user);
 	
-	public void disableUser(Integer userId);
+	public Boolean disableUser(Integer userId);
 }

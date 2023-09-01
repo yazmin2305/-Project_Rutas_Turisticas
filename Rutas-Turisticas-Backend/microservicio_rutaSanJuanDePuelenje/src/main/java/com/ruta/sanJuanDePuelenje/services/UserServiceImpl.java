@@ -44,9 +44,13 @@ public class UserServiceImpl implements IUserService{
 	}
 
 	@Override
-	public void disableUser(Integer userId) {
+	public Boolean disableUser(Integer userId) {
 		User user = this.findByUserId(userId);
-		user.setState(false);
+		if (user != null) {
+			user.setState(false);
+			return true;
+		}
+		return false;
 	}
 
 }

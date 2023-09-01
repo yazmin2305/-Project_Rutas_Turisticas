@@ -40,9 +40,13 @@ public class LunchServiceImpl implements ILunchService{
 	}
 
 	@Override
-	public void disableLunch(Integer lunchId) {
+	public Boolean disableLunch(Integer lunchId) {
 		Lunch lunch = this.findByLunchId(lunchId);
-		lunch.setState(false);
+		if(lunch != null) {
+			lunch.setState(false);
+			return true;
+		}
+		return false;
 	}
 
 }

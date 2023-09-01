@@ -2,17 +2,17 @@ package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
 
-import com.ruta.sanJuanDePuelenje.models.Festival;
+import com.ruta.sanJuanDePuelenje.DTO.FestivalDTO;
 
 public interface IFestivalService {
 	
-	public List<Festival> findAllFestival();
+	public List<FestivalDTO> findAllFestival();
 	
-	public Festival findByFestivalId(Integer festivalId);
+	public FestivalDTO findByFestivalId(Integer festivalId);
 	
-	public Festival saveFestival(Festival festival);
+	public FestivalDTO saveFestival(FestivalDTO festival);
 	
-	public Festival updateFestival(Integer festivalId, Festival festival);
+	public FestivalDTO updateFestival(Integer festivalId, FestivalDTO festival);
 	
 	public Boolean disableFestival(Integer festivalId);
 }

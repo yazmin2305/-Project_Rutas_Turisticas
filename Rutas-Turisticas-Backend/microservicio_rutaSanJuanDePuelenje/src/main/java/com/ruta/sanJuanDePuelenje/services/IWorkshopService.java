@@ -15,5 +15,5 @@ public interface IWorkshopService {
 	
 	public Workshop updateWorkshop(Integer workshopId, Workshop workshop);
 	
-	public void disableWorkshop(Integer workshopId);
+	public Boolean disableWorkshop(Integer workshopId);
 }

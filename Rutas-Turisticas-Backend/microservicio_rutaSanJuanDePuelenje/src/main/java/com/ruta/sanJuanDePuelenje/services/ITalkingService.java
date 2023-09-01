@@ -14,5 +14,5 @@ public interface ITalkingService {
 	
 	public Talking updateTalking(Integer talkingId, Talking talking);
 	
-	public void disableTalking(Integer talkingId);
+	public Boolean disableTalking(Integer talkingId);
 }

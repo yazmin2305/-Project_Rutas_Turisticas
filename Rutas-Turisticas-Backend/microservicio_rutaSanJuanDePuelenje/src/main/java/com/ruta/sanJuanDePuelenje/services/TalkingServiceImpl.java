@@ -45,9 +45,13 @@ public class TalkingServiceImpl implements ITalkingService{
 	}
 
 	@Override
-	public void disableTalking(Integer talkingId) {
+	public Boolean disableTalking(Integer talkingId) {
 		Talking talking = this.findByTalkingId(talkingId);
-		talking.setState(false);
+		if (talking != null) {
+			talking.setState(false);
+			return true;
+		}
+		return false;
 	}
 
 }
