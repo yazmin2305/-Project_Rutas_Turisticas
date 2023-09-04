@@ -1,51 +1,71 @@
 package com.ruta.sanJuanDePuelenje.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.ruta.sanJuanDePuelenje.DTO.LodgingDTO;
 import com.ruta.sanJuanDePuelenje.models.Lodging;
 import com.ruta.sanJuanDePuelenje.repository.ILodgingRepository;
 
 public final class LodgingServiceImpl implements ILodgingService{
-
+	
+	@Autowired
 	private ILodgingRepository iLodgingRepository;
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	@Override
-	public List<Lodging> findAllLodging() {
-		return (List<Lodging>) iLodgingRepository.findAll();
+	public List<LodgingDTO> findAllLodging() {
+		List<Lodging> lodgingEntity = iLodgingRepository.findAll();
+		List<LodgingDTO> lodgingDTOs = new ArrayList<>();
+		lodgingDTOs = lodgingEntity.stream().map(lodging -> modelMapper.map(lodging, LodgingDTO.class)).collect(Collectors.toList());
+		return lodgingDTOs;
 	}
 
 	@Override
-	public Lodging findByLodgingId(Integer lodgingId) {
+	public LodgingDTO findByLodgingId(Integer lodgingId) {
 		Lodging lodging = iLodgingRepository.findById(lodgingId).orElse(null);
-		return lodging;
+		LodgingDTO lodgingDTO = modelMapper.map(lodging, LodgingDTO.class);
+		return lodgingDTO;
 	}
 
 	@Override
-	public Lodging saveLodging(Lodging lodging) {
-		return iLodgingRepository.save(lodging);
+	public LodgingDTO saveLodging(LodgingDTO lodging) {
+		Lodging lodgingEntity  = this.modelMapper.map(lodging, Lodging.class);
+		lodgingEntity.setState(true);
+		Lodging objLodging = this.iLodgingRepository.save(lodgingEntity);
+		LodgingDTO lodgingDTO = this.modelMapper.map(objLodging, LodgingDTO.class);
+		return lodgingDTO;
 	}
 
 	@Override
-	public Lodging updateLodging(Integer lodgingId, Lodging lodging) {
-		Lodging lodging1 = this.findByLodgingId(lodgingId);
-		lodging1.setName(lodging.getName());
-		lodging1.setDescription(lodging.getDescription());
-		lodging1.setBedsAvailable(lodging.getBedsAvailable());
-		lodging1.setNumberNights(lodging.getNumberNights());
-		lodging1.setMaxAmountPerson(lodging.getMaxAmountPerson());
-		lodging1.setUnitPrice(lodging.getUnitPrice());
-		lodging1.setTotalPrice(lodging.getTotalPrice());
-		lodging1.setState(lodging.getState());
-		lodging1.setFinca(lodging.getFinca());
-		lodging1.setLstReserve(lodging.getLstReserve());
-		return lodging1;
+	public LodgingDTO updateLodging(Integer lodgingId, LodgingDTO lodging) {
+		Lodging lodgingEntity = this.modelMapper.map(lodging, Lodging.class);
+		LodgingDTO lodgingDTO = this.findByLodgingId(lodgingId);
+		Lodging lodgingEntity1 = this.modelMapper.map(lodgingDTO, Lodging.class);
+		lodgingEntity1.setName(lodgingEntity.getName());
+		lodgingEntity1.setDescription(lodgingEntity.getDescription());
+		lodgingEntity1.setBedsAvailable(lodgingEntity.getBedsAvailable());
+		lodgingEntity1.setNumberNights(lodgingEntity.getNumberNights());
+		lodgingEntity1.setMaxAmountPerson(lodgingEntity.getMaxAmountPerson());
+		lodgingEntity1.setUnitPrice(lodgingEntity.getUnitPrice());
+		lodgingEntity1.setTotalPrice(lodgingEntity.getTotalPrice());
+		lodgingEntity1.setState(lodgingEntity.getState());
+		lodgingEntity1.setFinca(lodgingEntity.getFinca());
+		lodgingEntity1.setLstReserve(lodgingEntity.getLstReserve());
+		return lodgingDTO;
 	}
 
 	@Override
 	public Boolean disableLodging(Integer lodgingId) {
-		Lodging lodging = this.findByLodgingId(lodgingId);
-		if(lodging != null) {
-			lodging.setState(false);
+		LodgingDTO lodgingDTO = this.findByLodgingId(lodgingId);
+		Lodging lodgingEntity = this.modelMapper.map(lodgingDTO, Lodging.class);
+		if(lodgingEntity != null) {
+			lodgingEntity.setState(false);
 			return true;
 		}
 		return false;

@@ -1,6 +1,8 @@
 package com.ruta.sanJuanDePuelenje.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,40 +19,48 @@ public class FestivalServiceImpl implements IFestivalService{
 	
 	@Override
 	public List<FestivalDTO> findAllFestival() {
-		List<Festival> festivalEntity = this.iFestivalRepository.findAll();
-		List<FestivalDTO> festivalDTO = this.modelMapper.map(festivalEntity, FestivalDTO);
-				
+		List<Festival> festivalEntity = iFestivalRepository.findAll();
+		List<FestivalDTO> festivalDTO = new ArrayList<>();
+		festivalDTO = festivalEntity.stream().map(festival -> modelMapper.map(festival, FestivalDTO.class)).collect(Collectors.toList());
 		return festivalDTO;
 	}
 
 	@Override
 	public FestivalDTO findByFestivalId(Integer festivalId) {
 		Festival festival = iFestivalRepository.findById(festivalId).orElse(null);
-		return festival;
+		FestivalDTO festivalDTO = modelMapper.map(festival, FestivalDTO.class);
+		return festivalDTO;
 	}
 
 	@Override
-	public FestivalDTO saveFestival(Festival festival) {
-		return iFestivalRepository.save(festival);
+	public FestivalDTO saveFestival(FestivalDTO festival) {
+		Festival festivalEntity  = this.modelMapper.map(festival, Festival.class);
+		festivalEntity.setState(true);
+		Festival objFestival = this.iFestivalRepository.save(festivalEntity);
+		FestivalDTO festivalDTO = this.modelMapper.map(objFestival, FestivalDTO.class);
+		return festivalDTO;
 	}
 
 	@Override
-	public FestivalDTO updateFestival(Integer festivalId, Festival festival) {
-		Festival festival1 = this.findByFestivalId(festivalId);
-		festival1.setName(festival.getName());
-		festival1.setDescription(festival.getDescription());
-		festival1.setDate(festival.getDate());
-		festival1.setFinca(festival.getFinca());
-		festival1.setLstReserve(festival.getLstReserve());
-		festival.setState(festival.getState());
-		return festival1;
+	public FestivalDTO updateFestival(Integer festivalId, FestivalDTO festival) {
+		Festival festivalEntity = this.modelMapper.map(festival, Festival.class);
+		FestivalDTO festivalDTO = this.findByFestivalId(festivalId);
+		Festival festivalEntity1 = this.modelMapper.map(festivalDTO, Festival.class);
+		festivalEntity1.setName(festivalEntity.getName());
+		festivalEntity1.setDescription(festivalEntity.getDescription());
+		festivalEntity1.setDate(festivalEntity.getDate());
+		festivalEntity1.setFinca(festivalEntity.getFinca());
+		festivalEntity1.setLstReserve(festivalEntity.getLstReserve());
+		festivalEntity1.setState(festivalEntity.getState());
+		return festivalDTO;
 	}
 
 	@Override
 	public Boolean disableFestival(Integer festivalId) {
-		Festival festival = this.findByFestivalId(festivalId);
-		if(festival != null) {
-			festival.setState(false);
+		FestivalDTO festivalDTO = this.findByFestivalId(festivalId);
+		Festival festivalEntity = this.modelMapper.map(festivalDTO, Festival.class);
+		if(festivalEntity != null) {
+			festivalEntity.setState(false);
 			return true;
 		}
 		return false;

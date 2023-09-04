@@ -2,17 +2,18 @@ package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
 
+import com.ruta.sanJuanDePuelenje.DTO.LodgingDTO;
 import com.ruta.sanJuanDePuelenje.models.Lodging;
 
 public interface ILodgingService {
 	
-	public List<Lodging> findAllLodging();
+	public List<LodgingDTO> findAllLodging();
 	
-	public Lodging findByLodgingId(Integer lodgingId);
+	public LodgingDTO findByLodgingId(Integer lodgingId);
 	
-	public Lodging saveLodging(Lodging lodging);
+	public LodgingDTO saveLodging(LodgingDTO lodging);
 	
-	public Lodging updateLodging(Integer lodgingId, Lodging lodging);
+	public LodgingDTO updateLodging(Integer lodgingId, LodgingDTO lodging);
 	
 	public Boolean disableLodging(Integer lodgingId);
 }

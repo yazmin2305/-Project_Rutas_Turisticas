@@ -1,9 +1,13 @@
 package com.ruta.sanJuanDePuelenje.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ruta.sanJuanDePuelenje.DTO.LunchDTO;
 import com.ruta.sanJuanDePuelenje.models.Lunch;
 import com.ruta.sanJuanDePuelenje.repository.ILunchRepository;
 
@@ -11,39 +15,52 @@ public class LunchServiceImpl implements ILunchService{
 
 	@Autowired
 	private ILunchRepository iLunchRepository;
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	@Override
-	public List<Lunch> findAllLodging() {
-		return (List<Lunch>) iLunchRepository.findAll();
+	public List<LunchDTO> findAllLodging() {
+		List<Lunch> lunchEntity = iLunchRepository.findAll();
+		List<LunchDTO> lunchDTOs = new ArrayList<>();
+		lunchDTOs = lunchEntity.stream().map(lunch -> modelMapper.map(lunch, LunchDTO.class)).collect(Collectors.toList());
+		return lunchDTOs;
 	}
 
 	@Override
-	public Lunch findByLunchId(Integer lunchId) {
-		Lunch lunch = iLunchRepository.findById(lunchId).orElse(null); 
-		return lunch;
+	public LunchDTO findByLunchId(Integer lunchId) {
+		Lunch lunch = iLunchRepository.findById(lunchId).orElse(null);
+		LunchDTO lunchDTO = modelMapper.map(lunch, LunchDTO.class);
+		return lunchDTO;
 	}
 
 	@Override
-	public Lunch saveLunch(Lunch lunch) {
-		return iLunchRepository.save(lunch);
+	public LunchDTO saveLunch(LunchDTO lunch) {
+		Lunch lunchEntity  = this.modelMapper.map(lunch, Lunch.class);
+		lunchEntity.setState(true);
+		Lunch objLunch = this.iLunchRepository.save(lunchEntity);
+		LunchDTO lunchDTO = this.modelMapper.map(objLunch, LunchDTO.class);
+		return lunchDTO;
 	}
 
 	@Override
-	public Lunch updateLunch(Integer lunchId, Lunch lunch) {
-		Lunch lunch1 = this.findByLunchId(lunchId);
-		lunch1.setMenu(lunch.getMenu());
-		lunch1.setUnitPrice(lunch.getUnitPrice());
-		lunch1.setTotalPrice(lunch.getTotalPrice());
-		lunch1.setState(lunch.getState());
-		lunch1.setLstReserve(lunch.getLstReserve());
-		return lunch1;
+	public LunchDTO updateLunch(Integer lunchId, LunchDTO lunch) {
+		Lunch lunchEntity = this.modelMapper.map(lunch, Lunch.class);
+		LunchDTO lunchDTO = this.findByLunchId(lunchId);
+		Lunch lunchEntity1 = this.modelMapper.map(lunchDTO, Lunch.class);
+		lunchEntity1.setMenu(lunchEntity.getMenu());
+		lunchEntity1.setUnitPrice(lunchEntity.getUnitPrice());
+		lunchEntity1.setTotalPrice(lunchEntity.getTotalPrice());
+		lunchEntity1.setState(lunchEntity.getState());
+		lunchEntity1.setLstReserve(lunchEntity.getLstReserve());
+		return lunchDTO;
 	}
 
 	@Override
 	public Boolean disableLunch(Integer lunchId) {
-		Lunch lunch = this.findByLunchId(lunchId);
-		if(lunch != null) {
-			lunch.setState(false);
+		LunchDTO lunchDTO = this.findByLunchId(lunchId);
+		Lunch lunchEntity = this.modelMapper.map(lunchDTO, Lunch.class);
+		if(lunchEntity != null) {
+			lunchEntity.setState(false);
 			return true;
 		}
 		return false;

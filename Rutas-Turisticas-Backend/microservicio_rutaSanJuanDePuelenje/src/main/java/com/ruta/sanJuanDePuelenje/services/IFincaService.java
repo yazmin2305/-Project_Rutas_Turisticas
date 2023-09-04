@@ -2,17 +2,17 @@ package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
 
-import com.ruta.sanJuanDePuelenje.models.Finca;
+import com.ruta.sanJuanDePuelenje.DTO.FincaDTO;
 
 public interface IFincaService {
 	
-	public List<Finca> findAllFincas();
+	public List<FincaDTO> findAllFincas();
 	
-	public Finca findByFincaId(Integer fincaId);
+	public FincaDTO findByFincaId(Integer fincaId);
 	
-	public Finca saveFinca(Finca finca);
+	public FincaDTO saveFinca(FincaDTO fincaDTO);
 	
-	public Finca updateFinca(Integer fincaId, Finca finca);
+	public FincaDTO updateFinca(Integer fincaId, FincaDTO fincaDTO);
 	
 	public Boolean disableFinca(Integer fincaId);
 }

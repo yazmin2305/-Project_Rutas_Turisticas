@@ -1,9 +1,13 @@
 package com.ruta.sanJuanDePuelenje.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ruta.sanJuanDePuelenje.DTO.RecreationDTO;
 import com.ruta.sanJuanDePuelenje.models.Recreation;
 import com.ruta.sanJuanDePuelenje.repository.IRecreationRepository;
 
@@ -11,44 +15,57 @@ public class RecreationServiceImpl implements IRecreationService{
 
 	@Autowired
 	private IRecreationRepository iRecreationRepository;
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	@Override
-	public List<Recreation> findAllLodging() {
-		return (List<Recreation>) iRecreationRepository.findAll();
+	public List<RecreationDTO> findAllLodging() {
+		List<Recreation> recreationEntity = iRecreationRepository.findAll();
+		List<RecreationDTO> recreationDTOs = new ArrayList<>();
+		recreationDTOs = recreationEntity.stream().map(recreation -> modelMapper.map(recreation, RecreationDTO.class)).collect(Collectors.toList());
+		return recreationDTOs;
 	}
 
 	@Override
-	public Recreation findByRecreationId(Integer recreationId) {
+	public RecreationDTO findByRecreationId(Integer recreationId) {
 		Recreation recreation = iRecreationRepository.findById(recreationId).orElse(null);
-		return recreation;
+		RecreationDTO recreationDTO = modelMapper.map(recreation, RecreationDTO.class);
+		return recreationDTO;
 	}
 
 	@Override
-	public Recreation saveRecreation(Recreation recreation) {
-		return iRecreationRepository.save(recreation);
+	public RecreationDTO saveRecreation(RecreationDTO recreation) {
+		Recreation recreationEntity  = this.modelMapper.map(recreation, Recreation.class);
+		recreationEntity.setState(true);
+		Recreation objRecreation = this.iRecreationRepository.save(recreationEntity);
+		RecreationDTO recreationDTO = this.modelMapper.map(objRecreation, RecreationDTO.class);
+		return recreationDTO;
 	}
 
 	@Override
-	public Recreation updateRecreation(Integer recreationId, Recreation recreation) {
-		Recreation recreation1 = this.findByRecreationId(recreationId);
-		recreation1.setName(recreation.getName());
-		recreation1.setDescription(recreation.getDescription());
-		recreation1.setDuration(recreation.getDuration());
-		recreation1.setAvailability(recreation.getAvailability());
-		recreation1.setMaxAmountPerson(recreation.getMaxAmountPerson());
-		recreation1.setUnitPrice(recreation.getUnitPrice());
-		recreation1.setTotalPrice(recreation.getTotalPrice());
-		recreation1.setState(recreation.getState());
-		recreation1.setFinca(recreation.getFinca());
-		recreation1.setLstReserve(recreation.getLstReserve());
-		return null;
+	public RecreationDTO updateRecreation(Integer recreationId, RecreationDTO recreation) {
+		Recreation recreationEntity = this.modelMapper.map(recreation, Recreation.class);
+		RecreationDTO recreationDTO = this.findByRecreationId(recreationId);
+		Recreation recreationEntity1 = this.modelMapper.map(recreationDTO, Recreation.class);
+		recreationEntity1.setName(recreationEntity.getName());
+		recreationEntity1.setDescription(recreationEntity.getDescription());
+		recreationEntity1.setDuration(recreationEntity.getDuration());
+		recreationEntity1.setAvailability(recreationEntity.getAvailability());
+		recreationEntity1.setMaxAmountPerson(recreationEntity.getMaxAmountPerson());
+		recreationEntity1.setUnitPrice(recreationEntity.getUnitPrice());
+		recreationEntity1.setTotalPrice(recreationEntity.getTotalPrice());
+		recreationEntity1.setState(recreationEntity.getState());
+		recreationEntity1.setFinca(recreationEntity.getFinca());
+		recreationEntity1.setLstReserve(recreationEntity.getLstReserve());
+		return recreationDTO;
 	}
 
 	@Override
 	public Boolean disableRecreation(Integer recreationId) {
-		Recreation recreation = this.findByRecreationId(recreationId);
-		if (recreation != null) {
-			recreation.setState(false);
+		RecreationDTO recreationDTO = this.findByRecreationId(recreationId);
+		Recreation recreationEntity = this.modelMapper.map(recreationDTO, Recreation.class);
+		if (recreationEntity != null) {
+			recreationEntity.setState(false);
 			return true;
 		}
 		return false;

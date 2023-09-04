@@ -1,9 +1,13 @@
 package com.ruta.sanJuanDePuelenje.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ruta.sanJuanDePuelenje.DTO.ReserveDTO;
 import com.ruta.sanJuanDePuelenje.models.Reserve;
 import com.ruta.sanJuanDePuelenje.repository.IReserveRepository;
 
@@ -11,44 +15,57 @@ public class ReserveServiceImpl implements IReserveService{
 
 	@Autowired
 	private IReserveRepository iReserveRepository;
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	@Override
-	public List<Reserve> findAllLodging() {
-		return (List<Reserve>) iReserveRepository.findAll();
+	public List<ReserveDTO> findAllReserve() {
+		List<Reserve> reserveEntity = iReserveRepository.findAll();
+		List<ReserveDTO> reserveDTOs = new ArrayList<>();
+		reserveDTOs = reserveEntity.stream().map(reserve -> modelMapper.map(reserve, ReserveDTO.class)).collect(Collectors.toList());
+		return reserveDTOs;
 	}
 
 	@Override
-	public Reserve findByReserveId(Integer reserveId) {
+	public ReserveDTO findByReserveId(Integer reserveId) {
 		Reserve reserve = iReserveRepository.findById(reserveId).orElse(null);
-		return reserve;
+		ReserveDTO reserveDTO = modelMapper.map(reserve, ReserveDTO.class);
+		return reserveDTO;
 	}
 
 	@Override
-	public Reserve saveReserve(Reserve reserve) {
-		return iReserveRepository.save(reserve);
+	public ReserveDTO saveReserve(ReserveDTO reserve) {
+		Reserve reserveEntity  = this.modelMapper.map(reserve, Reserve.class);
+		reserveEntity.setState(true);
+		Reserve objReserve = this.iReserveRepository.save(reserveEntity);
+		ReserveDTO reserveDTO = this.modelMapper.map(objReserve, ReserveDTO.class);
+		return reserveDTO;
 	}
 
 	@Override
-	public Reserve updateReserve(Integer reserveId, Reserve reserve) {
-		Reserve reserve1 = this.findByReserveId(reserveId);
-		reserve1.setAmountPersons(reserve.getAmountPersons());
-		reserve1.setTotalPrice(reserve.getTotalPrice());
-		reserve1.setState(reserve.getState());
-		reserve1.setUser(reserve.getUser());
-		reserve1.setWorkshop(reserve.getWorkshop());
-		reserve1.setTalking(reserve.getTalking());
-		reserve1.setRecreation(reserve.getRecreation());
-		reserve1.setLodging(reserve.getLodging());
-		reserve1.setFestival(reserve.getFestival());
-		reserve1.setLunch(reserve.getLunch());
-		return reserve1;
+	public ReserveDTO updateReserve(Integer reserveId, ReserveDTO reserve) {
+		Reserve reserveEntity = this.modelMapper.map(reserve, Reserve.class);
+		ReserveDTO reserveDTO = this.findByReserveId(reserveId);
+		Reserve reserveEntity1 = this.modelMapper.map(reserveDTO, Reserve.class);
+		reserveEntity1.setAmountPersons(reserveEntity.getAmountPersons());
+		reserveEntity1.setTotalPrice(reserveEntity.getTotalPrice());
+		reserveEntity1.setState(reserveEntity.getState());
+		reserveEntity1.setUser(reserveEntity.getUser());
+		reserveEntity1.setWorkshop(reserveEntity.getWorkshop());
+		reserveEntity1.setTalking(reserveEntity.getTalking());
+		reserveEntity1.setRecreation(reserveEntity.getRecreation());
+		reserveEntity1.setLodging(reserveEntity.getLodging());
+		reserveEntity1.setFestival(reserveEntity.getFestival());
+		reserveEntity1.setLunch(reserveEntity.getLunch());
+		return reserveDTO;
 	}
 
 	@Override
 	public Boolean disableReserve(Integer reserveId) {
-		Reserve reserve = this.findByReserveId(reserveId);
-		if(reserve != null){
-			reserve.setState(false);
+		ReserveDTO reserveDTO = this.findByReserveId(reserveId);
+		Reserve reserveEntity = this.modelMapper.map(reserveDTO, Reserve.class);
+		if(reserveEntity != null){
+			reserveEntity.setState(false);
 			return true;
 		}
 		return false;
@@ -56,16 +73,13 @@ public class ReserveServiceImpl implements IReserveService{
 
 	@Override
 	public Boolean deleteReserve(Integer reserveId) {
-		Reserve reserve = this.findByReserveId(reserveId);
-		if(reserve != null){
+		ReserveDTO reserveDTO = this.findByReserveId(reserveId);
+		Reserve reserveEntity = this.modelMapper.map(reserveDTO, Reserve.class);
+		if(reserveEntity != null){
 			iReserveRepository.deleteById(reserveId);;
 			return true;
 		}
 		return false;
 	}
-	
-	
-
-
 
 }

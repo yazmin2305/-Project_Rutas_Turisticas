@@ -2,17 +2,17 @@ package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
 
-import com.ruta.sanJuanDePuelenje.models.Recreation;
+import com.ruta.sanJuanDePuelenje.DTO.RecreationDTO;
 
 public interface IRecreationService {
 	
-	public List<Recreation> findAllLodging();
+	public List<RecreationDTO> findAllLodging();
 	
-	public Recreation findByRecreationId(Integer recreationId);
+	public RecreationDTO findByRecreationId(Integer recreationId);
 	
-	public Recreation saveRecreation(Recreation recreation);
+	public RecreationDTO saveRecreation(RecreationDTO recreation);
 	
-	public Recreation updateRecreation(Integer recreationId, Recreation recreation);
+	public RecreationDTO updateRecreation(Integer recreationId, RecreationDTO recreation);
 	
 	public Boolean disableRecreation(Integer recreationId);
 }

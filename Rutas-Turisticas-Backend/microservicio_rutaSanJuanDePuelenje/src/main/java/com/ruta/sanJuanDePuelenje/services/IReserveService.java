@@ -2,18 +2,18 @@ package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
 
-import com.ruta.sanJuanDePuelenje.models.Reserve;
+import com.ruta.sanJuanDePuelenje.DTO.ReserveDTO;
 
 
 public interface IReserveService {
 	
-	public List<Reserve> findAllLodging();
+	public List<ReserveDTO> findAllReserve();
 	
-	public Reserve findByReserveId(Integer reserveId);
+	public ReserveDTO findByReserveId(Integer reserveId);
 	
-	public Reserve saveReserve(Reserve reserve);
+	public ReserveDTO saveReserve(ReserveDTO reserve);
 	
-	public Reserve updateReserve(Integer reserveId, Reserve reserve);
+	public ReserveDTO updateReserve(Integer reserveId, ReserveDTO reserve);
 	
 	public Boolean disableReserve(Integer reserveId);
 	

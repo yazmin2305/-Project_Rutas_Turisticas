@@ -1,9 +1,13 @@
 package com.ruta.sanJuanDePuelenje.services;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ruta.sanJuanDePuelenje.DTO.FincaDTO;
 import com.ruta.sanJuanDePuelenje.models.Finca;
 import com.ruta.sanJuanDePuelenje.repository.IFincaRepository;
 
@@ -11,43 +15,56 @@ public class FincaServiceImpl implements IFincaService{
 	
 	@Autowired
 	private IFincaRepository iFincaRepository;
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@Override
-	public List<Finca> findAllFincas() {
-		return (List<Finca>) iFincaRepository.findAll();
+	public List<FincaDTO> findAllFincas() {
+		List<Finca> fincaEntity = iFincaRepository.findAll();
+		List<FincaDTO> fincaDTO = new ArrayList<>();
+		fincaDTO = fincaEntity.stream().map(finca -> modelMapper.map(finca, FincaDTO.class)).collect(Collectors.toList());
+		return fincaDTO;
 	}
 
 	@Override
-	public Finca findByFincaId(Integer fincaId) {
+	public FincaDTO findByFincaId(Integer fincaId) {
 		Finca finca = iFincaRepository.findById(fincaId).orElse(null);
-		return finca;
+		FincaDTO fincaDTO = modelMapper.map(finca, FincaDTO.class);
+		return fincaDTO;
 	}
 
 	@Override
-	public Finca saveFinca(Finca finca) {
-		return iFincaRepository.save(finca);
+	public FincaDTO saveFinca(FincaDTO finca) {
+		Finca fincaEntity  = this.modelMapper.map(finca, Finca.class);
+		fincaEntity.setState(true);
+		Finca objFinca = this.iFincaRepository.save(fincaEntity);
+		FincaDTO fincaDTO = this.modelMapper.map(objFinca, FincaDTO.class);
+		return fincaDTO;
 	}
 
 	@Override
-	public Finca updateFinca(Integer fincaId, Finca finca) {
-		Finca finca1 = this.findByFincaId(fincaId);
-		finca1.setName(finca.getName());
-		finca1.setDescription(finca.getDescription());
-		finca1.setLocation(finca.getLocation());
-		finca1.setState(finca.getState());
-		finca1.setLstTalking(finca.getLstTalking());
-		finca1.setLstWorkshop(finca.getLstWorkshop());
-		finca1.setLstRecreation(finca.getLstRecreation());
-		finca1.setLstLodging(finca.getLstLodging());
-		finca1.setLstFestival(finca.getLstFestival());
-		return finca1;
+	public FincaDTO updateFinca(Integer fincaId, FincaDTO finca) {
+		Finca fincaEntity = this.modelMapper.map(finca, Finca.class);
+		FincaDTO fincaDTO = this.findByFincaId(fincaId);
+		Finca fincaEntity1 = this.modelMapper.map(fincaDTO, Finca.class);
+		fincaEntity1.setName(fincaEntity.getName());
+		fincaEntity1.setDescription(fincaEntity.getDescription());
+		fincaEntity1.setLocation(fincaEntity.getLocation());
+		fincaEntity1.setState(fincaEntity.getState());
+		fincaEntity1.setLstTalking(fincaEntity.getLstTalking());
+		fincaEntity1.setLstWorkshop(fincaEntity.getLstWorkshop());
+		fincaEntity1.setLstRecreation(fincaEntity.getLstRecreation());
+		fincaEntity1.setLstLodging(fincaEntity.getLstLodging());
+		fincaEntity1.setLstFestival(fincaEntity.getLstFestival());
+		return fincaDTO;
 	}
 
 	@Override
 	public Boolean disableFinca(Integer fincaId) {
-		Finca finca = this.findByFincaId(fincaId);
-		if(finca != null) {
-			finca.setState(false);
+		FincaDTO fincaDTO = this.findByFincaId(fincaId);
+		Finca fincaEntity = this.modelMapper.map(fincaDTO, Finca.class);
+		if(fincaEntity != null) {
+			fincaEntity.setState(false);
 			return true;
 		}
 		return false;

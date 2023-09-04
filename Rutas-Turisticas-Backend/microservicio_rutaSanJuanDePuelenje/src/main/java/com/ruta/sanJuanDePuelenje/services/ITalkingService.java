@@ -2,17 +2,18 @@ package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
 
-import com.ruta.sanJuanDePuelenje.models.Talking;
+import com.ruta.sanJuanDePuelenje.DTO.TalkingDTO;
+
 
 public interface ITalkingService {
 	
-	public List<Talking> findAllTalking();
+	public List<TalkingDTO> findAllTalking();
 	
-	public Talking findByTalkingId(Integer talkingId);
+	public TalkingDTO findByTalkingId(Integer talkingId);
 	
-	public Talking saveTalking(Talking talking);
+	public TalkingDTO saveTalking(TalkingDTO talking);
 	
-	public Talking updateTalking(Integer talkingId, Talking talking);
+	public TalkingDTO updateTalking(Integer talkingId, TalkingDTO talking);
 	
 	public Boolean disableTalking(Integer talkingId);
 }
