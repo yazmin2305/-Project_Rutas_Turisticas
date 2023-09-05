@@ -3,7 +3,6 @@ package com.ruta.sanJuanDePuelenje.services;
 import java.util.List;
 
 import com.ruta.sanJuanDePuelenje.DTO.LodgingDTO;
-import com.ruta.sanJuanDePuelenje.models.Lodging;
 
 public interface ILodgingService {
 	

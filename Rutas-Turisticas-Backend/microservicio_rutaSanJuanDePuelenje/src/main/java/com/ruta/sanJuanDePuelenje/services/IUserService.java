@@ -2,18 +2,19 @@ package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
 
-import com.ruta.sanJuanDePuelenje.models.User;
+import com.ruta.sanJuanDePuelenje.DTO.UserDTO;
+
 
 
 public interface IUserService {
 	
-	public List<User> findAllTalking();
+	public List<UserDTO> findAllTalking();
 	
-	public User findByUserId(Integer userId);
+	public UserDTO findByUserId(Integer userId);
 	
-	public User saveUser(User user);
+	public UserDTO saveUser(UserDTO user);
 	
-	public User updateUser(Integer userId, User user);
+	public UserDTO updateUser(Integer userId, UserDTO user);
 	
 	public Boolean disableUser(Integer userId);
 }

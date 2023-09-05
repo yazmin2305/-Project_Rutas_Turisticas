@@ -2,18 +2,18 @@ package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
 
-import com.ruta.sanJuanDePuelenje.models.Workshop;
+import com.ruta.sanJuanDePuelenje.DTO.WorkshopDTO;
 
 
 public interface IWorkshopService {
 	
-	public List<Workshop> findAllWorkshop();
+	public List<WorkshopDTO> findAllWorkshop();
 	
-	public Workshop findByWorkshopId(Integer workshopId);
+	public WorkshopDTO findByWorkshopId(Integer workshopId);
 	
-	public Workshop saveWorkshop(Workshop workshop);
+	public WorkshopDTO saveWorkshop(WorkshopDTO workshop);
 	
-	public Workshop updateWorkshop(Integer workshopId, Workshop workshop);
+	public WorkshopDTO updateWorkshop(Integer workshopId, WorkshopDTO workshop);
 	
 	public Boolean disableWorkshop(Integer workshopId);
 }
