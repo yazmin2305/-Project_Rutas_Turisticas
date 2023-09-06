@@ -41,7 +41,7 @@ public class Lodging {
 	@Column(name = "total_price" , nullable = true)
 	private Double totalPrice;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Boolean state;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

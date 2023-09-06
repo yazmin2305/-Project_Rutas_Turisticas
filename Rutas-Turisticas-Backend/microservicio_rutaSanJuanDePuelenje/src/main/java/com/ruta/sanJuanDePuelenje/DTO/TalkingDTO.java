@@ -17,7 +17,7 @@ public class TalkingDTO {
 	private String talkingDescription;
 	private Integer talkingDuration;
 	private Boolean talkingAvailability;
-	private Integer talkingMaxAmountP;
+	private Integer talkingMaxAmountPerson;
 	private Double talkingUnitPrice;
 	private Double talkingTotalPrice;
 	private Boolean talkingState;

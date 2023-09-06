@@ -28,7 +28,7 @@ public class Festival {
 	private Date date;
 	//@Temporal(TemporalType.timestamp)
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Boolean state;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

@@ -26,7 +26,7 @@ public class Finca {
 	@Column(nullable = false, length = 200)
 	private String location;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Boolean state;
 	
 	@OneToMany(mappedBy = "finca")

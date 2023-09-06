@@ -22,7 +22,7 @@ public class Reserve {
 	@Column(name = "total_price" , nullable = false)
 	private Double totalPrice;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Boolean state;
 	
 	//fechas falta 

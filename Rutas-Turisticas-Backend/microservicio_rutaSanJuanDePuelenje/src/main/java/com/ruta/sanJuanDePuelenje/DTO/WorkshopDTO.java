@@ -17,6 +17,7 @@ public class WorkshopDTO {
 	private String workshopDescription;
 	private Integer workshopDuration;
 	private Boolean workshopAvailability;
+	private Integer workshopMaxAmountPerson;
 	private Double workshopUnitPrice;
 	private Double workshopTotalPrice;
 	private Boolean workshopState;

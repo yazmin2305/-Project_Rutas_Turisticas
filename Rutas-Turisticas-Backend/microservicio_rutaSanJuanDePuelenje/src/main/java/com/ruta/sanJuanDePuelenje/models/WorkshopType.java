@@ -20,7 +20,7 @@ public class WorkshopType {
 	@Column(name = "name_workshop_type", nullable = false, length = 45)
 	private String name;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Boolean state;
 	
 	@OneToMany(mappedBy = "workshopType")
