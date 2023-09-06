@@ -6,11 +6,13 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ruta.sanJuanDePuelenje.DTO.FincaDTO;
 import com.ruta.sanJuanDePuelenje.models.Finca;
 import com.ruta.sanJuanDePuelenje.repository.IFincaRepository;
 
+@Service
 public class FincaServiceImpl implements IFincaService{
 	
 	@Autowired
@@ -45,6 +47,7 @@ public class FincaServiceImpl implements IFincaService{
 	@Override
 	public FincaDTO updateFinca(Integer fincaId, FincaDTO finca) {
 		Finca fincaEntity = this.modelMapper.map(finca, Finca.class);
+		//Finca fincaUpdate = this.iFincaRepository.findById(fincaId).get();
 		FincaDTO fincaDTO = this.findByFincaId(fincaId);
 		Finca fincaEntity1 = this.modelMapper.map(fincaDTO, Finca.class);
 		fincaEntity1.setName(fincaEntity.getName());
@@ -56,6 +59,9 @@ public class FincaServiceImpl implements IFincaService{
 		fincaEntity1.setLstRecreation(fincaEntity.getLstRecreation());
 		fincaEntity1.setLstLodging(fincaEntity.getLstLodging());
 		fincaEntity1.setLstFestival(fincaEntity.getLstFestival());
+		this.iFincaRepository.save(fincaEntity1);
+		//FincaDTO fincaDTO = this.modelMapper.map(fincaEntity1, FincaDTO.class);
+		fincaDTO = this.modelMapper.map(fincaEntity1, FincaDTO.class);
 		return fincaDTO;
 	}
 
@@ -65,6 +71,7 @@ public class FincaServiceImpl implements IFincaService{
 		Finca fincaEntity = this.modelMapper.map(fincaDTO, Finca.class);
 		if(fincaEntity != null) {
 			fincaEntity.setState(false);
+			this.iFincaRepository.save(fincaEntity);
 			return true;
 		}
 		return false;

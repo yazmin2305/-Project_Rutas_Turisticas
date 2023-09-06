@@ -6,11 +6,13 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ruta.sanJuanDePuelenje.DTO.TalkingDTO;
 import com.ruta.sanJuanDePuelenje.models.Talking;
 import com.ruta.sanJuanDePuelenje.repository.ITalkingRepository;
 
+@Service
 public class TalkingServiceImpl implements ITalkingService{
 
 	@Autowired
@@ -66,6 +68,7 @@ public class TalkingServiceImpl implements ITalkingService{
 		Talking talkingEntity = this.modelMapper.map(talkingDTO, Talking.class);
 		if (talkingEntity != null) {
 			talkingEntity.setState(false);
+			this.iTalkingRepository.save(talkingEntity);
 			return true;
 		}
 		return false;

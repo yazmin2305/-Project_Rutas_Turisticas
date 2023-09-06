@@ -6,13 +6,13 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.ruta.sanJuanDePuelenje.DTO.FestivalDTO;
 import com.ruta.sanJuanDePuelenje.DTO.WorkshopTypeDTO;
-import com.ruta.sanJuanDePuelenje.models.Festival;
 import com.ruta.sanJuanDePuelenje.models.WorkshopType;
 import com.ruta.sanJuanDePuelenje.repository.IWorkshopTypeRepository;
 
+@Service
 public class WorkshopTypeServiceImpl implements IWorkshopTypeService{
 
 	@Autowired
@@ -61,6 +61,7 @@ public class WorkshopTypeServiceImpl implements IWorkshopTypeService{
 		WorkshopType WorkshopTypeEntity = this.modelMapper.map(workshopTypeDTO, WorkshopType.class);
 		if (WorkshopTypeEntity != null) {
 			WorkshopTypeEntity.setState(false);
+			this.iWorkshopTypeRepository.save(WorkshopTypeEntity);
 			return true;
 		}
 		return false;

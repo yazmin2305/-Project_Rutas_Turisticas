@@ -6,11 +6,13 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ruta.sanJuanDePuelenje.DTO.RecreationDTO;
 import com.ruta.sanJuanDePuelenje.models.Recreation;
 import com.ruta.sanJuanDePuelenje.repository.IRecreationRepository;
 
+@Service
 public class RecreationServiceImpl implements IRecreationService{
 
 	@Autowired
@@ -19,7 +21,7 @@ public class RecreationServiceImpl implements IRecreationService{
 	private ModelMapper modelMapper;
 	
 	@Override
-	public List<RecreationDTO> findAllLodging() {
+	public List<RecreationDTO> findAllRecreation() {
 		List<Recreation> recreationEntity = iRecreationRepository.findAll();
 		List<RecreationDTO> recreationDTOs = new ArrayList<>();
 		recreationDTOs = recreationEntity.stream().map(recreation -> modelMapper.map(recreation, RecreationDTO.class)).collect(Collectors.toList());
@@ -66,6 +68,7 @@ public class RecreationServiceImpl implements IRecreationService{
 		Recreation recreationEntity = this.modelMapper.map(recreationDTO, Recreation.class);
 		if (recreationEntity != null) {
 			recreationEntity.setState(false);
+			this.iRecreationRepository.save(recreationEntity);
 			return true;
 		}
 		return false;

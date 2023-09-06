@@ -6,11 +6,13 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ruta.sanJuanDePuelenje.DTO.LodgingDTO;
 import com.ruta.sanJuanDePuelenje.models.Lodging;
 import com.ruta.sanJuanDePuelenje.repository.ILodgingRepository;
 
+@Service
 public final class LodgingServiceImpl implements ILodgingService{
 	
 	@Autowired
@@ -66,6 +68,7 @@ public final class LodgingServiceImpl implements ILodgingService{
 		Lodging lodgingEntity = this.modelMapper.map(lodgingDTO, Lodging.class);
 		if(lodgingEntity != null) {
 			lodgingEntity.setState(false);
+			this.iLodgingRepository.save(lodgingEntity);
 			return true;
 		}
 		return false;

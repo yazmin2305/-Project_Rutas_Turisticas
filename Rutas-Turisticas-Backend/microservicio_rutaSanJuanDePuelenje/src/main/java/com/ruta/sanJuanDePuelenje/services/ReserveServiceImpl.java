@@ -6,11 +6,13 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ruta.sanJuanDePuelenje.DTO.ReserveDTO;
 import com.ruta.sanJuanDePuelenje.models.Reserve;
 import com.ruta.sanJuanDePuelenje.repository.IReserveRepository;
 
+@Service
 public class ReserveServiceImpl implements IReserveService{
 
 	@Autowired
@@ -66,6 +68,7 @@ public class ReserveServiceImpl implements IReserveService{
 		Reserve reserveEntity = this.modelMapper.map(reserveDTO, Reserve.class);
 		if(reserveEntity != null){
 			reserveEntity.setState(false);
+			this.iReserveRepository.save(reserveEntity);
 			return true;
 		}
 		return false;
@@ -76,7 +79,7 @@ public class ReserveServiceImpl implements IReserveService{
 		ReserveDTO reserveDTO = this.findByReserveId(reserveId);
 		Reserve reserveEntity = this.modelMapper.map(reserveDTO, Reserve.class);
 		if(reserveEntity != null){
-			iReserveRepository.deleteById(reserveId);;
+			iReserveRepository.deleteById(reserveId);
 			return true;
 		}
 		return false;

@@ -8,7 +8,7 @@ import com.ruta.sanJuanDePuelenje.DTO.UserDTO;
 
 public interface IUserService {
 	
-	public List<UserDTO> findAllTalking();
+	public List<UserDTO> findAllUsers();
 	
 	public UserDTO findByUserId(Integer userId);
 	

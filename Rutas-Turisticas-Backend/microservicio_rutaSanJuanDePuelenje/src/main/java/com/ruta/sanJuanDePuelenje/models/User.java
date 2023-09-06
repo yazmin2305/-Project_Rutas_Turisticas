@@ -33,11 +33,11 @@ public class User {
 	@Column(nullable = false, length = 30)
 	private String email;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Boolean state;
 	
 	@Column(nullable = false, length = 20)
-	private String passsword;
+	private String password;
 	
 	@OneToOne(mappedBy = "user")
 	private Role role;

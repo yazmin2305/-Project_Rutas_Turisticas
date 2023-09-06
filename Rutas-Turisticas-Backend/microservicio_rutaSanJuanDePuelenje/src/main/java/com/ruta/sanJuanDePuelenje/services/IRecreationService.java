@@ -6,7 +6,7 @@ import com.ruta.sanJuanDePuelenje.DTO.RecreationDTO;
 
 public interface IRecreationService {
 	
-	public List<RecreationDTO> findAllLodging();
+	public List<RecreationDTO> findAllRecreation();
 	
 	public RecreationDTO findByRecreationId(Integer recreationId);
 	

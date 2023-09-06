@@ -6,11 +6,13 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ruta.sanJuanDePuelenje.DTO.LunchDTO;
 import com.ruta.sanJuanDePuelenje.models.Lunch;
 import com.ruta.sanJuanDePuelenje.repository.ILunchRepository;
 
+@Service
 public class LunchServiceImpl implements ILunchService{
 
 	@Autowired
@@ -19,7 +21,7 @@ public class LunchServiceImpl implements ILunchService{
 	private ModelMapper modelMapper;
 	
 	@Override
-	public List<LunchDTO> findAllLodging() {
+	public List<LunchDTO> findAllLunch() {
 		List<Lunch> lunchEntity = iLunchRepository.findAll();
 		List<LunchDTO> lunchDTOs = new ArrayList<>();
 		lunchDTOs = lunchEntity.stream().map(lunch -> modelMapper.map(lunch, LunchDTO.class)).collect(Collectors.toList());
@@ -61,6 +63,7 @@ public class LunchServiceImpl implements ILunchService{
 		Lunch lunchEntity = this.modelMapper.map(lunchDTO, Lunch.class);
 		if(lunchEntity != null) {
 			lunchEntity.setState(false);
+			this.iLunchRepository.save(lunchEntity);
 			return true;
 		}
 		return false;

@@ -6,11 +6,13 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ruta.sanJuanDePuelenje.DTO.FestivalDTO;
 import com.ruta.sanJuanDePuelenje.models.Festival;
 import com.ruta.sanJuanDePuelenje.repository.IFestivalRepository;
 
+@Service
 public class FestivalServiceImpl implements IFestivalService{
 	@Autowired
 	private IFestivalRepository iFestivalRepository;
@@ -52,6 +54,8 @@ public class FestivalServiceImpl implements IFestivalService{
 		festivalEntity1.setFinca(festivalEntity.getFinca());
 		festivalEntity1.setLstReserve(festivalEntity.getLstReserve());
 		festivalEntity1.setState(festivalEntity.getState());
+		this.iFestivalRepository.save(festivalEntity1);
+		festivalDTO = this.modelMapper.map(festivalEntity1, FestivalDTO.class);
 		return festivalDTO;
 	}
 
@@ -61,6 +65,7 @@ public class FestivalServiceImpl implements IFestivalService{
 		Festival festivalEntity = this.modelMapper.map(festivalDTO, Festival.class);
 		if(festivalEntity != null) {
 			festivalEntity.setState(false);
+			this.iFestivalRepository.save(festivalEntity);
 			return true;
 		}
 		return false;

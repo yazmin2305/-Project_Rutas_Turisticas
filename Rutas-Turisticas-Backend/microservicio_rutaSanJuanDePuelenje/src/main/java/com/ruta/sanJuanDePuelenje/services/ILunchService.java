@@ -6,7 +6,7 @@ import com.ruta.sanJuanDePuelenje.DTO.LunchDTO;
 
 public interface ILunchService {
 	
-	public List<LunchDTO> findAllLodging();
+	public List<LunchDTO> findAllLunch();
 	
 	public LunchDTO findByLunchId(Integer lunchId);
 	
