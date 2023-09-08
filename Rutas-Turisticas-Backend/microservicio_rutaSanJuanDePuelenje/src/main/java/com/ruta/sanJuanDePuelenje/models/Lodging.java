@@ -29,10 +29,7 @@ public class Lodging {
 	@Column(name = "beds_available" ,nullable = false)
 	private Integer bedsAvailable;
 	
-	@Column(name = "number_nights" ,nullable = true)
-	private Integer numberNights;
-	
-	@Column(name = "max_amount_person", nullable = false)
+	@Column(name = "max_amount_person",nullable = true)
 	private Integer maxAmountPerson;
 	
 	@Column(name = "unit_price" ,nullable = false)
@@ -40,6 +37,9 @@ public class Lodging {
 	
 	@Column(name = "total_price" , nullable = true)
 	private Double totalPrice;
+	
+	@Column(name = "number_nights" ,nullable = true)
+	private Integer numberNights;
 	
 	@Column(nullable = true)
 	private Boolean state;

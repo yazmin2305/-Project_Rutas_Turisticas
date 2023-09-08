@@ -15,10 +15,10 @@ public class LodgingDTO {
 	private String lodgingName;
 	private String lodgingDescription;
 	private Integer lodgingBedsAvailable;
-	private Integer lodgingNumberNights;
 	private Integer lodgingMaxAmountP;
 	private Double lodgingUnitPrice;
 	private Double lodgingTotalPrice;
+	private Integer lodgingNumberNights;
 	private Boolean lodgingState;
 	private FincaDTO fincaDTO;
 	private List<ReserveDTO> lstReserveDTOs;
