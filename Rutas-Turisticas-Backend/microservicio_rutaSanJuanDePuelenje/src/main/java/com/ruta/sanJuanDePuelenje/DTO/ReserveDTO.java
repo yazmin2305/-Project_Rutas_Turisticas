@@ -11,14 +11,14 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ReserveDTO {
 	private Integer reserveId;
-	private Integer reserveAmountP;
+	private Integer reserveAmountPersons;
 	private Double reserveTotalPrice;
 	private Boolean reserveState;
-	private UserDTO userDTO;
-	private WorkshopDTO workshopDTO;
-	private TalkingDTO talkingDTO;
-	private RecreationDTO recreationDTO;
-	private LodgingDTO lodgingDTO;
-	private FestivalDTO festivalDTO;
-	private LunchDTO lunchDTO;
+	private UserDTO user;
+	private WorkshopDTO workshop;
+	private TalkingDTO talking;
+	private RecreationDTO recreation;
+	private LodgingDTO lodging;
+	private FestivalDTO festival;
+	private LunchDTO lunch;
 }

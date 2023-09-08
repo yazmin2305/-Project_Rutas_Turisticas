@@ -32,26 +32,26 @@ public class Reserve {
 	private User user;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "workshop_id")
+	@JoinColumn(name = "workshop_id", nullable = true)
 	private Workshop workshop;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "talking_id")
+	@JoinColumn(name = "talking_id", nullable = true)
 	private Talking talking;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "recreation_id")
+	@JoinColumn(name = "recreation_id", nullable = true)
 	private Recreation recreation;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "lodging_id")
+	@JoinColumn(name = "lodging_id", nullable = true)
 	private Lodging lodging;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "festival_id")
+	@JoinColumn(name = "festival_id", nullable = true)
 	private Festival festival;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "lunch_id")
+	@JoinColumn(name = "lunch_id", nullable = true)
 	private Lunch lunch;
 }

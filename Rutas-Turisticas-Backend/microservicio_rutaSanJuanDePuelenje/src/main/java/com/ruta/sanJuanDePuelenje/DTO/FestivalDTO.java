@@ -18,7 +18,7 @@ public class FestivalDTO {
 	private String festivalDescription;
 	private Date festivalDate;
 	private Boolean festivalState;
-	private FincaDTO fincaDTO;
+	private FincaDTO finca;
 	private List<ReserveDTO> lstReserveDTOs;
 	
 

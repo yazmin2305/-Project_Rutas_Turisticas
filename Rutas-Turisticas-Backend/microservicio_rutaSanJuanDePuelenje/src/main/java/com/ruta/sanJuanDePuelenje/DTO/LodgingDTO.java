@@ -15,7 +15,7 @@ public class LodgingDTO {
 	private String lodgingName;
 	private String lodgingDescription;
 	private Integer lodgingBedsAvailable;
-	private Integer lodgingMaxAmountP;
+	private Integer lodgingMaxAmountPerson;
 	private Double lodgingUnitPrice;
 	private Double lodgingTotalPrice;
 	private Integer lodgingNumberNights;

@@ -20,6 +20,6 @@ public class UserDTO {
 	private String userEmail;
 	private Boolean userState;
 	private String userPassword;
-	private RoleDTO roleDTO;
+	private RoleDTO role;
 	private List<ReserveDTO> lstReserveDTOs;
 }

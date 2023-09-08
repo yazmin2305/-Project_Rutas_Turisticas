@@ -21,7 +21,7 @@ public class WorkshopDTO {
 	private Double workshopUnitPrice;
 	private Double workshopTotalPrice;
 	private Boolean workshopState;
-	private WorkshopTypeDTO workshopTypeDTO;
-	private FincaDTO fincaDTO;
+	private WorkshopTypeDTO workshopType;
+	private FincaDTO finca;
 	private List<ReserveDTO> lstReserveDTOs;
 }

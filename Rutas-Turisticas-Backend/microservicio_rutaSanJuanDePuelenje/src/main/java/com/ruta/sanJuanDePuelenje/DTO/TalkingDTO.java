@@ -21,6 +21,6 @@ public class TalkingDTO {
 	private Double talkingUnitPrice;
 	private Double talkingTotalPrice;
 	private Boolean talkingState;
-	private FincaDTO fincaDTO;
+	private FincaDTO finca;
 	private List<ReserveDTO> lstReserveDTOs;
 }

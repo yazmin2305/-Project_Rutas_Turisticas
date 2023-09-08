@@ -50,7 +50,7 @@ public class FestivalServiceImpl implements IFestivalService{
 		Festival festivalEntity1 = this.modelMapper.map(festivalDTO, Festival.class);
 		festivalEntity1.setName(festivalEntity.getName());
 		festivalEntity1.setDescription(festivalEntity.getDescription());
-		festivalEntity1.setDate(festivalEntity.getDate());
+//		festivalEntity1.setDate(festivalEntity.getDate());
 		festivalEntity1.setFinca(festivalEntity.getFinca());
 		festivalEntity1.setLstReserve(festivalEntity.getLstReserve());
 		festivalEntity1.setState(festivalEntity.getState());

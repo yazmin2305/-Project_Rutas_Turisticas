@@ -12,5 +12,5 @@ import lombok.Setter;
 public class RoleDTO {
 	private Integer roleId;
 	private String roleName;
-	private UserDTO userDTO;
+	private UserDTO user;
 }

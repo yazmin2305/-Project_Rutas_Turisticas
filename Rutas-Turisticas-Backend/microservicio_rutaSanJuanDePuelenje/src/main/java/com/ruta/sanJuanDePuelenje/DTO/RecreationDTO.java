@@ -20,7 +20,7 @@ public class RecreationDTO {
 	private Double recreationUnitPrice;
 	private Double recreationTotalPrice;
 	private Boolean recreationState;
-	private FincaDTO fincaDTO;
+	private FincaDTO finca;
 	private List<ReserveDTO> lstReserveDTOs;
 
 }
