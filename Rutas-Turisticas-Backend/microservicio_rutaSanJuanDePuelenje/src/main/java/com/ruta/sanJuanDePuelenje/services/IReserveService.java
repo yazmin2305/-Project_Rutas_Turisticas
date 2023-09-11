@@ -18,5 +18,7 @@ public interface IReserveService {
 	public Boolean disableReserve(Integer reserveId);
 	
 	public Boolean deleteReserve(Integer reserveId);
+	
+	public List<ReserveDTO> findReservesByUser(Integer reserveId);
 
 }

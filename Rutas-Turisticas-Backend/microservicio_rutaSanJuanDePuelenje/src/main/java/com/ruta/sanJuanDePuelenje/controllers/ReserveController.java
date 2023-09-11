@@ -51,4 +51,11 @@ public class ReserveController {
 	public Boolean DeleteReserve(@PathVariable Integer id) {
 		return this.iReserveService.deleteReserve(id);
 	}
+	
+	//listado de reservas de un Usuario
+//	@GetMapping("/ConsultAllReserveUser/{id}")
+//	public List<ReserveDTO> consulReserveDTOs(){
+//		return this.
+//	}
+	
 }

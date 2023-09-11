@@ -85,4 +85,12 @@ public class ReserveServiceImpl implements IReserveService{
 		return false;
 	}
 
+	@Override
+	public List<ReserveDTO> findReservesByUser(Integer reserveId) {
+		List<Reserve> reserveEntity = iReserveRepository.reservasUsuario(reserveId);
+		List<ReserveDTO> reserveDTOs = new ArrayList<>();
+		reserveDTOs = reserveEntity.stream().map(reserve -> modelMapper.map(reserve, ReserveDTO.class)).collect(Collectors.toList());
+		return reserveDTOs;
+	}
+
 }
