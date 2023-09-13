@@ -74,4 +74,18 @@ public class TalkingServiceImpl implements ITalkingService{
 		return false;
 	}
 
+	@Override
+	public List<TalkingDTO> findAllTalkingDisabled() {
+		List<Talking> talkingEntity = this.iTalkingRepository.LstTalkingDisabled();
+		List<TalkingDTO> talkingDTO = talkingEntity.stream().map(talking -> modelMapper.map(talking, TalkingDTO.class)).collect(Collectors.toList());
+		return talkingDTO;
+	}
+
+	@Override
+	public List<TalkingDTO> findAllTalkingBytState(boolean state) {
+		List<Talking> talkingEntity = this.iTalkingRepository.LstTalkingByState(state);
+		List<TalkingDTO> talkingDTO = talkingEntity.stream().map(talking -> modelMapper.map(talking, TalkingDTO.class)).collect(Collectors.toList());
+		return talkingDTO;
+	}
+
 }

@@ -71,4 +71,11 @@ public class FestivalServiceImpl implements IFestivalService{
 		return false;
 	}
 
+	@Override
+	public List<FestivalDTO> findAllFestivalBytState(boolean state) {
+		List<Festival> festivalEntity = this.iFestivalRepository.LstFestivalByState(state);
+		List<FestivalDTO> festivalDTO = festivalEntity.stream().map(festival -> modelMapper.map(festival, FestivalDTO.class)).collect(Collectors.toList());
+		return festivalDTO;
+	}
+
 }

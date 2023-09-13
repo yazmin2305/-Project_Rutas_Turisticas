@@ -15,4 +15,6 @@ public interface IFincaService {
 	public FincaDTO updateFinca(Integer fincaId, FincaDTO fincaDTO);
 	
 	public Boolean disableFinca(Integer fincaId);
+	
+	public List<FincaDTO> findAllFincaBytState(boolean state);
 }

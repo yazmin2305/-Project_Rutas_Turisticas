@@ -15,4 +15,6 @@ public interface IFestivalService {
 	public FestivalDTO updateFestival(Integer festivalId, FestivalDTO festival);
 	
 	public Boolean disableFestival(Integer festivalId);
+	
+	public List<FestivalDTO> findAllFestivalBytState(boolean state);
 }

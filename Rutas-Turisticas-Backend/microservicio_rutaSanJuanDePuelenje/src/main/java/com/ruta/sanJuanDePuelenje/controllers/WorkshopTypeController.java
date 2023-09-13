@@ -12,7 +12,7 @@ import com.ruta.sanJuanDePuelenje.services.IWorkshopTypeService;
 @RequestMapping("/workshopType")
 @CrossOrigin("*")
 public class WorkshopTypeController {
-	
+
 	@Autowired
 	private IWorkshopTypeService iWorkshopTypeTypeService;
 
@@ -44,5 +44,11 @@ public class WorkshopTypeController {
 	@PutMapping("/DisableWorkshopType/{id}")
 	public Boolean DisableWorkshopType(@PathVariable Integer id) {
 		return this.iWorkshopTypeTypeService.disableWorkshopType(id);
+	}
+
+	// Consultar los tipos talleres dependiento su estado: activado - desactivado
+	@GetMapping("ConsultAllWorkshopTypeByState/{state}")
+	public List<WorkshopTypeDTO> ConsultAllWorkshopTypeByState(@PathVariable Boolean state) {
+		return this.iWorkshopTypeTypeService.findAllWorkshopTypeBytState(state);
 	}
 }

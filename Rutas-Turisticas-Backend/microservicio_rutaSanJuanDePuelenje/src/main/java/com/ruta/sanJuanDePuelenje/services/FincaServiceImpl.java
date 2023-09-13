@@ -76,6 +76,13 @@ public class FincaServiceImpl implements IFincaService{
 		}
 		return false;
 	}
+
+	@Override
+	public List<FincaDTO> findAllFincaBytState(boolean state) {
+		List<Finca> fincaEntity = this.iFincaRepository.LstFincaByState(state);
+		List<FincaDTO> fincaDTO = fincaEntity.stream().map(finca -> modelMapper.map(finca, FincaDTO.class)).collect(Collectors.toList());
+		return fincaDTO;
+	}
 	
 	
 }

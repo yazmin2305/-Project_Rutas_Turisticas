@@ -77,4 +77,11 @@ public class UserServiceImpl implements IUserService{
 		return false;
 	}
 
+	@Override
+	public List<UserDTO> findAllUserBytState(boolean state) {
+		List<User> userEntity = this.iUserRepository.LstUserByState(state);
+		List<UserDTO> userDTO = userEntity.stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
+		return userDTO;
+	}
+
 }

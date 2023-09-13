@@ -74,4 +74,11 @@ public class RecreationServiceImpl implements IRecreationService{
 		return false;
 	}
 
+	@Override
+	public List<RecreationDTO> findAllRecreationBytState(boolean state) {
+		List<Recreation> recreationEntity = this.iRecreationRepository.LstRecreationByState(state);
+		List<RecreationDTO> recreationDTO = recreationEntity.stream().map(recreation -> modelMapper.map(recreation, RecreationDTO.class)).collect(Collectors.toList());
+		return recreationDTO;
+	}
+
 }

@@ -16,4 +16,6 @@ public interface IWorkshopService {
 	public WorkshopDTO updateWorkshop(Integer workshopId, WorkshopDTO workshop);
 	
 	public Boolean disableWorkshop(Integer workshopId);
+	
+	public List<WorkshopDTO> findAllWorkshopBytState(boolean state);
 }

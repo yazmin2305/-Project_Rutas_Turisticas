@@ -15,4 +15,6 @@ public interface IRecreationService {
 	public RecreationDTO updateRecreation(Integer recreationId, RecreationDTO recreation);
 	
 	public Boolean disableRecreation(Integer recreationId);
+	
+	public List<RecreationDTO> findAllRecreationBytState(boolean state);
 }

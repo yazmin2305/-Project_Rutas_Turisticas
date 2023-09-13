@@ -46,4 +46,10 @@ public class UserController {
 		return this.iUserService.disableUser(id);
 	}
 
+	// Consultar los usuarios dependiento su estado: activado - desactivado
+	@GetMapping("ConsultAllUserByState/{state}")
+	public List<UserDTO> ConsultAllUserByState(@PathVariable Boolean state) {
+		return this.iUserService.findAllUserBytState(state);
+	}
+
 }

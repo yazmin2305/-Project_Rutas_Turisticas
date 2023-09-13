@@ -46,4 +46,16 @@ public class TalkingController {
 		return this.iTalkingService.disableTalking(id);
 	}
 	
+	//Consultar todas las charlas deshabilitadas
+	@GetMapping("ConsultAllTalkingDisabled")
+	public List<TalkingDTO> ConsultAllTalkingDisabled(){
+		return this.iTalkingService.findAllTalkingDisabled();
+	}
+	
+	//Consultar las charlas dependiento su estado: activado - desactivado
+	@GetMapping("ConsultAllTalkingByState/{state}")
+	public List<TalkingDTO> ConsultAllTalkingByState(@PathVariable Boolean state){
+		return this.iTalkingService.findAllTalkingBytState(state);
+	}
+	
 }

@@ -16,4 +16,8 @@ public interface ITalkingService {
 	public TalkingDTO updateTalking(Integer talkingId, TalkingDTO talking);
 	
 	public Boolean disableTalking(Integer talkingId);
+	
+	public List<TalkingDTO> findAllTalkingDisabled();
+	
+	public List<TalkingDTO> findAllTalkingBytState(boolean state);
 }

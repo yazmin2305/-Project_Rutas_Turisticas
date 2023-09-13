@@ -18,8 +18,11 @@ public class Role {
 	@Column(name = "name_rol", nullable = false, length = 15)
 	private String name;
 	
+//	
+//	@OneToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(name = "user_id")
+//	private User user;
 	
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
-	private User user;
+	@OneToOne(mappedBy = "role")
+	private User userRol;
 }

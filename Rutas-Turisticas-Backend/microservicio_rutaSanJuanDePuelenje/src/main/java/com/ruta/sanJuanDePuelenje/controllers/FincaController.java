@@ -45,4 +45,10 @@ public class FincaController {
 	public Boolean DisableFinca(@PathVariable Integer id) {
 		return this.iFincaService.disableFinca(id);
 	}
+
+	// Consultar las fincas dependiento su estado: activado - desactivado
+	@GetMapping("ConsultAllFincaByState/{state}")
+	public List<FincaDTO> ConsultAllFincaByState(@PathVariable Boolean state) {
+		return this.iFincaService.findAllFincaBytState(state);
+	}
 }

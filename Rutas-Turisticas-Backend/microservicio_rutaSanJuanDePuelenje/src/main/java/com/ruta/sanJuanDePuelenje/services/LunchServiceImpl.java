@@ -69,4 +69,11 @@ public class LunchServiceImpl implements ILunchService{
 		return false;
 	}
 
+	@Override
+	public List<LunchDTO> findAllLunchBytState(boolean state) {
+		List<Lunch> lunchEntity = this.iLunchRepository.LstLunchByState(state);
+		List<LunchDTO> lunchDTO = lunchEntity.stream().map(lunch -> modelMapper.map(lunch, LunchDTO.class)).collect(Collectors.toList());
+		return lunchDTO;
+	}
+
 }

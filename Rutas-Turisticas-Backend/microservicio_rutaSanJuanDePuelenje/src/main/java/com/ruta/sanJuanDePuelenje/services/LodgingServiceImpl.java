@@ -74,4 +74,11 @@ public final class LodgingServiceImpl implements ILodgingService{
 		return false;
 	}
 
+	@Override
+	public List<LodgingDTO> findAllLodgingBytState(boolean state) {
+		List<Lodging> lodgingEntity = this.iLodgingRepository.LstLodgingByState(state);
+		List<LodgingDTO> lodgingDTO = lodgingEntity.stream().map(lodging -> modelMapper.map(lodging, LodgingDTO.class)).collect(Collectors.toList());
+		return lodgingDTO;
+	}
+
 }

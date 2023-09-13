@@ -12,7 +12,7 @@ import com.ruta.sanJuanDePuelenje.services.IWorkshopService;
 @RequestMapping("/workshop")
 @CrossOrigin("*")
 public class WorkshopController {
-	
+
 	@Autowired
 	private IWorkshopService iWorkshopService;
 
@@ -46,4 +46,9 @@ public class WorkshopController {
 		return this.iWorkshopService.disableWorkshop(id);
 	}
 
+	// Consultar los talleres dependiento su estado: activado - desactivado
+	@GetMapping("ConsultAllWorkshopByState/{state}")
+	public List<WorkshopDTO> ConsultAllWorkshopByState(@PathVariable Boolean state) {
+		return this.iWorkshopService.findAllWorkshopBytState(state);
+	}
 }

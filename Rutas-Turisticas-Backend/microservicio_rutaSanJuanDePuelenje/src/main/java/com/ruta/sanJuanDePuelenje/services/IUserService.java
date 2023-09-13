@@ -17,4 +17,6 @@ public interface IUserService {
 	public UserDTO updateUser(Integer userId, UserDTO user);
 	
 	public Boolean disableUser(Integer userId);
+	
+	public List<UserDTO> findAllUserBytState(boolean state);
 }

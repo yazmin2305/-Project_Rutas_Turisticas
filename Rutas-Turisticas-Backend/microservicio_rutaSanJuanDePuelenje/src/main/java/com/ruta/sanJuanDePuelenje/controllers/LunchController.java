@@ -12,7 +12,7 @@ import com.ruta.sanJuanDePuelenje.services.ILunchService;
 @RequestMapping("/lunch")
 @CrossOrigin("*")
 public class LunchController {
-	
+
 	@Autowired
 	private ILunchService iLunchService;
 
@@ -44,5 +44,11 @@ public class LunchController {
 	@PutMapping("/DisableLunch/{id}")
 	public Boolean DisableLunch(@PathVariable Integer id) {
 		return this.iLunchService.disableLunch(id);
+	}
+
+	// Consultar los almuerzos dependiento su estado: activado - desactivado
+	@GetMapping("ConsultAllLunchByState/{state}")
+	public List<LunchDTO> ConsultAllLunchByState(@PathVariable Boolean state) {
+		return this.iLunchService.findAllLunchBytState(state);
 	}
 }

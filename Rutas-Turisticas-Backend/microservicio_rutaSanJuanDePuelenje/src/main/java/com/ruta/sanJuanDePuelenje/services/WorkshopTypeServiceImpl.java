@@ -67,6 +67,13 @@ public class WorkshopTypeServiceImpl implements IWorkshopTypeService{
 		return false;
 	}
 
+	@Override
+	public List<WorkshopTypeDTO> findAllWorkshopTypeBytState(boolean state) {
+		List<WorkshopType> workshopTypeEntity = this.iWorkshopTypeRepository.LstWorkshopTypeByState(state);
+		List<WorkshopTypeDTO> workshoTypepDTO = workshopTypeEntity.stream().map(workshopType -> modelMapper.map(workshopType, WorkshopTypeDTO.class)).collect(Collectors.toList());
+		return workshoTypepDTO;
+	}
+
 	
 
 }

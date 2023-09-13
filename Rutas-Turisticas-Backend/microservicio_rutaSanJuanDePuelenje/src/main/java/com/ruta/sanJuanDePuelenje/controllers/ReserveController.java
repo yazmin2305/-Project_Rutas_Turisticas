@@ -53,9 +53,9 @@ public class ReserveController {
 	}
 	
 	//listado de reservas de un Usuario
-//	@GetMapping("/ConsultAllReserveUser/{id}")
-//	public List<ReserveDTO> consulReserveDTOs(){
-//		return this.
-//	}
+	@GetMapping("/ConsultAllReserveUser/{id}")
+	public List<ReserveDTO> consulReserveDTOs(@PathVariable Integer id){
+		return this.iReserveService.findReservesByUser(id);
+	}
 	
 }

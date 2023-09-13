@@ -44,4 +44,10 @@ public class LodgingController {
 	public Boolean DisableLodging(@PathVariable Integer id) {
 		return this.iLodgingService.disableLodging(id);
 	}
+
+	// Consultar los hospedajes dependiento su estado: activado - desactivado
+	@GetMapping("ConsultAllLodgingByState/{state}")
+	public List<LodgingDTO> ConsultAllLodgingByState(@PathVariable Boolean state) {
+		return this.iLodgingService.findAllLodgingBytState(state);
+	}
 }

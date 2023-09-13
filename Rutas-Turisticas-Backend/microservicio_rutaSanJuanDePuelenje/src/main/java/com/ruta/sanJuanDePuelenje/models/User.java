@@ -39,7 +39,11 @@ public class User {
 	@Column(nullable = false, length = 20)
 	private String password;
 	
-	@OneToOne(mappedBy = "user")
+//	@OneToOne(mappedBy = "user")
+//	private Role role;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "rol_id", referencedColumnName = "role_id")
 	private Role role;
 	
 	@OneToMany(mappedBy = "user")

@@ -12,39 +12,43 @@ import com.ruta.sanJuanDePuelenje.services.IFestivalService;
 @RequestMapping("/festival")
 @CrossOrigin("*")
 public class FestivalController {
-	
+
 	@Autowired
 	private IFestivalService iFestivalService;
-	
-	//Consultar todos los festivales
+
+	// Consultar todos los festivales
 	@GetMapping("/ConsultAllFestival")
 	public List<FestivalDTO> ConsultAllFestival() {
-        return this.iFestivalService.findAllFestival();
-    }
-	
-	//Consultar festival por id
+		return this.iFestivalService.findAllFestival();
+	}
+
+	// Consultar festival por id
 	@GetMapping("/ConsultById/{id}")
 	public FestivalDTO ConsultFestivalById(@PathVariable Integer id) {
 		return this.iFestivalService.findByFestivalId(id);
 	}
-	
-	//Guardar festival
+
+	// Guardar festival
 	@PostMapping("/SaveFestival")
 	public FestivalDTO SaveFestival(@RequestBody FestivalDTO festival) {
 		return this.iFestivalService.saveFestival(festival);
 	}
-	
-	//Actualizar festival
+
+	// Actualizar festival
 	@PutMapping("/UpdateFestival/{id}")
 	public FestivalDTO UpdateFestival(@RequestBody FestivalDTO festival, @PathVariable Integer id) {
 		return this.iFestivalService.updateFestival(id, festival);
 	}
-	
-	//Desabilitar un festival registrado en el sistema
+
+	// Desabilitar un festival registrado en el sistema
 	@PutMapping("/DisableFestival/{id}")
 	public Boolean DisableFestival(@PathVariable Integer id) {
 		return this.iFestivalService.disableFestival(id);
 	}
-	
-	
+
+	// Consultar los festivales dependiento su estado: activado - desactivado
+	@GetMapping("ConsultAllFestivalByState/{state}")
+	public List<FestivalDTO> ConsultAllFestivalByState(@PathVariable Boolean state) {
+		return this.iFestivalService.findAllFestivalBytState(state);
+	}
 }

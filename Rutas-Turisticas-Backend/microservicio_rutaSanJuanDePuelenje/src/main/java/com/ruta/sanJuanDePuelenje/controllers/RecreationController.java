@@ -12,7 +12,7 @@ import com.ruta.sanJuanDePuelenje.services.IRecreationService;
 @RequestMapping("/recreation")
 @CrossOrigin("*")
 public class RecreationController {
-	
+
 	@Autowired
 	private IRecreationService iRecreationService;
 
@@ -44,5 +44,11 @@ public class RecreationController {
 	@PutMapping("/DisableRecreation/{id}")
 	public Boolean DisableRecreation(@PathVariable Integer id) {
 		return this.iRecreationService.disableRecreation(id);
+	}
+
+	// Consultar las actividades de recreacion dependiento su estado: activado - desactivado
+	@GetMapping("ConsultAllRecreationByState/{state}")
+	public List<RecreationDTO> ConsultAllRecreationByState(@PathVariable Boolean state) {
+		return this.iRecreationService.findAllRecreationBytState(state);
 	}
 }

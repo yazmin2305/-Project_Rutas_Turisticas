@@ -16,4 +16,6 @@ public interface ILunchService {
 	
 	public Boolean disableLunch(Integer lunchId);
 	
+	public List<LunchDTO> findAllLunchBytState(boolean state);
+	
 }

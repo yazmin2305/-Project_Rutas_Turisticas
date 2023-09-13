@@ -15,4 +15,6 @@ public interface ILodgingService {
 	public LodgingDTO updateLodging(Integer lodgingId, LodgingDTO lodging);
 	
 	public Boolean disableLodging(Integer lodgingId);
+	
+	public List<LodgingDTO> findAllLodgingBytState(boolean state);
 }
