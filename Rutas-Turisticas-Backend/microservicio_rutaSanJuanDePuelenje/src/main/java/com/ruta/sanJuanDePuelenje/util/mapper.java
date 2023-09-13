@@ -1,4 +1,4 @@
-package com.ruta.sanJuanDePuelenje.util.mapper;
+package com.ruta.sanJuanDePuelenje.util;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

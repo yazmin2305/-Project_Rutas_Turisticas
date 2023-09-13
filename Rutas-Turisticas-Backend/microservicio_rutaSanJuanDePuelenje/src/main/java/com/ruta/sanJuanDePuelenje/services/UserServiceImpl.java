@@ -12,6 +12,8 @@ import com.ruta.sanJuanDePuelenje.DTO.UserDTO;
 import com.ruta.sanJuanDePuelenje.models.User;
 import com.ruta.sanJuanDePuelenje.repository.IUserRepository;
 
+import jakarta.validation.Valid;
+
 @Service
 public class UserServiceImpl implements IUserService{
 	
@@ -36,17 +38,19 @@ public class UserServiceImpl implements IUserService{
 	}
 
 	@Override
-	public UserDTO saveUser(UserDTO user) {
+	public UserDTO saveUser(@Valid UserDTO user) {
 		User userEntity  = this.modelMapper.map(user, User.class);
 		userEntity.setState(true);
 		User objUser = this.iUserRepository.save(userEntity);
 		UserDTO userDTO = this.modelMapper.map(objUser, UserDTO.class);
+		//return new ResponseEntity<userEntity>(userDTO, HttpStatus.CREATED);
 		return userDTO;
 	}
 
 	@Override
 	public UserDTO updateUser(Integer userId, UserDTO user) {
 		User userEntity = this.modelMapper.map(user, User.class);
+		//verificar si lo encuentra
 		UserDTO userDTO = this.findByUserId(userId);
 		User userEntity1 = this.modelMapper.map(userDTO, User.class);
 		System.out.println("nombre modificado: "+userEntity.getName());

@@ -3,6 +3,8 @@ package com.ruta.sanJuanDePuelenje.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.ruta.sanJuanDePuelenje.DTO.UserDTO;
@@ -18,20 +20,39 @@ public class UserController {
 
 	// Consultar todos los usuarios
 	@GetMapping("/ConsultAllUsers")
-	public List<UserDTO> ConsultAllUsers() {
-		return this.iUserService.findAllUsers();
+	public ResponseEntity<?> ConsultAllUsers() {
+		List<UserDTO> lstUsers = this.iUserService.findAllUsers();
+		if(!lstUsers.isEmpty()) {
+			return ResponseEntity.ok(lstUsers);
+		}else {
+			String mensaje = "¡Usuarios no encontrados!";
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensaje);
+		}
 	}
 
 	// Consultar usuario por id
 	@GetMapping("/ConsultById/{id}")
-	public UserDTO ConsultUserById(@PathVariable Integer id) {
-		return this.iUserService.findByUserId(id);
+	public ResponseEntity<?> ConsultUserById(@PathVariable Integer id) {
+		UserDTO user = this.iUserService.findByUserId(id);
+		if(user != null) {
+			return ResponseEntity.ok(user);
+		}else {
+			String mensaje = "Usuario no encontrado";
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensaje);
+		}
 	}
 
 	// Guardar usuario
 	@PostMapping("/SaveUser")
-	public UserDTO SaveUser(@RequestBody UserDTO user) {
-		return this.iUserService.saveUser(user);
+	public ResponseEntity<String> SaveUser(@RequestBody UserDTO user) {
+		UserDTO saveUser = this.iUserService.saveUser(user);
+		if(saveUser != null) {
+			String mensaje = "Usuario guardado correctamente";
+			return ResponseEntity.ok(mensaje);
+		}else {
+			String mensaje = "Error al guardar el usuario";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(mensaje);
+		}
 	}
 
 	// Actualizar usuario

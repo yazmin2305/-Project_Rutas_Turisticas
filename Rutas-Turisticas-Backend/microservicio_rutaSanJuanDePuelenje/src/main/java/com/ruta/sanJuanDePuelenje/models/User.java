@@ -3,6 +3,7 @@ package com.ruta.sanJuanDePuelenje.models;
 import java.util.List;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 
 @Entity
@@ -18,19 +19,21 @@ public class User {
 	@Column(name = "user_id")
 	private Integer id;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String identification;
 	
 	@Column(nullable = false, length = 45)
+	//@Value("${usuario.nombre.novalido}")
 	private String name;
 	
 	@Column(name = "last_name" ,nullable = false, length = 45)
 	private String lastName;
 	
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, unique = true, length = 20)
 	private String phone;
 	
-	@Column(nullable = false, length = 30)
+	@Column(nullable = false, unique = true, length = 30)
+	@Email
 	private String email;
 	
 	@Column(nullable = true)
@@ -39,11 +42,8 @@ public class User {
 	@Column(nullable = false, length = 20)
 	private String password;
 	
-//	@OneToOne(mappedBy = "user")
-//	private Role role;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "rol_id", referencedColumnName = "role_id")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "rol_id", nullable = false)
 	private Role role;
 	
 	@OneToMany(mappedBy = "user")

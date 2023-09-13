@@ -47,7 +47,6 @@ public class FincaServiceImpl implements IFincaService{
 	@Override
 	public FincaDTO updateFinca(Integer fincaId, FincaDTO finca) {
 		Finca fincaEntity = this.modelMapper.map(finca, Finca.class);
-		//Finca fincaUpdate = this.iFincaRepository.findById(fincaId).get();
 		FincaDTO fincaDTO = this.findByFincaId(fincaId);
 		Finca fincaEntity1 = this.modelMapper.map(fincaDTO, Finca.class);
 		fincaEntity1.setName(fincaEntity.getName());
@@ -60,7 +59,6 @@ public class FincaServiceImpl implements IFincaService{
 		fincaEntity1.setLstLodging(fincaEntity.getLstLodging());
 		fincaEntity1.setLstFestival(fincaEntity.getLstFestival());
 		this.iFincaRepository.save(fincaEntity1);
-		//FincaDTO fincaDTO = this.modelMapper.map(fincaEntity1, FincaDTO.class);
 		fincaDTO = this.modelMapper.map(fincaEntity1, FincaDTO.class);
 		return fincaDTO;
 	}
