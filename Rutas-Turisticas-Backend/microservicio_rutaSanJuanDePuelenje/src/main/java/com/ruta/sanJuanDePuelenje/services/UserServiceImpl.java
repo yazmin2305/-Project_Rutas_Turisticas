@@ -33,8 +33,12 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public UserDTO findByUserId(Integer userId) {
 		User user = iUserRepository.findById(userId).orElse(null);
-		UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+		UserDTO userDTO = null;
+		if(user != null) {
+			userDTO = modelMapper.map(user, UserDTO.class);
+		}
 		return userDTO;
+		
 	}
 
 	@Override
@@ -50,7 +54,7 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public UserDTO updateUser(Integer userId, UserDTO user) {
 		User userEntity = this.modelMapper.map(user, User.class);
-		//verificar si lo encuentra
+		//verificar si lo encuentra, sino devolver un nulo y controlarlo en el controller
 		UserDTO userDTO = this.findByUserId(userId);
 		User userEntity1 = this.modelMapper.map(userDTO, User.class);
 		System.out.println("nombre modificado: "+userEntity.getName());
@@ -63,9 +67,11 @@ public class UserServiceImpl implements IUserService{
 		userEntity1.setRole(userEntity.getRole());
 		userEntity1.setLstReserve(userEntity.getLstReserve());
 		userEntity1.setState(userEntity.getState());
-		this.iUserRepository.save(userEntity1);
-		userDTO = this.modelMapper.map(userEntity1, UserDTO.class);
-		return userDTO;
+//		this.iUserRepository.save(userEntity1);
+		return this.modelMapper.map(this.iUserRepository.save(userEntity1), UserDTO.class);
+//		userDTO = this.modelMapper.map(userEntity1, UserDTO.class);
+//		return userDTO;
+		
 	}
 
 	@Override

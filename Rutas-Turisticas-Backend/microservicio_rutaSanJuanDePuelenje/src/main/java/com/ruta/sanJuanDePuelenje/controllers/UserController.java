@@ -25,8 +25,12 @@ public class UserController {
 		if(!lstUsers.isEmpty()) {
 			return ResponseEntity.ok(lstUsers);
 		}else {
-			String mensaje = "¡Usuarios no encontrados!";
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensaje);
+			
+//			new ResponseEntity<>(
+//			          "Year of birth cannot be in the future", 
+//			          HttpStatus.BAD_REQUEST);\
+			//String mensaje = "¡Usuarios no encontrados!";
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("¡Usuarios no encontrados!");
 		}
 	}
 
@@ -34,6 +38,7 @@ public class UserController {
 	@GetMapping("/ConsultById/{id}")
 	public ResponseEntity<?> ConsultUserById(@PathVariable Integer id) {
 		UserDTO user = this.iUserService.findByUserId(id);
+		System.out.println("aqui no llega");
 		if(user != null) {
 			return ResponseEntity.ok(user);
 		}else {
