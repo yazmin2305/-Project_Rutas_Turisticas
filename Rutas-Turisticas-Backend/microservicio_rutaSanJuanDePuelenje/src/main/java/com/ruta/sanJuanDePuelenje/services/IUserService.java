@@ -2,23 +2,22 @@ package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
-
+import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.UserDTO;
 
 
 
 public interface IUserService {
 	
-	public ResponseEntity<?> findAllUsers();
+	public Response<List<UserDTO>> findAllUsers();
 	
-	public UserDTO findByUserId(Integer userId);
+	public Response<UserDTO> findByUserId(Integer userId);
 	
-	public UserDTO saveUser(UserDTO user);
+	public Response<UserDTO> saveUser(UserDTO user);
 	
-	public UserDTO updateUser(Integer userId, UserDTO user);
+	public Response<UserDTO> updateUser(Integer userId, UserDTO user);
 	
-	public Boolean disableUser(Integer userId);
+	public Response<Boolean> disableUser(Integer userId);
 	
-	public List<UserDTO> findAllUserBytState(boolean state);
+	public Response<List<UserDTO>> findAllUserBytState(boolean state);
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.ruta.sanJuanDePuelenje.DTO.FestivalDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.services.IFestivalService;
 
 @RestController
@@ -18,37 +19,37 @@ public class FestivalController {
 
 	// Consultar todos los festivales
 	@GetMapping("/ConsultAllFestival")
-	public List<FestivalDTO> ConsultAllFestival() {
+	public Response<List<FestivalDTO>> ConsultAllFestival() {
 		return this.iFestivalService.findAllFestival();
 	}
 
 	// Consultar festival por id
 	@GetMapping("/ConsultById/{id}")
-	public FestivalDTO ConsultFestivalById(@PathVariable Integer id) {
+	public Response<FestivalDTO> ConsultFestivalById(@PathVariable Integer id) {
 		return this.iFestivalService.findByFestivalId(id);
 	}
 
 	// Guardar festival
 	@PostMapping("/SaveFestival")
-	public FestivalDTO SaveFestival(@RequestBody FestivalDTO festival) {
+	public Response<FestivalDTO> SaveFestival(@RequestBody FestivalDTO festival) {
 		return this.iFestivalService.saveFestival(festival);
 	}
 
 	// Actualizar festival
 	@PutMapping("/UpdateFestival/{id}")
-	public FestivalDTO UpdateFestival(@RequestBody FestivalDTO festival, @PathVariable Integer id) {
+	public Response<FestivalDTO> UpdateFestival(@RequestBody FestivalDTO festival, @PathVariable Integer id) {
 		return this.iFestivalService.updateFestival(id, festival);
 	}
 
 	// Desabilitar un festival registrado en el sistema
 	@PutMapping("/DisableFestival/{id}")
-	public Boolean DisableFestival(@PathVariable Integer id) {
+	public Response<Boolean> DisableFestival(@PathVariable Integer id) {
 		return this.iFestivalService.disableFestival(id);
 	}
 
 	// Consultar los festivales dependiento su estado: activado - desactivado
 	@GetMapping("ConsultAllFestivalByState/{state}")
-	public List<FestivalDTO> ConsultAllFestivalByState(@PathVariable Boolean state) {
+	public Response<List<FestivalDTO>> ConsultAllFestivalByState(@PathVariable Boolean state) {
 		return this.iFestivalService.findAllFestivalBytState(state);
 	}
 }

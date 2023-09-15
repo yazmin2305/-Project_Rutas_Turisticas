@@ -3,18 +3,19 @@ package com.ruta.sanJuanDePuelenje.services;
 import java.util.List;
 
 import com.ruta.sanJuanDePuelenje.DTO.FestivalDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Response;
 
 public interface IFestivalService {
 	
-	public List<FestivalDTO> findAllFestival();
+	public Response<List<FestivalDTO>> findAllFestival();
 	
-	public FestivalDTO findByFestivalId(Integer festivalId);
+	public Response<FestivalDTO> findByFestivalId(Integer festivalId);
 	
-	public FestivalDTO saveFestival(FestivalDTO festival);
+	public Response<FestivalDTO> saveFestival(FestivalDTO festival);
 	
-	public FestivalDTO updateFestival(Integer festivalId, FestivalDTO festival);
+	public Response<FestivalDTO> updateFestival(Integer festivalId, FestivalDTO festival);
 	
-	public Boolean disableFestival(Integer festivalId);
+	public Response<Boolean> disableFestival(Integer festivalId);
 	
-	public List<FestivalDTO> findAllFestivalBytState(boolean state);
+	public Response<List<FestivalDTO>> findAllFestivalBytState(boolean state);
 }

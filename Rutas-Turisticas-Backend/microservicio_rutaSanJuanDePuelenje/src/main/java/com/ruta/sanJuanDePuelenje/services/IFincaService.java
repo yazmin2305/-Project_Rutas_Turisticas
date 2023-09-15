@@ -3,18 +3,19 @@ package com.ruta.sanJuanDePuelenje.services;
 import java.util.List;
 
 import com.ruta.sanJuanDePuelenje.DTO.FincaDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Response;
 
 public interface IFincaService {
 	
-	public List<FincaDTO> findAllFincas();
+	public Response<List<FincaDTO>> findAllFincas();
 	
-	public FincaDTO findByFincaId(Integer fincaId);
+	public Response<FincaDTO> findByFincaId(Integer fincaId);
 	
-	public FincaDTO saveFinca(FincaDTO fincaDTO);
+	public Response<FincaDTO> saveFinca(FincaDTO fincaDTO);
 	
-	public FincaDTO updateFinca(Integer fincaId, FincaDTO fincaDTO);
+	public Response<FincaDTO> updateFinca(Integer fincaId, FincaDTO fincaDTO);
 	
-	public Boolean disableFinca(Integer fincaId);
+	public Response<Boolean> disableFinca(Integer fincaId);
 	
-	public List<FincaDTO> findAllFincaBytState(boolean state);
+	public Response<List<FincaDTO>> findAllFincaBytState(boolean state);
 }

@@ -26,7 +26,6 @@ public class Reserve {
 	private Boolean state;
 	
 	//fechas falta 
-	//referencia a la imagen y tener un storage, url para acceder al storage
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
