@@ -2,13 +2,15 @@ package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 import com.ruta.sanJuanDePuelenje.DTO.UserDTO;
 
 
 
 public interface IUserService {
 	
-	public List<UserDTO> findAllUsers();
+	public ResponseEntity<?> findAllUsers();
 	
 	public UserDTO findByUserId(Integer userId);
 	

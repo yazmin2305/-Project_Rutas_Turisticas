@@ -1,11 +1,12 @@
 package com.ruta.sanJuanDePuelenje.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ruta.sanJuanDePuelenje.DTO.UserDTO;
@@ -15,39 +16,48 @@ import com.ruta.sanJuanDePuelenje.repository.IUserRepository;
 import jakarta.validation.Valid;
 
 @Service
-public class UserServiceImpl implements IUserService{
-	
+public class UserServiceImpl implements IUserService {
+
 	@Autowired
 	private IUserRepository iUserRepository;
 	@Autowired
 	private ModelMapper modelMapper;
 	
+//	new ResponseEntity<>(
+//	          "Year of birth cannot be in the future", 
+//	          HttpStatus.BAD_REQUEST);\
 	@Override
-	public List<UserDTO> findAllUsers() {
+	public ResponseEntity<?> findAllUsers() {
 		List<User> userEntity = iUserRepository.findAll();
-		List<UserDTO> userDTOs = new ArrayList<>();
-		userDTOs = userEntity.stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
-		return userDTOs;
+		List<UserDTO> userDTOs = null;
+		if(!userEntity.isEmpty()) {
+			userDTOs = userEntity.stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
+			return ResponseEntity.ok(userDTOs);
+		}else {
+
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("¡Usuarios no encontrados!");
+		}
 	}
 
 	@Override
 	public UserDTO findByUserId(Integer userId) {
 		User user = iUserRepository.findById(userId).orElse(null);
 		UserDTO userDTO = null;
-		if(user != null) {
+		if (user != null) {
 			userDTO = modelMapper.map(user, UserDTO.class);
 		}
 		return userDTO;
-		
 	}
 
 	@Override
 	public UserDTO saveUser(@Valid UserDTO user) {
-		User userEntity  = this.modelMapper.map(user, User.class);
-		userEntity.setState(true);
-		User objUser = this.iUserRepository.save(userEntity);
-		UserDTO userDTO = this.modelMapper.map(objUser, UserDTO.class);
-		//return new ResponseEntity<userEntity>(userDTO, HttpStatus.CREATED);
+		UserDTO userDTO = null;
+		if (user != null) {
+			User userEntity = this.modelMapper.map(user, User.class);
+			userEntity.setState(true);
+			User objUser = this.iUserRepository.save(userEntity);
+			return this.modelMapper.map(objUser, UserDTO.class);
+		}
 		return userDTO;
 	}
 
@@ -81,7 +91,8 @@ public class UserServiceImpl implements IUserService{
 		if (userEntity != null) {
 			userEntity.setState(false);
 			this.iUserRepository.save(userEntity);
-			//validar que si ya esta en falso se envie un mensaje que ya esta deshabilitado?
+			// validar que si ya esta en falso se envie un mensaje que ya esta
+			// deshabilitado?
 			return true;
 		}
 		return false;
@@ -90,7 +101,8 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public List<UserDTO> findAllUserBytState(boolean state) {
 		List<User> userEntity = this.iUserRepository.LstUserByState(state);
-		List<UserDTO> userDTO = userEntity.stream().map(user -> modelMapper.map(user, UserDTO.class)).collect(Collectors.toList());
+		List<UserDTO> userDTO = userEntity.stream().map(user -> modelMapper.map(user, UserDTO.class))
+				.collect(Collectors.toList());
 		return userDTO;
 	}
 

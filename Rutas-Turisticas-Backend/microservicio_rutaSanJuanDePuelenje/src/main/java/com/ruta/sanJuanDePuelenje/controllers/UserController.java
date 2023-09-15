@@ -1,4 +1,4 @@
-package com.ruta.sanJuanDePuelenje.controllers;
+ package com.ruta.sanJuanDePuelenje.controllers;
 
 import java.util.List;
 
@@ -21,24 +21,13 @@ public class UserController {
 	// Consultar todos los usuarios
 	@GetMapping("/ConsultAllUsers")
 	public ResponseEntity<?> ConsultAllUsers() {
-		List<UserDTO> lstUsers = this.iUserService.findAllUsers();
-		if(!lstUsers.isEmpty()) {
-			return ResponseEntity.ok(lstUsers);
-		}else {
-			
-//			new ResponseEntity<>(
-//			          "Year of birth cannot be in the future", 
-//			          HttpStatus.BAD_REQUEST);\
-			//String mensaje = "¡Usuarios no encontrados!";
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("¡Usuarios no encontrados!");
-		}
+		return this.iUserService.findAllUsers();
 	}
-
+	
 	// Consultar usuario por id
 	@GetMapping("/ConsultById/{id}")
 	public ResponseEntity<?> ConsultUserById(@PathVariable Integer id) {
 		UserDTO user = this.iUserService.findByUserId(id);
-		System.out.println("aqui no llega");
 		if(user != null) {
 			return ResponseEntity.ok(user);
 		}else {
