@@ -1,6 +1,5 @@
 package com.ruta.sanJuanDePuelenje.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.ruta.sanJuanDePuelenje.DTO.LunchDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
-import com.ruta.sanJuanDePuelenje.DTO.UserDTO;
 import com.ruta.sanJuanDePuelenje.models.Lunch;
 import com.ruta.sanJuanDePuelenje.repository.ILunchRepository;
 
@@ -25,30 +23,38 @@ public class LunchServiceImpl implements ILunchService{
 	@Override
 	public Response<List<LunchDTO>> findAllLunch() {
 		List<Lunch> lunchEntity = iLunchRepository.findAll();
-		if(lunchEntity.isEmpty()) {
-			
-		}
-		List<LunchDTO> lunchDTOs = lunchEntity.stream().map(lunch -> modelMapper.map(lunch, LunchDTO.class)).collect(Collectors.toList());
 		Response<List<LunchDTO>> response = new Response<>();
-		response.setStatus(200);
-		response.setUserMessage("Menú encontrado con éxito");
-		response.setMoreInfo("http://localhost:8080/lunch/ConsultAllLunch");
-		response.setData(lunchDTOs);
+		if(lunchEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("Menú no encontrado");
+			response.setMoreInfo("http://localhost:8080/lunch/ConsultAllLunch");
+			response.setData(null);
+		}else {
+			List<LunchDTO> lunchDTOs = lunchEntity.stream().map(lunch -> modelMapper.map(lunch, LunchDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Menú encontrado con éxito");
+			response.setMoreInfo("http://localhost:8080/lunch/ConsultAllLunch");
+			response.setData(lunchDTOs);
+		}
 		return response;
 	}
 
 	@Override
 	public Response<LunchDTO> findByLunchId(Integer lunchId) {
 		Lunch lunch = iLunchRepository.findById(lunchId).orElse(null);
-		if(lunch == null) {
-			
-		}
-		LunchDTO lunchDTO = modelMapper.map(lunch, LunchDTO.class);
 		Response<LunchDTO> response = new Response<>();
-		response.setStatus(200);
-		response.setUserMessage("Menú encontrado con éxito");
-		response.setMoreInfo("http://localhost:8080/lunch/ConsultById/{id}");
-		response.setData(lunchDTO);
+		if(lunch == null) {
+			response.setStatus(404);
+			response.setUserMessage("Item de menú no encontrado");
+			response.setMoreInfo("http://localhost:8080/lunch/ConsultById/{id}");
+			response.setData(null);
+		}else {
+			LunchDTO lunchDTO = modelMapper.map(lunch, LunchDTO.class);
+			response.setStatus(200);
+			response.setUserMessage("Menú encontrado con éxito");
+			response.setMoreInfo("http://localhost:8080/lunch/ConsultById/{id}");
+			response.setData(lunchDTO);
+		}
 		return response;
 	}
 
@@ -61,19 +67,23 @@ public class LunchServiceImpl implements ILunchService{
 			Lunch objLunch = this.iLunchRepository.save(lunchEntity);
 			LunchDTO lunchDTO = this.modelMapper.map(objLunch, LunchDTO.class);
 			response.setStatus(200);
-			response.setUserMessage("Menú creado con éxito");
+			response.setUserMessage("Item del menú creado con éxito");
 			response.setMoreInfo("http://localhost:8080/lunch/SaveLunch");
 			response.setData(lunchDTO);
-		}
-		
+		}else {
+			response.setStatus(500);
+			response.setUserMessage("Error al crear nuevo item del menú");
+			response.setMoreInfo("http://localhost:8080/lunch/SaveLunch");
+			response.setData(null);
+		}		
 		return response;
 	}
 
 	@Override
 	public Response<LunchDTO> updateLunch(Integer lunchId, LunchDTO lunch) {
-		Lunch lunchEntity = this.modelMapper.map(lunch, Lunch.class);
 		Response<LunchDTO> response = new Response<>();
 		if(lunch != null && lunchId != null) {
+			Lunch lunchEntity = this.modelMapper.map(lunch, Lunch.class);
 			Lunch lunchEntity1 = this.iLunchRepository.findById(lunchId).get();
 			lunchEntity1.setMenu(lunchEntity.getMenu());
 			lunchEntity1.setUnitPrice(lunchEntity.getUnitPrice());
@@ -86,8 +96,12 @@ public class LunchServiceImpl implements ILunchService{
 			response.setUserMessage("Menú actualizado con éxito");
 			response.setMoreInfo("http://localhost:8080/lunch/UpdateLunch/{id}");
 			response.setData(lunchDTO);
+		}else {
+			response.setStatus(500);
+			response.setUserMessage("Error al actualizar item del menú");
+			response.setMoreInfo("http://localhost:8080/lunch/UpdateLunch/{id}");
+			response.setData(null);
 		}
-		
 		return response;
 	}
 
@@ -109,7 +123,6 @@ public class LunchServiceImpl implements ILunchService{
 				response.setMoreInfo("http://localhost:8080/lunch/DisableLunch/{id}");
 				response.setData(false);
 			}
-			
 		}
 		return response;
 	}
@@ -117,8 +130,20 @@ public class LunchServiceImpl implements ILunchService{
 	@Override
 	public Response<List<LunchDTO>> findAllLunchBytState(boolean state) {
 		List<Lunch> lunchEntity = this.iLunchRepository.LstLunchByState(state);
-		List<LunchDTO> lunchDTO = lunchEntity.stream().map(lunch -> modelMapper.map(lunch, LunchDTO.class)).collect(Collectors.toList());
-		return lunchDTO;
+		Response<List<LunchDTO>> response = new Response<>();
+		if(!lunchEntity.isEmpty()) {
+			List<LunchDTO> lunchDTO = lunchEntity.stream().map(lunch -> modelMapper.map(lunch, LunchDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Items del menú encontrados con éxito");
+			response.setMoreInfo("http://localhost:8080/lunch/ConsultAllLunchByState");
+			response.setData(lunchDTO);
+		}else {
+			response.setStatus(404);
+			response.setUserMessage("No existen items del menú relacionados a este estado");
+			response.setMoreInfo("http://localhost:8080/lunch/ConsultAllLunchByState");
+			response.setData(null);
+		}
+		return response;
 	}
 
 }

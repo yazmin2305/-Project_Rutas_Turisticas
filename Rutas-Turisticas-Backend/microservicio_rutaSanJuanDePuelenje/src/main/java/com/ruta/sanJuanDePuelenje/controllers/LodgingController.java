@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.ruta.sanJuanDePuelenje.DTO.LodgingDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.services.ILodgingService;
 
 @RestController
@@ -17,37 +18,37 @@ public class LodgingController {
 
 	// Consultar todos los hospedajes
 	@GetMapping("/ConsultAllLodging")
-	public List<LodgingDTO> ConsultAllLodging() {
+	public Response<List<LodgingDTO>> ConsultAllLodging() {
 		return this.iLodgingService.findAllLodging();
 	}
 
 	// Consultar usuario por id
 	@GetMapping("/ConsultById/{id}")
-	public LodgingDTO ConsultLodgingById(@PathVariable Integer id) {
+	public Response<LodgingDTO> ConsultLodgingById(@PathVariable Integer id) {
 		return this.iLodgingService.findByLodgingId(id);
 	}
 
 	// Guardar usuario
 	@PostMapping("/SaveLodging")
-	public LodgingDTO SaveLodging(@RequestBody LodgingDTO lodging) {
+	public Response<LodgingDTO> SaveLodging(@RequestBody LodgingDTO lodging) {
 		return this.iLodgingService.saveLodging(lodging);
 	}
 
 	// Actualizar usuario
 	@PutMapping("/UpdateLodging/{id}")
-	public LodgingDTO UpdateLodging(@RequestBody LodgingDTO lodging, @PathVariable Integer id) {
+	public Response<LodgingDTO> UpdateLodging(@RequestBody LodgingDTO lodging, @PathVariable Integer id) {
 		return this.iLodgingService.updateLodging(id, lodging);
 	}
 
 	// Desabilitar un usuario registrado en el sistema
 	@PutMapping("/DisableLodging/{id}")
-	public Boolean DisableLodging(@PathVariable Integer id) {
+	public Response<Boolean> DisableLodging(@PathVariable Integer id) {
 		return this.iLodgingService.disableLodging(id);
 	}
 
 	// Consultar los hospedajes dependiento su estado: activado - desactivado
 	@GetMapping("ConsultAllLodgingByState/{state}")
-	public List<LodgingDTO> ConsultAllLodgingByState(@PathVariable Boolean state) {
+	public Response<List<LodgingDTO>> ConsultAllLodgingByState(@PathVariable Boolean state) {
 		return this.iLodgingService.findAllLodgingBytState(state);
 	}
 }

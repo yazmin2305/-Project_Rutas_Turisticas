@@ -23,38 +23,46 @@ public class FincaServiceImpl implements IFincaService{
 	@Override
 	public Response<List<FincaDTO>> findAllFincas() {
 		List<Finca> fincaEntity = iFincaRepository.findAll();
-		if(fincaEntity.isEmpty()) {
-			
-		}
-		List<FincaDTO> fincaDTO = fincaEntity.stream().map(finca -> modelMapper.map(finca, FincaDTO.class)).collect(Collectors.toList());
 		Response<List<FincaDTO>> response = new Response<>();
-		response.setStatus(200);
-		response.setUserMessage("Fincas encontradas con éxito");
-		response.setMoreInfo("http://localhost:8080/finca/ConsultAllFincas");
-		response.setData(fincaDTO);
+		if(fincaEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("Fincas no encontradas");
+			response.setMoreInfo("http://localhost:8080/finca/ConsultAllFincas");
+			response.setData(null);
+		}else {
+			List<FincaDTO> fincaDTO = fincaEntity.stream().map(finca -> modelMapper.map(finca, FincaDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Fincas encontradas con éxito");
+			response.setMoreInfo("http://localhost:8080/finca/ConsultAllFincas");
+			response.setData(fincaDTO);
+		}
 		return response;
 	}
 
 	@Override
 	public Response<FincaDTO> findByFincaId(Integer fincaId) {
 		Finca finca = iFincaRepository.findById(fincaId).orElse(null);
-		if(finca == null) {
-			
-		}
-		FincaDTO fincaDTO = modelMapper.map(finca, FincaDTO.class);
 		Response<FincaDTO> response = new Response<>();
-		response.setStatus(200);
-		response.setUserMessage("Finca encontrada con éxito");
-		response.setMoreInfo("http://localhost:8080/finca/ConsultById/{id}");
-		response.setData(fincaDTO);
+		if(finca == null) {
+			response.setStatus(404);
+			response.setUserMessage("Finca no encontrada");
+			response.setMoreInfo("http://localhost:8080/finca/ConsultById/{id}");
+			response.setData(null);
+		}else {
+			FincaDTO fincaDTO = modelMapper.map(finca, FincaDTO.class);
+			response.setStatus(200);
+			response.setUserMessage("Finca encontrada con éxito");
+			response.setMoreInfo("http://localhost:8080/finca/ConsultById/{id}");
+			response.setData(fincaDTO);
+		}
 		return response;
 	}
 
 	@Override
 	public Response<FincaDTO> saveFinca(FincaDTO finca) {
-		Finca fincaEntity  = this.modelMapper.map(finca, Finca.class);
 		Response<FincaDTO> response = new Response<>();
 		if(finca != null) {
+			Finca fincaEntity  = this.modelMapper.map(finca, Finca.class);
 			fincaEntity.setState(true);
 			Finca objFinca = this.iFincaRepository.save(fincaEntity);
 			FincaDTO fincaDTO = this.modelMapper.map(objFinca, FincaDTO.class);
@@ -62,16 +70,20 @@ public class FincaServiceImpl implements IFincaService{
 			response.setUserMessage("Finca creada con éxito");
 			response.setMoreInfo("http://localhost:8080/finca/SaveFinca");
 			response.setData(fincaDTO);
+		}else {
+			response.setStatus(500);
+			response.setUserMessage("Error al guardar la finca");
+			response.setMoreInfo("http://localhost:8080/finca/SaveFinca");
+			response.setData(null);
 		}
 		return response;
 	}
 
 	@Override
 	public Response<FincaDTO> updateFinca(Integer fincaId, FincaDTO finca) {
-		Finca fincaEntity = this.modelMapper.map(finca, Finca.class);
 		Response<FincaDTO> response = new Response<>();
 		if(finca != null && fincaId != null) {
-			//FincaDTO fincaDTO = this.findByFincaId(fincaId);
+			Finca fincaEntity = this.modelMapper.map(finca, Finca.class);
 			Finca fincaEntity1 = this.iFincaRepository.findById(fincaId).get();
 			fincaEntity1.setName(fincaEntity.getName());
 			fincaEntity1.setDescription(fincaEntity.getDescription());
@@ -88,6 +100,11 @@ public class FincaServiceImpl implements IFincaService{
 			response.setUserMessage("Finca actualizada con éxito");
 			response.setMoreInfo("http://localhost:8080/finca/UpdateFinca/{id}");
 			response.setData(fincaDTO);
+		}else {
+			response.setStatus(500);
+			response.setUserMessage("Error al actualizar la finca");
+			response.setMoreInfo("http://localhost:8080/finca/UpdateFinca/{id}");
+			response.setData(null);
 		}
 		return response;
 	}
@@ -125,8 +142,12 @@ public class FincaServiceImpl implements IFincaService{
 			response.setUserMessage("Fincas encontradas con éxito");
 			response.setMoreInfo("http://localhost:8080/finca/ConsultAllFincaByState");
 			response.setData(fincaDTO);
-		}
-		
+		}else {
+			response.setStatus(500);
+			response.setUserMessage("No se encuentran las fincas relacionadas a este estado");
+			response.setMoreInfo("http://localhost:8080/finca/ConsultAllFincaByState");
+			response.setData(null);
+		}		
 		return response;
 	}
 	

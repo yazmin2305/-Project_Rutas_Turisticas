@@ -22,38 +22,46 @@ public class FestivalServiceImpl implements IFestivalService{
 	@Override
 	public Response<List<FestivalDTO>> findAllFestival() {
 		List<Festival> festivalEntity = iFestivalRepository.findAll();
-		if(festivalEntity.isEmpty()) {
-			
-		}
-		List<FestivalDTO> festivalDTO = festivalEntity.stream().map(festival -> modelMapper.map(festival, FestivalDTO.class)).collect(Collectors.toList());
 		Response<List<FestivalDTO>> response = new Response<>();
-		response.setStatus(200);
-		response.setUserMessage("Festivales encontrados con éxito");
-		response.setMoreInfo("http://localhost:8080/festival/ConsultAllFestival");
-		response.setData(festivalDTO);
+		if(festivalEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("Festivales no encontrados");
+			response.setMoreInfo("http://localhost:8080/festival/ConsultAllFestival");
+			response.setData(null);
+		}else {
+			List<FestivalDTO> festivalDTO = festivalEntity.stream().map(festival -> modelMapper.map(festival, FestivalDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Festivales encontrados con éxito");
+			response.setMoreInfo("http://localhost:8080/festival/ConsultAllFestival");
+			response.setData(festivalDTO);
+		}
 		return response;
 	}
 
 	@Override
 	public Response<FestivalDTO> findByFestivalId(Integer festivalId) {
 		Festival festival = iFestivalRepository.findById(festivalId).orElse(null);
-		if(festival == null) {
-			
-		}
-		FestivalDTO festivalDTO = modelMapper.map(festival, FestivalDTO.class);
 		Response<FestivalDTO> response = new Response<>();
-		response.setStatus(200);
-		response.setUserMessage("Festival encontrado con éxito");
-		response.setMoreInfo("http://localhost:8080/festival/ConsultFestivalById/{id}");
-		response.setData(festivalDTO);
+		if(festival == null) {
+			response.setStatus(404);
+			response.setUserMessage("Festival no encontrado");
+			response.setMoreInfo("http://localhost:8080/festival/ConsultFestivalById/{id}");
+			response.setData(null);
+		}else {
+			FestivalDTO festivalDTO = modelMapper.map(festival, FestivalDTO.class);
+			response.setStatus(200);
+			response.setUserMessage("Festival encontrado con éxito");
+			response.setMoreInfo("http://localhost:8080/festival/ConsultFestivalById/{id}");
+			response.setData(festivalDTO);
+		}
 		return response;
 	}
 
 	@Override
 	public Response<FestivalDTO> saveFestival(FestivalDTO festival) {
-		Festival festivalEntity  = this.modelMapper.map(festival, Festival.class);
 		Response<FestivalDTO> response = new Response<>();
 		if(festival != null) {
+			Festival festivalEntity  = this.modelMapper.map(festival, Festival.class);
 			festivalEntity.setState(true);
 			Festival objFestival = this.iFestivalRepository.save(festivalEntity);
 			FestivalDTO festivalDTO = this.modelMapper.map(objFestival, FestivalDTO.class);
@@ -61,16 +69,20 @@ public class FestivalServiceImpl implements IFestivalService{
 			response.setUserMessage("Festival creado con éxito");
 			response.setMoreInfo("http://localhost:8080/festival/SaveFestival");
 			response.setData(festivalDTO);
+		}else {
+			response.setStatus(500);
+			response.setUserMessage("Error al crear el festival");
+			response.setMoreInfo("http://localhost:8080/festival/SaveFestival");
+			response.setData(null);
 		}
 		return response;
 	}
 
 	@Override
 	public Response<FestivalDTO> updateFestival(Integer festivalId, FestivalDTO festival) {
-		Festival festivalEntity = this.modelMapper.map(festival, Festival.class);
 		Response<FestivalDTO> response = new Response<>();
 		if(festival != null && festivalId != null) {
-			//FestivalDTO festivalDTO = this.findByFestivalId(festivalId);
+			Festival festivalEntity = this.modelMapper.map(festival, Festival.class);
 			Festival festivalEntity1 = this.iFestivalRepository.findById(festivalId).get();
 			festivalEntity1.setName(festivalEntity.getName());
 			festivalEntity1.setDescription(festivalEntity.getDescription());
@@ -84,13 +96,17 @@ public class FestivalServiceImpl implements IFestivalService{
 			response.setUserMessage("Festival actualizado con éxito");
 			response.setMoreInfo("http://localhost:8080/festival/UpdateFestival/{id}");
 			response.setData(festivalDTO);
+		}else {
+			response.setStatus(500);
+			response.setUserMessage("El festival no se puede actualizar");
+			response.setMoreInfo("http://localhost:8080/festival/UpdateFestival/{id}");
+			response.setData(null);
 		}
 		return response;
 	}
 
 	@Override
 	public Response<Boolean> disableFestival(Integer festivalId) {
-		//FestivalDTO festivalDTO = this.findByFestivalId(festivalId);
 		Festival festivalEntity = this.iFestivalRepository.findById(festivalId).get();
 		Response<Boolean> response = new Response<>();
 		if(festivalEntity != null) {
@@ -121,6 +137,11 @@ public class FestivalServiceImpl implements IFestivalService{
 			response.setUserMessage("Festivales encontrados con éxito");
 			response.setMoreInfo("http://localhost:8080/festival/ConsultAllFestivalByState");
 			response.setData(festivalDTO);
+		}else {
+			response.setStatus(404);
+			response.setUserMessage("No se encuentran festivales relacionados a este estado");
+			response.setMoreInfo("http://localhost:8080/festival/ConsultAllFestivalByState");
+			response.setData(null);
 		}
 		return response;
 	}

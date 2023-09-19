@@ -3,22 +3,23 @@ package com.ruta.sanJuanDePuelenje.services;
 import java.util.List;
 
 import com.ruta.sanJuanDePuelenje.DTO.ReserveDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Response;
 
 
 public interface IReserveService {
 	
-	public List<ReserveDTO> findAllReserve();
+	public Response<List<ReserveDTO>> findAllReserve();
 	
-	public ReserveDTO findByReserveId(Integer reserveId);
+	public Response<ReserveDTO> findByReserveId(Integer reserveId);
 	
-	public ReserveDTO saveReserve(ReserveDTO reserve);
+	public Response<ReserveDTO> saveReserve(ReserveDTO reserve);
 	
-	public ReserveDTO updateReserve(Integer reserveId, ReserveDTO reserve);
+	public Response<ReserveDTO> updateReserve(Integer reserveId, ReserveDTO reserve);
 	
-	public Boolean disableReserve(Integer reserveId);
+	public Response<Boolean> disableReserve(Integer reserveId);
 	
-	public Boolean deleteReserve(Integer reserveId);
+	public Response<Boolean> deleteReserve(Integer reserveId);
 	
-	public List<ReserveDTO> findReservesByUser(Integer reserveId);
+	public Response<List<ReserveDTO>> findReservesByUser(Integer reserveId);
 
 }

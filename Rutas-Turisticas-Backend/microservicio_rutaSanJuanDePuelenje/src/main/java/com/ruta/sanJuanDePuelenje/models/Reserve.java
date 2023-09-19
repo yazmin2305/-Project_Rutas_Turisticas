@@ -28,7 +28,7 @@ public class Reserve {
 	//fechas falta 
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

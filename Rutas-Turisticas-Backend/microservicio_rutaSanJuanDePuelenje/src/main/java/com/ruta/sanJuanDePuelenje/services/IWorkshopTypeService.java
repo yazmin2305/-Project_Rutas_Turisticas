@@ -2,19 +2,20 @@ package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
 
+import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.WorkshopTypeDTO;
 
 public interface IWorkshopTypeService {
 	
-	public List<WorkshopTypeDTO> findAllWorkshopTypes();
+	public Response<List<WorkshopTypeDTO>> findAllWorkshopTypes();
 	
-	public WorkshopTypeDTO findByWorkshopTypeId(Integer WorkshopTypeId);
+	public Response<WorkshopTypeDTO> findByWorkshopTypeId(Integer WorkshopTypeId);
 	
-	public WorkshopTypeDTO saveWorkshopType(WorkshopTypeDTO workshopType);
+	public Response<WorkshopTypeDTO> saveWorkshopType(WorkshopTypeDTO workshopType);
 	
-	public WorkshopTypeDTO updateWorkshopType(Integer workshopTypeId, WorkshopTypeDTO workshopType);
+	public Response<WorkshopTypeDTO> updateWorkshopType(Integer workshopTypeId, WorkshopTypeDTO workshopType);
 	
-	public Boolean disableWorkshopType(Integer workshopTypeId);
+	public Response<Boolean> disableWorkshopType(Integer workshopTypeId);
 	
-	public List<WorkshopTypeDTO> findAllWorkshopTypeBytState(boolean state);
+	public Response<List<WorkshopTypeDTO>> findAllWorkshopTypeBytState(boolean state);
 }
