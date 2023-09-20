@@ -94,7 +94,6 @@ public class FestivalServiceImpl implements IFestivalService{
 			festivalEntity1.setDescription(festivalEntity.getDescription());
 			festivalEntity1.setDate(festivalEntity.getDate());
 			festivalEntity1.setFinca(festivalEntity.getFinca());
-			festivalEntity1.setLstReserve(festivalEntity.getLstReserve());
 			festivalEntity1.setState(festivalEntity.getState());
 			this.iFestivalRepository.save(festivalEntity1);
 			FestivalDTO festivalDTO = this.modelMapper.map(festivalEntity1, FestivalDTO.class);

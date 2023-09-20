@@ -1,8 +1,6 @@
 package com.ruta.sanJuanDePuelenje.models;
 
-
 import java.util.Date;
-import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -37,6 +35,4 @@ public class Festival {
 	@JoinColumn(name = "finca_id")
 	private Finca finca;
 	
-	@OneToMany(mappedBy = "festival")
-	private List<Reserve> LstReserve ;
 }

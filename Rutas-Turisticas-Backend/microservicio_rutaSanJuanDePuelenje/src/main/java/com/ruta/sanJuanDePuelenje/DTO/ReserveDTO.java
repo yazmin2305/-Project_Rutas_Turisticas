@@ -1,5 +1,7 @@
 package com.ruta.sanJuanDePuelenje.DTO;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,7 @@ public class ReserveDTO {
 	private Integer reserveAmountPersons;
 	private Double reserveTotalPrice;
 	private Boolean reserveState;
+	private Date reserveDate;
 	private UserDTO user;
 	private WorkshopDTO workshop;
 	private TalkingDTO talking;

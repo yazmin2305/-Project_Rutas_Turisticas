@@ -1,7 +1,6 @@
 package com.ruta.sanJuanDePuelenje.DTO;
 
 import java.util.Date;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +18,6 @@ public class FestivalDTO {
 	private Date festivalDate;
 	private Boolean festivalState;
 	private FincaDTO finca;
-	private List<ReserveDTO> lstReserveDTOs;
 	
 
 }

@@ -67,7 +67,7 @@ public class ReserveServiceImpl implements IReserveService{
 		if(reserve != null) {
 			Reserve reserveEntity  = this.modelMapper.map(reserve, Reserve.class);
 			reserveEntity.setState(true);
-			double totalPrice = calculateTotalPrice(reserve);
+			double totalPrice = calculateTotalPrice2(reserve);
 			reserveEntity.setTotalPrice(totalPrice);
 			Reserve objReserve = this.iReserveRepository.save(reserveEntity);
 			ReserveDTO reserveDTO = this.modelMapper.map(objReserve, ReserveDTO.class);
@@ -202,9 +202,13 @@ public class ReserveServiceImpl implements IReserveService{
 	private Double calculateTotalPrice2(ReserveDTO reserve) {
 		double totalPrice = 0;
 		if(reserve.getTalking() != null) {
-			totalPrice += (reserve.getReserveAmountPersons() * reserve.getTalking().getTalkingUnitPrice());
+			reserve.getTalking().setTalkingTotalPrice(reserve.getReserveAmountPersons() * reserve.getTalking().getTalkingUnitPrice());
+			System.out.println("total"+reserve.getTalking().getTalkingTotalPrice());
+			totalPrice += (reserve.getTalking().getTalkingTotalPrice());
 		}if(reserve.getWorkshop() != null) {
-			totalPrice += (reserve.getReserveAmountPersons() * reserve.getWorkshop().getWorkshopUnitPrice());
+			reserve.getWorkshop().setWorkshopTotalPrice(reserve.getReserveAmountPersons() * reserve.getWorkshop().getWorkshopUnitPrice());
+			System.out.println("total"+reserve.getWorkshop().getWorkshopTotalPrice());
+			totalPrice += (reserve.getWorkshop().getWorkshopTotalPrice());
 		}if(reserve.getLodging() != null) {
 			totalPrice += (reserve.getReserveAmountPersons() * reserve.getLodging().getLodgingUnitPrice());
 		}if(reserve.getRecreation() != null) {
