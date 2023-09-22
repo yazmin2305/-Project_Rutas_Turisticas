@@ -14,7 +14,6 @@ public class LunchDTO {
 	private Integer lunchId;
 	private String lunchMenu;
 	private Double lunchUnitPrice;
-	private Double lunchTotalPrice;
 	private Boolean lunchState;
 	private List<ReserveDTO> lsReserveDTOs;
 

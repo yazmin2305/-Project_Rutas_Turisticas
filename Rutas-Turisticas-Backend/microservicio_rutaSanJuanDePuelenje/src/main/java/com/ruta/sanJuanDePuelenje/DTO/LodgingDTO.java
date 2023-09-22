@@ -17,7 +17,6 @@ public class LodgingDTO {
 	private Integer lodgingBedsAvailable;
 	private Integer lodgingMaxAmountPerson;
 	private Double lodgingUnitPrice;
-	private Double lodgingTotalPrice;
 	private Integer lodgingNumberNights;
 	private Boolean lodgingState;
 	private FincaDTO fincaDTO;

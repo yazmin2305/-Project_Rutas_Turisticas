@@ -6,4 +6,5 @@ import com.ruta.sanJuanDePuelenje.models.Role;
 
 public interface IRoleRepository extends JpaRepository<Role, Integer>{
 
+	
 }

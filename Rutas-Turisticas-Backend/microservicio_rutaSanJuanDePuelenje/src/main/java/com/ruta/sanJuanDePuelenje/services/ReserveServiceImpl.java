@@ -93,6 +93,11 @@ public class ReserveServiceImpl implements IReserveService{
 			Reserve reserveEntity1 = this.iReserveRepository.findById(reserveId).get();
 			reserveEntity1.setAmountPersons(reserveEntity.getAmountPersons());
 			reserveEntity1.setTotalPrice(reserveEntity.getTotalPrice());
+			reserveEntity1.setTotalPriceLodging(reserveEntity.getTotalPriceLodging());
+			reserveEntity1.setTotalPriceLunch(reserveEntity.getTotalPriceLunch());
+			reserveEntity1.setTotalPriceRecreation(reserveEntity.getTotalPriceRecreation());
+			reserveEntity1.setTotalPriceTalking(reserveEntity.getTotalPriceTalking());
+			reserveEntity1.setTotalPriceWorkshop(reserveEntity.getTotalPriceWorkshop());
 			reserveEntity1.setState(reserveEntity.getState());
 			reserveEntity1.setDate(reserveEntity.getDate());
 			reserveEntity1.setUser(reserveEntity.getUser());
@@ -180,42 +185,26 @@ public class ReserveServiceImpl implements IReserveService{
 		return response;
 	}
 	
-	private Double calculateTotalPrice(ReserveDTO reserve) {
-		double totalPrice = 0;
-		if(reserve.getTalking() != null) {
-			totalPrice += reserve.getTalking().getTalkingTotalPrice();
-		}if(reserve.getWorkshop() != null) {
-			totalPrice += reserve.getWorkshop().getWorkshopTotalPrice();
-		}if(reserve.getLodging() != null) {
-			totalPrice += reserve.getLodging().getLodgingTotalPrice();
-		}if(reserve.getRecreation() != null) {
-			totalPrice += reserve.getRecreation().getRecreationTotalPrice();
-		}if(reserve.getLunch() != null) {
-			totalPrice +=  reserve.getLunch().getLunchTotalPrice();
-		}
-		//la reserva de un festival si se puede hacer? 
-		return totalPrice;
-	}
-	
-	//si no le pongo el precio total a cada item...A partir del precio unitario y de la cantidad de personas en la reserva
-	//y del precio unitario por cada item yo puedo saber el precio total sin tener nulos en las tablas de las actividades	
+	//se calcula el precio total de la reserva y el precio total por cada item que el usuario selecciona
 	private Double calculateTotalPrice2(ReserveDTO reserve) {
+		Reserve reserveEntity = this.modelMapper.map(reserve, Reserve.class);
 		double totalPrice = 0;
-		if(reserve.getTalking() != null) {
-			reserve.getTalking().setTalkingTotalPrice(reserve.getReserveAmountPersons() * reserve.getTalking().getTalkingUnitPrice());
-			System.out.println("total"+reserve.getTalking().getTalkingTotalPrice());
-			totalPrice += (reserve.getTalking().getTalkingTotalPrice());
-		}if(reserve.getWorkshop() != null) {
-			reserve.getWorkshop().setWorkshopTotalPrice(reserve.getReserveAmountPersons() * reserve.getWorkshop().getWorkshopUnitPrice());
-			System.out.println("total"+reserve.getWorkshop().getWorkshopTotalPrice());
-			totalPrice += (reserve.getWorkshop().getWorkshopTotalPrice());
-		}if(reserve.getLodging() != null) {
-			totalPrice += (reserve.getReserveAmountPersons() * reserve.getLodging().getLodgingUnitPrice());
-		}if(reserve.getRecreation() != null) {
-			totalPrice += (reserve.getReserveAmountPersons() * reserve.getRecreation().getRecreationUnitPrice());
-		}if(reserve.getLunch() != null) {
-			totalPrice +=  (reserve.getReserveAmountPersons() * reserve.getLunch().getLunchUnitPrice());
+		if(reserveEntity.getTalking() != null) {
+			reserveEntity.setTotalPriceTalking(reserveEntity.getAmountPersons() * reserveEntity.getTalking().getUnitPrice());   
+			totalPrice += reserveEntity.getTotalPriceTalking();
+		}if(reserveEntity.getWorkshop() != null) {
+			reserveEntity.setTotalPriceWorkshop(reserveEntity.getAmountPersons() * reserveEntity.getWorkshop().getUnitPrice()); 
+			totalPrice += reserveEntity.getTotalPriceWorkshop();
+		}if(reserveEntity.getLodging() != null) {
+			reserveEntity.setTotalPriceLodging(reserveEntity.getAmountPersons() * reserveEntity.getLodging().getUnitPrice());
+			totalPrice += reserveEntity.getTotalPriceLodging();
+		}if(reserveEntity.getRecreation() != null) {
+			reserveEntity.setTotalPriceRecreation(reserveEntity.getAmountPersons() * reserveEntity.getRecreation().getUnitPrice());
+			totalPrice += reserveEntity.getTotalPriceRecreation();
+		}if(reserveEntity.getLunch() != null) {
+			reserveEntity.setTotalPriceLunch(reserveEntity.getAmountPersons() * reserveEntity.getLunch().getUnitPrice());
 		}
+		this.iReserveRepository.save(reserveEntity);
 		return totalPrice;
 	}
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ruta.sanJuanDePuelenje.DTO.FestivalDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
@@ -31,8 +32,8 @@ public class FestivalController {
 
 	// Guardar festival
 	@PostMapping("/SaveFestival")
-	public Response<FestivalDTO> SaveFestival(@RequestBody FestivalDTO festival) {
-		return this.iFestivalService.saveFestival(festival);
+	public Response<FestivalDTO> SaveFestival(@RequestBody FestivalDTO festival, @RequestParam("file") MultipartFile imagen) {
+		return this.iFestivalService.saveFestival(festival, imagen);
 	}
 
 	// Actualizar festival

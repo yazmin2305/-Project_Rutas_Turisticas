@@ -24,12 +24,28 @@ public class Reserve {
 	@Column(name = "total_price" , nullable = false)
 	private Double totalPrice;
 	
+	@Column(name = "lodging_total_price" , nullable = true)
+	private Double totalPriceLodging;
+	
+	@Column(name = "lunch_total_price" , nullable = true)
+	private Double totalPriceLunch;
+	
+	@Column(name = "talking_total_price" , nullable = true)
+	private Double totalPriceTalking;
+	
+	@Column(name = "recreation_total_price" , nullable = true)
+	private Double totalPriceRecreation;
+	
+	@Column(name = "workshop_total_price" , nullable = true)
+	private Double totalPriceWorkshop;
+	
 	@Column(nullable = true)
 	private Boolean state;
 	
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
+	
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", nullable = false)

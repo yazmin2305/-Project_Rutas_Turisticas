@@ -36,9 +36,9 @@ public class Workshop {
 	@Column(name = "unit_price" ,nullable = false)
 	private Double unitPrice;
 	
-	@Column(name = "total_price" , nullable = true)
-	@Transient
-	private Double totalPrice;
+//	@Column(name = "total_price" , nullable = true)
+//	@Transient
+//	private Double totalPrice;
 	
 	@Column(nullable = true)
 	private Boolean state;

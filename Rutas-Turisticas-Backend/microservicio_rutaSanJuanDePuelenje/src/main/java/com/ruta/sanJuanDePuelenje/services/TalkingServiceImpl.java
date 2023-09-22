@@ -96,7 +96,7 @@ public class TalkingServiceImpl implements ITalkingService{
 			talkingEntity1.setAvailability(talkingEntity.getAvailability());
 			talkingEntity1.setMaxAmountPerson(talkingEntity.getMaxAmountPerson());
 			talkingEntity1.setUnitPrice(talkingEntity.getUnitPrice());
-			talkingEntity1.setTotalPrice(talkingEntity.getTotalPrice());
+//			talkingEntity1.setTotalPrice(talkingEntity.getTotalPrice());
 			talkingEntity1.setState(talkingEntity.getState());
 			talkingEntity1.setFinca(talkingEntity.getFinca());
 			talkingEntity1.setLstReserve(talkingEntity.getLstReserve());

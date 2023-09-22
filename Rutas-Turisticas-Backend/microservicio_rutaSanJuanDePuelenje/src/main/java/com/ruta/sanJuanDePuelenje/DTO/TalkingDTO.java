@@ -19,7 +19,6 @@ public class TalkingDTO {
 	private Boolean talkingAvailability;
 	private Integer talkingMaxAmountPerson;
 	private Double talkingUnitPrice;
-	private Double talkingTotalPrice;
 	private Boolean talkingState;
 	private FincaDTO finca;
 	private List<ReserveDTO> lstReserveDTOs;

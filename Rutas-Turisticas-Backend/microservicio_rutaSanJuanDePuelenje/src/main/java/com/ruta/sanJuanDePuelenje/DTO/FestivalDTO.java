@@ -18,7 +18,6 @@ public class FestivalDTO {
 	private Date festivalDate;
 	private Boolean festivalState;
 	private FincaDTO finca;
-	
 
 }
  

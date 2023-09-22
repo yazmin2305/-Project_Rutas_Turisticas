@@ -96,7 +96,7 @@ public class WorkshopServiceImpl implements IWorkshopService{
 			workshopEntity1.setAvailability(workshopEntity.getAvailability());
 			workshopEntity1.setMaxAmountPerson(workshopEntity.getMaxAmountPerson());
 			workshopEntity1.setUnitPrice(workshopEntity.getUnitPrice());
-			workshopEntity1.setTotalPrice(workshopEntity.getTotalPrice());
+//			workshopEntity1.setTotalPrice(workshopEntity.getTotalPrice());
 			workshopEntity1.setWorkshopType(workshopEntity.getWorkshopType());
 			workshopEntity1.setState(workshopEntity.getState());
 			workshopEntity1.setFinca(workshopEntity.getFinca());

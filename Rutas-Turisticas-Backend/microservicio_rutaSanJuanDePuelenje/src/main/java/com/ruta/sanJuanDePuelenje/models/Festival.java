@@ -28,6 +28,8 @@ public class Festival {
 	private Date date;
 	//@Temporal(TemporalType.timestamp)
 	
+	private String imagen;
+	
 	@Column(nullable = true)
 	private Boolean state;
 	

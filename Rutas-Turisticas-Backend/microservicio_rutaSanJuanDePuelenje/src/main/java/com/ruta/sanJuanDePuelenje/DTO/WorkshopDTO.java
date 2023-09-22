@@ -19,7 +19,6 @@ public class WorkshopDTO {
 	private Boolean workshopAvailability;
 	private Integer workshopMaxAmountPerson;
 	private Double workshopUnitPrice;
-	private Double workshopTotalPrice;
 	private Boolean workshopState;
 	private WorkshopTypeDTO workshopType;
 	private FincaDTO finca;

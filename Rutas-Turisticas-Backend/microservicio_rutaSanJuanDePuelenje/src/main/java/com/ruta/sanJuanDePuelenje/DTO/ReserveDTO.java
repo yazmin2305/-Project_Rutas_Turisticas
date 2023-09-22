@@ -15,6 +15,11 @@ public class ReserveDTO {
 	private Integer reserveId;
 	private Integer reserveAmountPersons;
 	private Double reserveTotalPrice;
+	private Double lodgingTotalPrice;
+	private Double lunchTotalPrice;
+	private Double talkingTotalPrice;
+	private Double recreationTotalPrice;
+	private Double workshopTotalPrice;
 	private Boolean reserveState;
 	private Date reserveDate;
 	private UserDTO user;

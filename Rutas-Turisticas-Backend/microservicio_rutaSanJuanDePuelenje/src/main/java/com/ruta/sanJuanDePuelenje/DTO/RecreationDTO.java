@@ -18,7 +18,6 @@ public class RecreationDTO {
 	private Boolean recreationAvailability;
 	private Integer recreationMaxAmountP;
 	private Double recreationUnitPrice;
-	private Double recreationTotalPrice;
 	private Boolean recreationState;
 	private FincaDTO finca;
 	private List<ReserveDTO> lstReserveDTOs;
