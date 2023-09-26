@@ -18,7 +18,8 @@ public class FincaController {
 	private IFincaService iFincaService;
 
 	// Consultar todas las fincas
-	@GetMapping("/ConsultAllFincas")
+	//@GetMapping("/ConsultAllFincas")
+	@RequestMapping(value = {"/ConsultAllFincas", "/"} , method = RequestMethod.GET )
 	public Response<List<FincaDTO>> ConsultAllFincas() {
 		return this.iFincaService.findAllFincas();
 	}
