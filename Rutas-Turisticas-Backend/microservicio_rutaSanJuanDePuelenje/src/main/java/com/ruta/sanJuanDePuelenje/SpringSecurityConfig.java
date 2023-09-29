@@ -1,5 +1,6 @@
 package com.ruta.sanJuanDePuelenje;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -13,8 +14,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import com.ruta.sanJuanDePuelenje.auth.handler.LoginSuccesHandler;
+
 @Configuration
 public class SpringSecurityConfig {
+	
+	@Autowired
+	private LoginSuccesHandler succesHandler;
+	
 	@Bean
 	public static BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -59,7 +66,7 @@ public class SpringSecurityConfig {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}).formLogin(formLogin -> formLogin.loginPage("/login").permitAll()).logout((logout) -> logout.permitAll())
+		}).formLogin(formLogin -> formLogin.successHandler(succesHandler).loginPage("/login").permitAll()).logout((logout) -> logout.permitAll())
 				.exceptionHandling(e -> {
 					e.accessDeniedPage("/error_403");
 				});
