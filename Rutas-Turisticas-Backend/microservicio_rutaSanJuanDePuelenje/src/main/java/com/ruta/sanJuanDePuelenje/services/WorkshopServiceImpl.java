@@ -48,7 +48,7 @@ public class WorkshopServiceImpl implements IWorkshopService{
 		Response<WorkshopDTO> response = new Response<>();
 		if(workshop == null) {
 			response.setStatus(200);
-			response.setUserMessage("Taller no s eencuentra");
+			response.setUserMessage("Taller no se encuentra");
 			response.setMoreInfo("http://localhost:8080/workshop/ConsultById/{id}");
 			response.setData(null);
 		}else {

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ public class LunchServiceImpl implements ILunchService{
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	@PreAuthorize("hasRole('USER')")
 	@Override
 	@Transactional(readOnly = true)
 	public Response<List<LunchDTO>> findAllLunch() {

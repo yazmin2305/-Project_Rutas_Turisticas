@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +27,7 @@ public class FestivalServiceImpl implements IFestivalService{
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@Override
 	@Transactional(readOnly = true)
 	public Response<List<FestivalDTO>> findAllFestival() {

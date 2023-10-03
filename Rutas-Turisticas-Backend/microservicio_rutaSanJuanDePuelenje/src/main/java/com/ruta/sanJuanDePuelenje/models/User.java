@@ -39,7 +39,7 @@ public class User {
 	@Column(nullable = true)
 	private Boolean state;
 	
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, length = 60)
 	private String password;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
