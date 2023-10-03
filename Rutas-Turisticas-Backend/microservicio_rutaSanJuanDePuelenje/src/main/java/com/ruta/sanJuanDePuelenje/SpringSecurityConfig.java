@@ -85,12 +85,7 @@ public class SpringSecurityConfig {
 
 //		return http.build();
 
-		http.csrf(csrf -> {
-            // Configura la protección CSRF según tus necesidades
-            csrf
-                .disable(); // Para deshabilitar CSRF (no recomendado en la mayoría de los casos)
-               
-        }).authorizeHttpRequests(authorize -> {
+		http.authorizeHttpRequests(authorize -> {
 			try {
 				authorize.requestMatchers(publicMatchers).permitAll().anyRequest()
 						.authenticated();

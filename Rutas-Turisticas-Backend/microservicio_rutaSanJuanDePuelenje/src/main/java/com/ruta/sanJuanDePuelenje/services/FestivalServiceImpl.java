@@ -27,7 +27,6 @@ public class FestivalServiceImpl implements IFestivalService{
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	@PreAuthorize("hasRole('ADMIN')")
 	@Override
 	@Transactional(readOnly = true)
 	public Response<List<FestivalDTO>> findAllFestival() {

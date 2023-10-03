@@ -22,7 +22,6 @@ public class LunchServiceImpl implements ILunchService{
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	@PreAuthorize("hasRole('USER')")
 	@Override
 	@Transactional(readOnly = true)
 	public Response<List<LunchDTO>> findAllLunch() {
