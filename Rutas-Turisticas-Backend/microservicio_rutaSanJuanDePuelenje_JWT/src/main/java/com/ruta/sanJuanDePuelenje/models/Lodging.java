@@ -45,6 +45,9 @@ public class Lodging {
 	@JoinColumn(name = "finca_id")
 	private Finca finca;
 	
-	@OneToMany(mappedBy = "lodging")
+//	@OneToMany(mappedBy = "lodging")
+//	private List<Reserve> LstReserve ;
+	
+	@ManyToMany(mappedBy = "lodging")
 	private List<Reserve> LstReserve ;
 }

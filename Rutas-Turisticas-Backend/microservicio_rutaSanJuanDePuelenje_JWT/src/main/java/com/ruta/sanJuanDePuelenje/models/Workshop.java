@@ -51,6 +51,7 @@ public class Workshop {
 	@JoinColumn(name = "finca_id")
 	private Finca finca;
 	
-	@OneToMany(mappedBy = "workshop")
+//	@OneToMany(mappedBy = "workshop")
+	@ManyToMany(mappedBy = "workshop")
 	private List<Reserve> LstReserve ;
 }

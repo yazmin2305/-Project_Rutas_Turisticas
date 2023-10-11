@@ -46,6 +46,7 @@ public class Talking {
 	@JoinColumn(name = "finca_id")
 	private Finca finca;
 	
-	@OneToMany(mappedBy = "talking")
+	//@OneToMany(mappedBy = "talking")
+	@ManyToMany(mappedBy = "talking")
 	private List<Reserve> LstReserve;
 }

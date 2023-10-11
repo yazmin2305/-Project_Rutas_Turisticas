@@ -10,7 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ruta.sanJuanDePuelenje.DTO.ReserveDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
+import com.ruta.sanJuanDePuelenje.models.Lodging;
+import com.ruta.sanJuanDePuelenje.models.Lunch;
+import com.ruta.sanJuanDePuelenje.models.Recreation;
 import com.ruta.sanJuanDePuelenje.models.Reserve;
+import com.ruta.sanJuanDePuelenje.models.Talking;
+import com.ruta.sanJuanDePuelenje.models.Workshop;
 import com.ruta.sanJuanDePuelenje.repository.IReserveRepository;
 
 @Service
@@ -91,8 +96,8 @@ public class ReserveServiceImpl implements IReserveService{
 		if(reserve != null && reserveId != null) {
 			Reserve reserveEntity = this.modelMapper.map(reserve, Reserve.class);
 			Reserve reserveEntity1 = this.iReserveRepository.findById(reserveId).get();
+			double totalPrice = calculateTotalPrice2(reserve);
 			reserveEntity1.setAmountPersons(reserveEntity.getAmountPersons());
-			reserveEntity1.setTotalPrice(reserveEntity.getTotalPrice());
 			reserveEntity1.setTotalPriceLodging(reserveEntity.getTotalPriceLodging());
 			reserveEntity1.setTotalPriceLunch(reserveEntity.getTotalPriceLunch());
 			reserveEntity1.setTotalPriceRecreation(reserveEntity.getTotalPriceRecreation());
@@ -101,12 +106,14 @@ public class ReserveServiceImpl implements IReserveService{
 			reserveEntity1.setState(reserveEntity.getState());
 			reserveEntity1.setDate(reserveEntity.getDate());
 			reserveEntity1.setUser(reserveEntity.getUser());
-			reserveEntity1.setWorkshop(reserveEntity.getWorkshop());
-			reserveEntity1.setTalking(reserveEntity.getTalking());
-			reserveEntity1.setRecreation(reserveEntity.getRecreation());
-			reserveEntity1.setLodging(reserveEntity.getLodging());
-			reserveEntity1.setFestival(reserveEntity.getFestival());
-			reserveEntity1.setLunch(reserveEntity.getLunch());
+			reserveEntity1.setLstWorkshop(reserveEntity.getLstWorkshop());
+			reserveEntity1.setLstTalking(reserveEntity.getLstTalking());
+			reserveEntity1.setLstRecreation(reserveEntity.getLstRecreation());
+			reserveEntity1.setLstLodging(reserveEntity.getLstLodging());
+			reserveEntity1.setLstLunch(reserveEntity.getLstLunch());
+//			reserveEntity1.setFestival(reserveEntity.getFestival());
+			//reserveEntity1.setTotalPrice(reserveEntity.getTotalPrice());
+			reserveEntity1.setTotalPrice(totalPrice);
 			this.iReserveRepository.save(reserveEntity1);
 			ReserveDTO reserveDTO = this.modelMapper.map(reserveEntity1, ReserveDTO.class);
 			response.setStatus(200);
@@ -189,20 +196,32 @@ public class ReserveServiceImpl implements IReserveService{
 	private Double calculateTotalPrice2(ReserveDTO reserve) {
 		Reserve reserveEntity = this.modelMapper.map(reserve, Reserve.class);
 		double totalPrice = 0;
-		if(reserveEntity.getTalking() != null) {
-			reserveEntity.setTotalPriceTalking(reserveEntity.getAmountPersons() * reserveEntity.getTalking().getUnitPrice());   
-			totalPrice += reserveEntity.getTotalPriceTalking();
-		}if(reserveEntity.getWorkshop() != null) {
-			reserveEntity.setTotalPriceWorkshop(reserveEntity.getAmountPersons() * reserveEntity.getWorkshop().getUnitPrice()); 
-			totalPrice += reserveEntity.getTotalPriceWorkshop();
-		}if(reserveEntity.getLodging() != null) {
-			reserveEntity.setTotalPriceLodging(reserveEntity.getAmountPersons() * reserveEntity.getLodging().getUnitPrice());
-			totalPrice += reserveEntity.getTotalPriceLodging();
-		}if(reserveEntity.getRecreation() != null) {
-			reserveEntity.setTotalPriceRecreation(reserveEntity.getAmountPersons() * reserveEntity.getRecreation().getUnitPrice());
-			totalPrice += reserveEntity.getTotalPriceRecreation();
-		}if(reserveEntity.getLunch() != null) {
-			reserveEntity.setTotalPriceLunch(reserveEntity.getAmountPersons() * reserveEntity.getLunch().getUnitPrice());
+		//ya tengo que recorrer la lista de lodging de talkin de recreation y demas...
+		if(reserveEntity.getLstTalking() != null) {
+			for(Talking talking : reserveEntity.getLstTalking()) {
+				reserveEntity.setTotalPriceTalking(reserveEntity.getAmountPersons() * talking.getUnitPrice());   
+				totalPrice += reserveEntity.getTotalPriceTalking();
+			}
+		}if(reserveEntity.getLstWorkshop() != null) {
+			for(Workshop workshop : reserveEntity.getLstWorkshop()) {
+				reserveEntity.setTotalPriceWorkshop(reserveEntity.getAmountPersons() * workshop.getUnitPrice()); 
+				totalPrice += reserveEntity.getTotalPriceWorkshop();
+			}
+		}if(reserveEntity.getLstLodging() != null) {
+			for(Lodging lodging : reserveEntity.getLstLodging()) {
+				reserveEntity.setTotalPriceLodging(reserveEntity.getAmountPersons() * lodging.getUnitPrice());
+				totalPrice += reserveEntity.getTotalPriceLodging();
+			}
+		}if(reserveEntity.getLstRecreation() != null) {
+			for(Recreation recreation : reserveEntity.getLstRecreation()) {
+				reserveEntity.setTotalPriceRecreation(reserveEntity.getAmountPersons() * recreation.getUnitPrice());
+				totalPrice += reserveEntity.getTotalPriceRecreation();
+			}
+		}if(reserveEntity.getLstLunch() != null) {
+			for(Lunch lunch : reserveEntity.getLstLunch()) {
+				reserveEntity.setTotalPriceLunch(reserveEntity.getAmountPersons() * lunch.getUnitPrice());
+				totalPrice += reserveEntity.getTotalPriceLunch();
+			}
 		}
 		this.iReserveRepository.save(reserveEntity);
 		return totalPrice;

@@ -29,6 +29,7 @@ public class Lunch {
 	@Column(nullable = true)
 	private Boolean state;
 	
-	@OneToMany(mappedBy = "lunch")
+	@ManyToMany(mappedBy = "lunch")
 	private List<Reserve> LstReserve ;
+
 }
