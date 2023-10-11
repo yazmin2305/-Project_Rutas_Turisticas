@@ -10,8 +10,6 @@ import com.ruta.sanJuanDePuelenje.DTO.RecreationDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.services.IRecreationService;
 
-import jakarta.annotation.security.PermitAll;
-
 @RestController
 @RequestMapping("/recreation")
 @CrossOrigin("*")
@@ -21,7 +19,6 @@ public class RecreationController {
 	private IRecreationService iRecreationService;
 
 	// Consultar todos las actividades de recreación
-	@PermitAll
 	@GetMapping("/ConsultAllRecreation")
 	public Response<List<RecreationDTO>> ConsultAllRecreation() {
 		return this.iRecreationService.findAllRecreation();

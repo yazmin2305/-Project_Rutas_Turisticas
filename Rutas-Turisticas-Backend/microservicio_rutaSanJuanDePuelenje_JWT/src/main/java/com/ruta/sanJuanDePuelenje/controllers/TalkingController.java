@@ -10,8 +10,6 @@ import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.TalkingDTO;
 import com.ruta.sanJuanDePuelenje.services.ITalkingService;
 
-import jakarta.annotation.security.PermitAll;
-
 @RestController
 @RequestMapping("/talking")
 @CrossOrigin("*")
@@ -21,7 +19,6 @@ public class TalkingController {
 	private ITalkingService iTalkingService;
 
 	// Consultar todas las charlas
-	@PermitAll
 	@GetMapping("/ConsultAllTalking")
 	public Response<List<TalkingDTO>> ConsultAllTalking() {
 		return this.iTalkingService.findAllTalking();

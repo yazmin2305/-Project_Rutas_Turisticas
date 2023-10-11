@@ -10,8 +10,6 @@ import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.WorkshopDTO;
 import com.ruta.sanJuanDePuelenje.services.IWorkshopService;
 
-import jakarta.annotation.security.PermitAll;
-
 @RestController
 @RequestMapping("/workshop")
 @CrossOrigin("*")
@@ -21,7 +19,6 @@ public class WorkshopController {
 	private IWorkshopService iWorkshopService;
 
 	// Consultar todos los talleres
-	@PermitAll
 	@GetMapping("/ConsultAllWorkshop")
 	public Response<List<WorkshopDTO>> ConsultAllWorkshop() {
 		return this.iWorkshopService.findAllWorkshop();

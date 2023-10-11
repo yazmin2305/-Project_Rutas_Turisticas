@@ -1,7 +1,5 @@
 package com.ruta.sanJuanDePuelenje.models;
 
-import java.util.List;
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,7 +17,7 @@ public class Role {
 	
 	@Column(name = "name_rol", nullable = false, length = 15)
 	private String name;
-	
-	@OneToMany(mappedBy = "role")
-	private List<User> LstUserRol ;
+
+//	@OneToMany(mappedBy = "role")
+//	private List<User> LstUserRol ;
 }

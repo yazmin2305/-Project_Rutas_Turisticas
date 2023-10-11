@@ -23,7 +23,6 @@ public class User {
 	private String identification;
 	
 	@Column(nullable = false, length = 45)
-	//@Value("${usuario.nombre.novalido}")
 	private String name;
 	
 	@Column(name = "last_name" ,nullable = false, length = 45)
@@ -42,8 +41,11 @@ public class User {
 	@Column(nullable = false, length = 60)
 	private String password;
 	
+	/*Este campo queda vacio ya que solo se van a crear usuarios con rol USER,
+	 * los usuarios con Rol ADMIN van a estar almacenados previamente en la base de datos */
+	//Esta relacion se cambio por unidireccional ya que no necesito acceser a la lista de usuarios por medio de la entidad Role
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "rol_id", nullable = false)
+	@JoinColumn(name = "rol_id", nullable = true)
 	private Role role;
 	
 	@OneToMany(mappedBy = "user")

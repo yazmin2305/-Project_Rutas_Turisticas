@@ -1,28 +1,19 @@
 package com.ruta.sanJuanDePuelenje.auth.filter;
 
 import java.io.IOException;
-import javax.crypto.SecretKey;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.ruta.sanJuanDePuelenje.auth.service.JWTService;
+import com.ruta.sanJuanDePuelenje.auth.service.JWTServiceImpl;
 import com.ruta.sanJuanDePuelenje.models.User;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-
-import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,13 +26,14 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	// verifica las credenciales del usuario utilizando JWT
 	private AuthenticationManager authenticationManager;
-	//Esta clave secreta es necesaria para firmar y verificar tokens JWT.
-	public static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+	
+	private JWTService jwtService;
 
-	public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTService jwtService) {
 		this.authenticationManager = authenticationManager;
 		// setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/login",
 		// "POST"));
+		this.jwtService = jwtService;
 	}
 
 	// Este metodo se encarga de realizar la autenticación
@@ -90,23 +82,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 		// Creamos el token que vamos a retornar al cliente
-		//SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+		String token = jwtService.create(authResult);
 		
-		//SecretKey secretKey = Keys.hmacShaKeyFor("algunaLlaveSecreta".getBytes());
-		//SecretKey secretKey = new SecretKeySpec("Clave.Secreta.12345".getBytes(), SignatureAlgorithm.HS512.getJcaName());
-
-		String username = ((org.springframework.security.core.userdetails.User) authResult.getPrincipal())
-				.getUsername();
-		// authResult: contiene los datos del usuario
-		Collection<? extends GrantedAuthority> roles = authResult.getAuthorities();
-		Claims claims = Jwts.claims();
-		claims.put("authorities", new ObjectMapper().writeValueAsString(roles));
-
-		String token = Jwts.builder().setClaims(claims).setSubject(username).signWith(SECRET_KEY).setIssuedAt(new Date())
-				.setExpiration(new Date(System.currentTimeMillis() + 3600000 * 4)).compact();
-
 		// Guardamos el token en el parametro Authorization, e indicamos el prefijo Bearer
-		response.addHeader("Authorization", "Bearer " + token);
+		response.addHeader(JWTServiceImpl.HEADER_STRING, JWTServiceImpl.TOKEN_PREFIX + token);
 		Map<String, Object> body = new HashMap<String, Object>();
 		body.put("token", token);
 		body.put("user", (org.springframework.security.core.userdetails.User) authResult.getPrincipal());

@@ -18,7 +18,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.ruta.sanJuanDePuelenje.auth.filter.JWTAuthenticationFilter;
 import com.ruta.sanJuanDePuelenje.auth.filter.JWTAuthorizationFilter;
-//import com.ruta.sanJuanDePuelenje.auth.filter.JWTAuthorizationFilter;
+import com.ruta.sanJuanDePuelenje.auth.service.JWTService;
 import com.ruta.sanJuanDePuelenje.services.JpaUserDetailsService;
 
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
@@ -43,6 +43,9 @@ public class SpringSecurityConfig {
 	@Autowired
 	private AuthenticationConfiguration authenticationConfiguration;
 
+	@Autowired
+	private JWTService jwtService;
+	
 	@Bean
 	public AuthenticationManager authenticationManager() throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
@@ -58,7 +61,10 @@ public class SpringSecurityConfig {
 
 		RequestMatcher publicMatchers = new OrRequestMatcher(new AntPathRequestMatcher("/"),
 				new AntPathRequestMatcher("/css/**"), new AntPathRequestMatcher("/js/**"),
-				new AntPathRequestMatcher("/images/**"), new AntPathRequestMatcher("/user/ConsultAllUsers"));
+				new AntPathRequestMatcher("/images/**"), new AntPathRequestMatcher("/festival/ConsultAllFestivales"), 
+				new AntPathRequestMatcher("/finca/ConsultAllFincas"), new AntPathRequestMatcher("/lodging/ConsultAllLodging"),
+				new AntPathRequestMatcher("/lunch/ConsultAllLunch"), new AntPathRequestMatcher("/recreation/ConsultAllRecreation"),
+				new AntPathRequestMatcher("/talking/ConsultAllTalking"), new AntPathRequestMatcher("/workshop/ConsultAllWorkshop"));
 
 		http.authorizeHttpRequests(authorize -> {
 			try {
@@ -69,8 +75,8 @@ public class SpringSecurityConfig {
 
 		}).csrf(csrf -> csrf.disable()) // Deshabilitar CSRF ya que vamos a utilizar el jwt
 				.sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))// para que no utilice  sesiones  y  no utilice el estado
-				.addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()))
-				.addFilter(new JWTAuthorizationFilter(authenticationConfiguration.getAuthenticationManager())); 
+				.addFilter(new JWTAuthenticationFilter(authenticationConfiguration.getAuthenticationManager(), jwtService))
+				.addFilter(new JWTAuthorizationFilter(authenticationConfiguration.getAuthenticationManager(), jwtService)); 
 
 		return http.build();
 	}

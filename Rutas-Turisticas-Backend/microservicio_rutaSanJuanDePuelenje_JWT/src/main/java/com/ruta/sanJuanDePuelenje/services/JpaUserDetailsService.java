@@ -39,10 +39,6 @@ public class JpaUserDetailsService implements UserDetailsService{
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		
 		// Agregar el rol con el que se autentico el usuario ya sea admin o user
-		//authorities.add(new SimpleGrantedAuthority("ADMIN"));
-		//authorities.add(new SimpleGrantedAuthority("USER"));
-		
-		
 		Role role = user.getRole(); // Obtén el primer (y único) rol del usuario
 		logger.info("Role: ".concat(role.getName()));
 		authorities.add(new SimpleGrantedAuthority(role.getName()));

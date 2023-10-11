@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.UserDTO;
+import com.ruta.sanJuanDePuelenje.models.Role;
 import com.ruta.sanJuanDePuelenje.models.User;
 import com.ruta.sanJuanDePuelenje.repository.IUserRepository;
 
@@ -73,10 +74,13 @@ public class UserServiceImpl implements IUserService {
 		Response<UserDTO> response = new Response<>();
 		if (user != null) {
 			User userEntity = this.modelMapper.map(user, User.class);
+			/*Crear un rol por defecto USER, de tal forma que solo se guarden usuarios con este rol.
+			 * Por defecto el id para el rol USER va a ser = 2*/
+			Role rol = new Role(2, "USER");
 			//se realiza la codificación de la contraseña antes de guardar en BD
-			String bcryptPassword = passwordEncoder.encode(userEntity.getPassword());
-			userEntity.setPassword(bcryptPassword);
+			userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
 			userEntity.setState(true);
+			userEntity.setRole(rol);
 			User objUser = this.iUserRepository.save(userEntity);
 			UserDTO userDTO = this.modelMapper.map(objUser, UserDTO.class);
 			response.setStatus(200);
@@ -99,12 +103,15 @@ public class UserServiceImpl implements IUserService {
 		Response<UserDTO> response = new Response<>();
 		if (user != null && userId != null) {
 			User userEntity1 = this.iUserRepository.findById(userId).get();
+			//Si la contraseña ha cambiado entra al condicional para encriptar la nueva contraseña
+			if(!passwordEncoder.matches(userEntity.getPassword(), userEntity1.getPassword())) {
+				userEntity1.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+			}
 			userEntity1.setIdentification(userEntity.getIdentification());
 			userEntity1.setName(userEntity.getName());
 			userEntity1.setLastName(userEntity.getLastName());
 			userEntity1.setPhone(userEntity.getPhone());
 			userEntity1.setEmail(userEntity.getEmail());
-			userEntity1.setPassword(userEntity.getPassword());
 			userEntity1.setRole(userEntity.getRole());
 			userEntity1.setLstReserve(userEntity.getLstReserve());
 			userEntity1.setState(userEntity.getState());

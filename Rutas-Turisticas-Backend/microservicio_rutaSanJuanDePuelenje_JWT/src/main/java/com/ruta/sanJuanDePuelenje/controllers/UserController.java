@@ -21,9 +21,8 @@ public class UserController {
 	private IUserService iUserService;
 
 	// Consultar todos los usuarios
-	//@Secured("ADMIN")
+	@Secured("ADMIN")
 	@GetMapping("/ConsultAllUsers")
-	//@RequestMapping(value = {"/ConsultAllUsers", "/"} , method = RequestMethod.GET )
 	public Response<List<UserDTO>> ConsultAllUsers() {
 		return this.iUserService.findAllUsers();
 	}

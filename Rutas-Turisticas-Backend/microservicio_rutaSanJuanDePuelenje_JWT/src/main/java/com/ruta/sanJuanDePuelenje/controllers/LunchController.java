@@ -10,8 +10,6 @@ import com.ruta.sanJuanDePuelenje.DTO.LunchDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.services.ILunchService;
 
-import jakarta.annotation.security.PermitAll;
-
 @RestController
 @RequestMapping("/lunch")
 @CrossOrigin("*")
@@ -21,7 +19,6 @@ public class LunchController {
 	private ILunchService iLunchService;
 
 	// Consultar todos los almuerzos
-	@PermitAll
 	@GetMapping("/ConsultAllLunch")
 	public Response<List<LunchDTO>> ConsultAllLunch() {
 		return this.iLunchService.findAllLunch();

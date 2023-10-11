@@ -11,9 +11,6 @@ import com.ruta.sanJuanDePuelenje.DTO.FestivalDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.services.IFestivalService;
 
-import jakarta.annotation.security.PermitAll;
-
-
 @RestController
 @RequestMapping("/festival")
 @CrossOrigin("*")
@@ -23,8 +20,7 @@ public class FestivalController {
 	private IFestivalService iFestivalService;
 
 	// Consultar todos los festivales
-	@PermitAll
-	@GetMapping("/ConsultAllFestival")
+	@GetMapping("/ConsultAllFestivales")
 	public Response<List<FestivalDTO>> ConsultAllFestival() {
 		return this.iFestivalService.findAllFestival();
 	}

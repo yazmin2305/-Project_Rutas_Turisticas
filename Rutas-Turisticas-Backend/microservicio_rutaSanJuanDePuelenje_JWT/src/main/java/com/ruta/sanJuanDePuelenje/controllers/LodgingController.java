@@ -10,8 +10,6 @@ import com.ruta.sanJuanDePuelenje.DTO.LodgingDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.services.ILodgingService;
 
-import jakarta.annotation.security.PermitAll;
-
 @RestController
 @RequestMapping("/lodging")
 @CrossOrigin("*")
@@ -22,7 +20,6 @@ public class LodgingController {
 	// Consultar todos los hospedajes
 	
 	@GetMapping("/ConsultAllLodging")
-	@PermitAll
 	public Response<List<LodgingDTO>> ConsultAllLodging() {
 		return this.iLodgingService.findAllLodging();
 	}
