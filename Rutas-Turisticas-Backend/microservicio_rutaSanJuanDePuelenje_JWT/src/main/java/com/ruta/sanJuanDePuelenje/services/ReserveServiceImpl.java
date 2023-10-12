@@ -73,7 +73,7 @@ public class ReserveServiceImpl implements IReserveService{
 			Reserve reserveEntity  = this.modelMapper.map(reserve, Reserve.class);
 			reserveEntity.setState(true);
 			double totalPrice = calculateTotalPrice2(reserve);
-			reserveEntity.setTotalPrice(totalPrice);
+			reserveEntity.setTotalPriceReserve(totalPrice);
 			Reserve objReserve = this.iReserveRepository.save(reserveEntity);
 			ReserveDTO reserveDTO = this.modelMapper.map(objReserve, ReserveDTO.class);
 			response.setStatus(200);
@@ -111,9 +111,7 @@ public class ReserveServiceImpl implements IReserveService{
 			reserveEntity1.setLstRecreation(reserveEntity.getLstRecreation());
 			reserveEntity1.setLstLodging(reserveEntity.getLstLodging());
 			reserveEntity1.setLstLunch(reserveEntity.getLstLunch());
-//			reserveEntity1.setFestival(reserveEntity.getFestival());
-			//reserveEntity1.setTotalPrice(reserveEntity.getTotalPrice());
-			reserveEntity1.setTotalPrice(totalPrice);
+			reserveEntity1.setTotalPriceReserve(totalPrice);
 			this.iReserveRepository.save(reserveEntity1);
 			ReserveDTO reserveDTO = this.modelMapper.map(reserveEntity1, ReserveDTO.class);
 			response.setStatus(200);
@@ -223,7 +221,6 @@ public class ReserveServiceImpl implements IReserveService{
 				totalPrice += reserveEntity.getTotalPriceLunch();
 			}
 		}
-		this.iReserveRepository.save(reserveEntity);
 		return totalPrice;
 	}
 

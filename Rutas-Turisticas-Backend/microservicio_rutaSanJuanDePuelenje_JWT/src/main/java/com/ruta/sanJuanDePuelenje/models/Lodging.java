@@ -32,9 +32,6 @@ public class Lodging {
 	@Column(name = "unit_price" ,nullable = false)
 	private Double unitPrice;
 	
-//	@Column(name = "total_price" , nullable = true)
-//	private Double totalPrice;
-	
 	@Column(name = "number_nights" ,nullable = true)
 	private Integer numberNights;
 	
@@ -45,9 +42,6 @@ public class Lodging {
 	@JoinColumn(name = "finca_id")
 	private Finca finca;
 	
-//	@OneToMany(mappedBy = "lodging")
-//	private List<Reserve> LstReserve ;
-	
-	@ManyToMany(mappedBy = "lodging")
+	@ManyToMany(mappedBy = "LstLodging")
 	private List<Reserve> LstReserve ;
 }

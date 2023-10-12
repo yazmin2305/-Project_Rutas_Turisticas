@@ -3,6 +3,7 @@ package com.ruta.sanJuanDePuelenje.models;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,8 +24,8 @@ public class Reserve {
 	private Integer amountPersons;
 	
 	//probar si este campo se puede mandar vacio o sino toca pasarlo a nulleable
-	@Column(name = "total_price" , nullable = false)
-	private Double totalPrice;
+	@Column(name = "total_price" , nullable = true)
+	private Double totalPriceReserve;
 	
 	@Column(name = "lodging_total_price" , nullable = true)
 	private Double totalPriceLodging;
@@ -53,17 +54,15 @@ public class Reserve {
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 	
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "workshop_id", nullable = true)
+	@Nullable
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(
 			name = "reserve_workshop", joinColumns = @JoinColumn(name = "reserve_id", referencedColumnName = "reserve_id"),
 			inverseJoinColumns = @JoinColumn(name = "workshop_id", referencedColumnName = "workshop_id")
 	)
 	private List<Workshop> LstWorkshop;
-	
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "talking_id", nullable = true)
+
+	@Nullable
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(
 			name = "reserve_talking", joinColumns = @JoinColumn(name = "reserve_id", referencedColumnName = "reserve_id"),
@@ -71,8 +70,7 @@ public class Reserve {
 	)
 	private List<Talking> LstTalking;
 	
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "recreation_id", nullable = true)
+	@Nullable
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(
 			name = "reserve_recreation", joinColumns = @JoinColumn(name = "reserve_id", referencedColumnName = "reserve_id"),
@@ -80,8 +78,7 @@ public class Reserve {
 	)
 	private List<Recreation> LstRecreation;
 	
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "lodging_id", nullable = true)
+	@Nullable
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(
 			name = "reserve_lodging", joinColumns = @JoinColumn(name = "reserve_id", referencedColumnName = "reserve_id"),
@@ -89,12 +86,7 @@ public class Reserve {
 	)
 	private List<Lodging> LstLodging;
 	
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "festival_id", nullable = true)
-//	private Festival festival;
-	
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "lunch_id", nullable = true)
+	@Nullable
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(
 			name = "reserve_lunch", joinColumns = @JoinColumn(name = "reserve_id", referencedColumnName = "reserve_id"),

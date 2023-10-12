@@ -26,7 +26,6 @@ public class Festival {
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
-	//@Temporal(TemporalType.timestamp)
 	
 	private String imagen;
 	

@@ -35,19 +35,15 @@ public class Recreation {
 	
 	@Column(name = "unit_price" ,nullable = false)
 	private Double unitPrice;
-	
-//	@Column(name = "total_price" , nullable = true)
-//	private Double totalPrice;
-	
+
 	@Column(nullable = true)
 	private Boolean state;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "finca_id")
 	private Finca finca;
-	
-	//@OneToMany(mappedBy = "recreation")
-	@ManyToMany(mappedBy = "recreation")
+
+	@ManyToMany(mappedBy = "LstRecreation")
 	private List<Reserve> LstReserve ;
 
 }

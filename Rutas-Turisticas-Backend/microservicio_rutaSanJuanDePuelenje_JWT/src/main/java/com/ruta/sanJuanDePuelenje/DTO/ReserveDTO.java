@@ -1,6 +1,7 @@
 package com.ruta.sanJuanDePuelenje.DTO;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,10 +24,10 @@ public class ReserveDTO {
 	private Boolean reserveState;
 	private Date reserveDate;
 	private UserDTO user;
-	private WorkshopDTO workshop;
-	private TalkingDTO talking;
-	private RecreationDTO recreation;
-	private LodgingDTO lodging;
-	private FestivalDTO festival;
-	private LunchDTO lunch;
+	private List<WorkshopDTO> LstWorkshop;
+	private List<TalkingDTO> LstTalking;
+	private List<RecreationDTO> LstRecreation;
+	private List<LodgingDTO> LstLodging;
+	private List<FestivalDTO> LstFestival;
+	private List<LunchDTO> ListLunch;
 }

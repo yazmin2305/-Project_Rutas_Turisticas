@@ -23,13 +23,10 @@ public class Lunch {
 	@Column(name = "unit_price" ,nullable = false)
 	private Double unitPrice;
 	
-//	@Column(name = "total_price" , nullable = true)
-//	private Double totalPrice;
-	
 	@Column(nullable = true)
 	private Boolean state;
 	
-	@ManyToMany(mappedBy = "lunch")
+	@ManyToMany(mappedBy = "LstLunch")
 	private List<Reserve> LstReserve ;
 
 }

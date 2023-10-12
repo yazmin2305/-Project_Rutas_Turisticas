@@ -36,10 +36,6 @@ public class Workshop {
 	@Column(name = "unit_price" ,nullable = false)
 	private Double unitPrice;
 	
-//	@Column(name = "total_price" , nullable = true)
-//	@Transient
-//	private Double totalPrice;
-	
 	@Column(nullable = true)
 	private Boolean state;
 	
@@ -51,7 +47,6 @@ public class Workshop {
 	@JoinColumn(name = "finca_id")
 	private Finca finca;
 	
-//	@OneToMany(mappedBy = "workshop")
-	@ManyToMany(mappedBy = "workshop")
+	@ManyToMany(mappedBy = "LstWorkshop")
 	private List<Reserve> LstReserve ;
 }
