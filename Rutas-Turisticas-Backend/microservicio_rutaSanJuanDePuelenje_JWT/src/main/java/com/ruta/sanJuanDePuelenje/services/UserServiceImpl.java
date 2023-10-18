@@ -112,6 +112,7 @@ public class UserServiceImpl implements IUserService {
 			userEntity1.setLastName(userEntity.getLastName());
 			userEntity1.setPhone(userEntity.getPhone());
 			userEntity1.setEmail(userEntity.getEmail());
+			//solo la persona que tiene el rol superusuario puede cambiar el rol de un usuario....falta???
 			userEntity1.setRole(userEntity.getRole());
 			userEntity1.setLstReserve(userEntity.getLstReserve());
 			userEntity1.setState(userEntity.getState());

@@ -32,8 +32,8 @@ public class Lodging {
 	@Column(name = "unit_price" ,nullable = false)
 	private Double unitPrice;
 	
-	@Column(name = "number_nights" ,nullable = true)
-	private Integer numberNights;
+//	@Column(name = "number_nights" ,nullable = true)
+//	private Integer numberNights;
 	
 	@Column(nullable = true)
 	private Boolean state;
@@ -44,4 +44,8 @@ public class Lodging {
 	
 	@ManyToMany(mappedBy = "LstLodging")
 	private List<Reserve> LstReserve ;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ruta_id")
+	private Ruta ruta;
 }

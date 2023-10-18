@@ -49,4 +49,8 @@ public class Workshop {
 	
 	@ManyToMany(mappedBy = "LstWorkshop")
 	private List<Reserve> LstReserve ;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ruta_id")
+	private Ruta ruta;
 }

@@ -28,5 +28,9 @@ public class Lunch {
 	
 	@ManyToMany(mappedBy = "LstLunch")
 	private List<Reserve> LstReserve ;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ruta_id")
+	private Ruta ruta;
 
 }

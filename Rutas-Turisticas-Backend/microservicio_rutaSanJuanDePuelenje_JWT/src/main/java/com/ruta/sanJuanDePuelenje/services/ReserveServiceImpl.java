@@ -98,6 +98,9 @@ public class ReserveServiceImpl implements IReserveService{
 			Reserve reserveEntity1 = this.iReserveRepository.findById(reserveId).get();
 			double totalPrice = calculateTotalPrice2(reserve);
 			reserveEntity1.setAmountPersons(reserveEntity.getAmountPersons());
+//			reserveEntity1.setFechaInicio(reserveEntity.getFechaInicio());
+//			reserveEntity1.setFechaFin(reserveEntity.getFechaFin());
+			reserveEntity1.setNumberNights(reserveEntity.getNumberNights());
 			reserveEntity1.setTotalPriceLodging(reserveEntity.getTotalPriceLodging());
 			reserveEntity1.setTotalPriceLunch(reserveEntity.getTotalPriceLunch());
 			reserveEntity1.setTotalPriceRecreation(reserveEntity.getTotalPriceRecreation());

@@ -23,7 +23,18 @@ public class Reserve {
 	@Column(name = "amount_persons", nullable = false)
 	private Integer amountPersons;
 	
-	//probar si este campo se puede mandar vacio o sino toca pasarlo a nulleable
+//	@Column(nullable = false)
+//	@Temporal(TemporalType.TIMESTAMP)
+//	private Date fechaInicio;
+//	
+//	@Column(nullable = false)
+//	@Temporal(TemporalType.TIMESTAMP)
+//	private Date fechaFin;
+	
+	//si el usuario va a reservar hospedaje debe añadir que tantas noches se va a quedar
+	@Column(name = "number_nights" ,nullable = true)
+	private Integer numberNights;
+	
 	@Column(name = "total_price" , nullable = true)
 	private Double totalPriceReserve;
 	
@@ -93,4 +104,8 @@ public class Reserve {
 			inverseJoinColumns = @JoinColumn(name = "lunch_id", referencedColumnName = "lunch_id")
 	)
 	private List<Lunch> LstLunch;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ruta_id")
+	private Ruta ruta;
 }

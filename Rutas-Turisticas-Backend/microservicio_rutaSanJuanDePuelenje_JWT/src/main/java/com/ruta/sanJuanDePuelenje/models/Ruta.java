@@ -6,45 +6,47 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "finca")
+@Table(name = "ruta")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Finca {
+public class Ruta {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "finca_id")
+	@Column(name = "ruta_id")
 	private Integer id;
 	
 	@Column(nullable = false, length = 50)
 	private String name;
 	
-	@Column(nullable = false, length = 200)
-	private String description;
-	
-	@Column(nullable = false, length = 200)
-	private String location;
-	
-	@Column(nullable = true)
-	private Boolean state;
-	
-	@OneToMany(mappedBy = "finca")
+	@OneToMany(mappedBy = "ruta")
 	private List<Talking> LstTalking;
 	
-	@OneToMany(mappedBy = "finca")
+	@OneToMany(mappedBy = "ruta")
 	private List<Workshop> LstWorkshop;
 
-	@OneToMany(mappedBy = "finca")
+	@OneToMany(mappedBy = "ruta")
 	private List<Recreation> LstRecreation;
 	
-	@OneToMany(mappedBy = "finca")
+	@OneToMany(mappedBy = "ruta")
 	private List<Lodging> LstLodging;
 	
-	@OneToMany(mappedBy = "finca")
+	@OneToMany(mappedBy = "ruta")
 	private List<Festival> LstFestival;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "ruta_id")
-	private Ruta ruta;
+	@OneToMany(mappedBy = "ruta")
+	private List<Finca> LstFinca;
+
+	@OneToMany(mappedBy = "ruta")
+	private List<Lunch> LstLunch;
+	
+	@OneToMany(mappedBy = "ruta")
+	private List<Reserve> LstReserve;
+	
+	@OneToMany(mappedBy = "ruta")
+	private List<User> LstUser;
+		
+	
 }
