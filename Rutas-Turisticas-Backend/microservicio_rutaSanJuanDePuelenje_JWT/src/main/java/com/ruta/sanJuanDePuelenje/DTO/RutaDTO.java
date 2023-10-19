@@ -9,14 +9,18 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RutaDTO {
-	private Integer rutaID;
+	private Integer rutaId;
 	private String rutaName;
-	private List<WorkshopDTO> LstWorkshop;
+	private String rutaState;
 	private List<TalkingDTO> LstTalking;
+	private List<WorkshopDTO> LstWorkshop;
 	private List<RecreationDTO> LstRecreation;
 	private List<LodgingDTO> LstLodging;
 	private List<FestivalDTO> LstFestival;
-	private List<LunchDTO> ListLunch;
+	private List<FincaDTO> LstFinca;
+	private List<LunchDTO> LstLunch;
+	private List<ReserveDTO> LstReserve;
+	private List<UserDTO> LstUser;
 	
 	
 }

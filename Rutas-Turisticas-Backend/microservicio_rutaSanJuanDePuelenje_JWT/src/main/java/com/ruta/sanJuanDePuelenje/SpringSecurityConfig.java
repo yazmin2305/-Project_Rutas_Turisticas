@@ -64,7 +64,8 @@ public class SpringSecurityConfig {
 				new AntPathRequestMatcher("/images/**"), new AntPathRequestMatcher("/festival/ConsultAllFestivales"), 
 				new AntPathRequestMatcher("/finca/ConsultAllFincas"), new AntPathRequestMatcher("/lodging/ConsultAllLodging"),
 				new AntPathRequestMatcher("/lunch/ConsultAllLunch"), new AntPathRequestMatcher("/recreation/ConsultAllRecreation"),
-				new AntPathRequestMatcher("/talking/ConsultAllTalking"), new AntPathRequestMatcher("/workshop/ConsultAllWorkshop"));
+				new AntPathRequestMatcher("/talking/ConsultAllTalking"), new AntPathRequestMatcher("/workshop/ConsultAllWorkshop"),
+				new AntPathRequestMatcher("/ruta/ConsultAllRutas"));
 
 		http.authorizeHttpRequests(authorize -> {
 			try {

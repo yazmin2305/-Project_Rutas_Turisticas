@@ -96,7 +96,6 @@ public class TalkingServiceImpl implements ITalkingService{
 			talkingEntity1.setAvailability(talkingEntity.getAvailability());
 			talkingEntity1.setMaxAmountPerson(talkingEntity.getMaxAmountPerson());
 			talkingEntity1.setUnitPrice(talkingEntity.getUnitPrice());
-//			talkingEntity1.setTotalPrice(talkingEntity.getTotalPrice());
 			talkingEntity1.setState(talkingEntity.getState());
 			talkingEntity1.setFinca(talkingEntity.getFinca());
 			talkingEntity1.setLstReserve(talkingEntity.getLstReserve());
@@ -166,12 +165,12 @@ public class TalkingServiceImpl implements ITalkingService{
 			List<TalkingDTO> talkingDTO = talkingEntity.stream().map(talking -> modelMapper.map(talking, TalkingDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Charlas encontrados con éxito");
-			response.setMoreInfo("http://localhost:8080/talking/ConsultAllTalkingDisabled");
+			response.setMoreInfo("http://localhost:8080/talking/ConsultAllTalkingByState");
 			response.setData(talkingDTO);
 		}else {
 			response.setStatus(404);
 			response.setUserMessage("No existen charlas relacionadas a este estado");
-			response.setMoreInfo("http://localhost:8080/talking/ConsultAllTalkingDisabled");
+			response.setMoreInfo("http://localhost:8080/talking/ConsultAllTalkingByState");
 			response.setData(null);
 		}
 		return response;

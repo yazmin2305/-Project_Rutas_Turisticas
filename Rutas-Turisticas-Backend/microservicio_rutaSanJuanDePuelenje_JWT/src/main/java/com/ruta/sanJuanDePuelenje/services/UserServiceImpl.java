@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.UserDTO;
+import com.ruta.sanJuanDePuelenje.auth.service.JWTService;
 import com.ruta.sanJuanDePuelenje.models.Role;
 import com.ruta.sanJuanDePuelenje.models.User;
 import com.ruta.sanJuanDePuelenje.repository.IUserRepository;
@@ -26,6 +27,8 @@ public class UserServiceImpl implements IUserService {
 	// guardar en la BD
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	
+	private JWTService jwtService;
 
 	@Override
 	@Transactional(readOnly = true)
