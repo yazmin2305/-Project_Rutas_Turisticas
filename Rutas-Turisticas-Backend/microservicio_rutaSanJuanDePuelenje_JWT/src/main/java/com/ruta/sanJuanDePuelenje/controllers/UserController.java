@@ -7,6 +7,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
+import com.ruta.sanJuanDePuelenje.DTO.RoleDTO;
 import com.ruta.sanJuanDePuelenje.DTO.UserDTO;
 import com.ruta.sanJuanDePuelenje.services.IUserService;
 
@@ -62,4 +63,9 @@ public class UserController {
 		return this.iUserService.findAllUserBytState(state);
 	}
 
+	@Secured("SUPER")
+	@PutMapping("/changeRolUser/{id}")
+	public Response<Boolean> changeRolUser(@PathVariable Integer id, @RequestBody RoleDTO role) {
+		return this.iUserService.changeRolUser(id, role);
+	}
 }

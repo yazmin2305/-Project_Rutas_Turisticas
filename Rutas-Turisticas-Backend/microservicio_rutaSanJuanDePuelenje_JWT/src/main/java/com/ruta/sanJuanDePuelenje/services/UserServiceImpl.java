@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
+import com.ruta.sanJuanDePuelenje.DTO.RoleDTO;
 import com.ruta.sanJuanDePuelenje.DTO.UserDTO;
-import com.ruta.sanJuanDePuelenje.auth.service.JWTService;
 import com.ruta.sanJuanDePuelenje.models.Role;
 import com.ruta.sanJuanDePuelenje.models.User;
 import com.ruta.sanJuanDePuelenje.repository.IUserRepository;
@@ -27,8 +27,6 @@ public class UserServiceImpl implements IUserService {
 	// guardar en la BD
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	
-	private JWTService jwtService;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -116,7 +114,7 @@ public class UserServiceImpl implements IUserService {
 			userEntity1.setPhone(userEntity.getPhone());
 			userEntity1.setEmail(userEntity.getEmail());
 			//solo la persona que tiene el rol superusuario puede cambiar el rol de un usuario....falta???
-			userEntity1.setRole(userEntity.getRole());
+			//userEntity1.setRole(userEntity.getRole());
 			userEntity1.setLstReserve(userEntity.getLstReserve());
 			userEntity1.setState(userEntity.getState());
 			this.iUserRepository.save(userEntity1);
@@ -180,4 +178,29 @@ public class UserServiceImpl implements IUserService {
 		return response;
 	}
 
+	@Override
+	@Transactional
+	public Response<Boolean> changeRolUser(Integer userId, RoleDTO roleDTO) {
+		User userEntity = this.iUserRepository.findById(userId).get();
+		Response<Boolean> response = new Response<>();
+		if(userEntity != null) {
+			Role role = this.modelMapper.map(roleDTO, Role.class);
+			if(userEntity.getRole().getName().equals("USER")) {
+				userEntity.setRole(role);
+				this.iUserRepository.save(userEntity);
+				response.setStatus(200);
+				response.setUserMessage("Cambio de rol exitoso");
+				response.setMoreInfo("http://localhost:8080/user/changeRolUser/{id}");
+				response.setData(true);
+			}else if (userEntity.getRole().getName().equals("ADMIN")) {
+				response.setStatus(404);
+				response.setUserMessage("El usuario ya tiene rol de administrador");
+				response.setMoreInfo("http://localhost:8080/user/changeRolUser/{id}");
+				response.setData(false);
+			}
+		}
+		return response;
+	}
+
+	
 }

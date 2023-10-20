@@ -36,9 +36,9 @@ public class RutaController {
 	}
 	
 	@Secured("SUPER")
-	@PostMapping("SaveRuta")
+	@PostMapping("/SaveRuta")
 	public Response<RutaDTO> SaveRuta(@RequestBody RutaDTO ruta){
-		return this.SaveRuta(ruta);
+		return this.iRutaService.saveRuta(ruta);
 	}
 	
 	@Secured("SUPER")
@@ -54,7 +54,7 @@ public class RutaController {
 	}
 	
 	@Secured("SUPER")
-	@GetMapping("ConsultAllRutasByState/{state}")
+	@GetMapping("/ConsultAllRutasByState/{state}")
 	public Response<List<RutaDTO>> ConsultAllRutaByState(@PathVariable Boolean state){
 		return this.iRutaService.findAllRutasBytState(state);
 	}

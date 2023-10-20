@@ -58,14 +58,14 @@ public class SpringSecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
+		//aqui se encuentras las rutas de todos los servicios que van a estar disponibles sin que un usuario se tenga que logear
 		RequestMatcher publicMatchers = new OrRequestMatcher(new AntPathRequestMatcher("/"),
 				new AntPathRequestMatcher("/css/**"), new AntPathRequestMatcher("/js/**"),
 				new AntPathRequestMatcher("/images/**"), new AntPathRequestMatcher("/festival/ConsultAllFestivales"), 
 				new AntPathRequestMatcher("/finca/ConsultAllFincas"), new AntPathRequestMatcher("/lodging/ConsultAllLodging"),
 				new AntPathRequestMatcher("/lunch/ConsultAllLunch"), new AntPathRequestMatcher("/recreation/ConsultAllRecreation"),
 				new AntPathRequestMatcher("/talking/ConsultAllTalking"), new AntPathRequestMatcher("/workshop/ConsultAllWorkshop"),
-				new AntPathRequestMatcher("/ruta/ConsultAllRutas"));
+				new AntPathRequestMatcher("/ruta/ConsultAllRutas"), new AntPathRequestMatcher("/user/SaveUser"));
 
 		http.authorizeHttpRequests(authorize -> {
 			try {
