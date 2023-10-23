@@ -2,20 +2,21 @@ package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
 
-import com.ruta.sanJuanDePuelenje.DTO.RecreationDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
+import com.ruta.sanJuanDePuelenje.DTO.Command.RecreationCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.RecreationQueryDTO;
 
 public interface IRecreationService {
 	
-	public Response<List<RecreationDTO>> findAllRecreation();
+	public Response<List<RecreationQueryDTO>> findAllRecreation();
 	
-	public Response<RecreationDTO> findByRecreationId(Integer recreationId);
+	public Response<RecreationQueryDTO> findByRecreationId(Integer recreationId);
 	
-	public Response<RecreationDTO> saveRecreation(RecreationDTO recreation);
+	public Response<RecreationCommandDTO> saveRecreation(RecreationCommandDTO recreation);
 	
-	public Response<RecreationDTO> updateRecreation(Integer recreationId, RecreationDTO recreation);
+	public Response<RecreationQueryDTO> updateRecreation(Integer recreationId, RecreationCommandDTO recreation);
 	
 	public Response<Boolean> disableRecreation(Integer recreationId);
 	
-	public Response<List<RecreationDTO>> findAllRecreationBytState(boolean state);
+	public Response<List<RecreationQueryDTO>> findAllRecreationBytState(boolean state);
 }

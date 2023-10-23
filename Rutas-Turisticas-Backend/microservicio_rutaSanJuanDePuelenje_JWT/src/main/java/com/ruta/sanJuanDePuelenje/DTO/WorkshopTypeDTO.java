@@ -2,6 +2,8 @@ package com.ruta.sanJuanDePuelenje.DTO;
 
 import java.util.List;
 
+import com.ruta.sanJuanDePuelenje.DTO.Query.WorkshopQueryDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkshopTypeDTO {
-	private Integer workshopTypeId;
 	private String workshopTypeName;
 	private Boolean WorkshopTypeState;
-	private List<WorkshopDTO> lstWorkshopDTOs;
+	private List<WorkshopQueryDTO> lstWorkshopDTOs;
 }

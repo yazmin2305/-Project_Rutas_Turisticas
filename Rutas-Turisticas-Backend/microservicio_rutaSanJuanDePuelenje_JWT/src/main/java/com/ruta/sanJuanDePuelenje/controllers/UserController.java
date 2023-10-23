@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.RoleDTO;
-import com.ruta.sanJuanDePuelenje.DTO.UserDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Command.UserCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.UserQueryDTO;
 import com.ruta.sanJuanDePuelenje.services.IUserService;
 
 import jakarta.annotation.security.PermitAll;
@@ -24,28 +25,28 @@ public class UserController {
 	// Consultar todos los usuarios
 	@Secured("ADMIN")
 	@GetMapping("/ConsultAllUsers")
-	public Response<List<UserDTO>> ConsultAllUsers() {
+	public Response<List<UserQueryDTO>> ConsultAllUsers() {
 		return this.iUserService.findAllUsers();
 	}
 
 	// Consultar usuario por id
 	@Secured("ADMIN")
 	@GetMapping("/ConsultById/{id}")
-	public Response<UserDTO> ConsultUserById(@PathVariable Integer id) {
+	public Response<UserQueryDTO> ConsultUserById(@PathVariable Integer id) {
 		return this.iUserService.findByUserId(id);
 	}
 
 	// Guardar usuario
 	@PermitAll
 	@PostMapping("/SaveUser")
-	public Response<UserDTO> SaveUser(@RequestBody UserDTO user) {
+	public Response<UserCommandDTO> SaveUser(@RequestBody UserCommandDTO user) {
 		return this.iUserService.saveUser(user);
 	}
 
 	// Actualizar usuario
 	@Secured({"ADMIN", "USER"})
 	@PutMapping("/UpdateUser/{id}")
-	public Response<UserDTO> UpdateUser(@RequestBody UserDTO user, @PathVariable Integer id) {
+	public Response<UserQueryDTO> UpdateUser(@RequestBody UserCommandDTO user, @PathVariable Integer id) {
 		return this.iUserService.updateUser(id, user);
 	}
 
@@ -59,7 +60,7 @@ public class UserController {
 	// Consultar los usuarios dependiento su estado: activado - desactivado
 	@Secured("ADMIN")
 	@GetMapping("ConsultAllUsersByState/{state}")
-	public Response<List<UserDTO>> ConsultAllUsersByState(@PathVariable Boolean state) {
+	public Response<List<UserQueryDTO>> ConsultAllUsersByState(@PathVariable Boolean state) {
 		return this.iUserService.findAllUserBytState(state);
 	}
 

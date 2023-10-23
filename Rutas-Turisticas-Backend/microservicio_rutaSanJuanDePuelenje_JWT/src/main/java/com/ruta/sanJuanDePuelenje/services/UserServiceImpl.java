@@ -11,7 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.RoleDTO;
-import com.ruta.sanJuanDePuelenje.DTO.UserDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Command.UserCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.UserQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Role;
 import com.ruta.sanJuanDePuelenje.models.User;
 import com.ruta.sanJuanDePuelenje.repository.IUserRepository;
@@ -30,16 +31,16 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<UserDTO>> findAllUsers() {
+	public Response<List<UserQueryDTO>> findAllUsers() {
 		List<User> userEntity = iUserRepository.findAll();
-		Response<List<UserDTO>> response = new Response<>();
+		Response<List<UserQueryDTO>> response = new Response<>();
 		if (userEntity.isEmpty()) {
 			response.setStatus(404);
 			response.setUserMessage("Usuarios no encontrados");
 			response.setMoreInfo("http://localhost:8080/user/ConsultAllUsers");
 			response.setData(null);
 		} else {
-			List<UserDTO> userDTOs = userEntity.stream().map(user -> modelMapper.map(user, UserDTO.class))
+			List<UserQueryDTO> userDTOs = userEntity.stream().map(user -> modelMapper.map(user, UserQueryDTO.class))
 					.collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Usuarios encontrados con éxito");
@@ -51,16 +52,16 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<UserDTO> findByUserId(Integer userId) {
+	public Response<UserQueryDTO> findByUserId(Integer userId) {
 		User user = iUserRepository.findById(userId).orElse(null);
-		Response<UserDTO> response = new Response<>();
+		Response<UserQueryDTO> response = new Response<>();
 		if (user == null) {
 			response.setStatus(404);
 			response.setUserMessage("Usuario no encontrado");
 			response.setMoreInfo("http://localhost:8080/user/ConsultById{id}");
 			response.setData(null);
 		} else {
-			UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+			UserQueryDTO userDTO = modelMapper.map(user, UserQueryDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Usuario encontrado con éxito");
 			response.setMoreInfo("http://localhost:8080/user/ConsultById/{id}");
@@ -71,8 +72,8 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	@Transactional
-	public Response<UserDTO> saveUser(UserDTO user) {
-		Response<UserDTO> response = new Response<>();
+	public Response<UserCommandDTO> saveUser(UserCommandDTO user) {
+		Response<UserCommandDTO> response = new Response<>();
 		if (user != null) {
 			User userEntity = this.modelMapper.map(user, User.class);
 			/*Crear un rol por defecto USER, de tal forma que solo se guarden usuarios con este rol.
@@ -83,7 +84,7 @@ public class UserServiceImpl implements IUserService {
 			userEntity.setState(true);
 			userEntity.setRole(rol);
 			User objUser = this.iUserRepository.save(userEntity);
-			UserDTO userDTO = this.modelMapper.map(objUser, UserDTO.class);
+			UserCommandDTO userDTO = this.modelMapper.map(objUser, UserCommandDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Usuario creado con éxito");
 			response.setMoreInfo("http://localhost:8080/user/SaveUser");
@@ -99,9 +100,9 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	@Transactional
-	public Response<UserDTO> updateUser(Integer userId, UserDTO user) {
+	public Response<UserQueryDTO> updateUser(Integer userId, UserCommandDTO user) {
 		User userEntity = this.modelMapper.map(user, User.class);
-		Response<UserDTO> response = new Response<>();
+		Response<UserQueryDTO> response = new Response<>();
 		if (user != null && userId != null) {
 			User userEntity1 = this.iUserRepository.findById(userId).get();
 			//Si la contraseña ha cambiado entra al condicional para encriptar la nueva contraseña
@@ -118,7 +119,7 @@ public class UserServiceImpl implements IUserService {
 			userEntity1.setLstReserve(userEntity.getLstReserve());
 			userEntity1.setState(userEntity.getState());
 			this.iUserRepository.save(userEntity1);
-			UserDTO userDTO = this.modelMapper.map(userEntity1, UserDTO.class);
+			UserQueryDTO userDTO = this.modelMapper.map(userEntity1, UserQueryDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Usuario actualizado con éxito");
 			response.setMoreInfo("http://localhost:8080/user/UpdateUser/{id}");
@@ -159,11 +160,11 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<UserDTO>> findAllUserBytState(boolean state) {
+	public Response<List<UserQueryDTO>> findAllUserBytState(boolean state) {
 		List<User> userEntity = this.iUserRepository.LstUserByState(state);
-		Response<List<UserDTO>> response = new Response<>();
+		Response<List<UserQueryDTO>> response = new Response<>();
 		if (!userEntity.isEmpty()) {
-			List<UserDTO> userDTO = userEntity.stream().map(user -> modelMapper.map(user, UserDTO.class))
+			List<UserQueryDTO> userDTO = userEntity.stream().map(user -> modelMapper.map(user, UserQueryDTO.class))
 					.collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Usuarios encontrados con éxito");

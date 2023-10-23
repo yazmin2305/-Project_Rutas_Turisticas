@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ruta.sanJuanDePuelenje.DTO.ReserveDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
+import com.ruta.sanJuanDePuelenje.DTO.Command.ReserveCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.ReserveQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Lodging;
 import com.ruta.sanJuanDePuelenje.models.Lunch;
 import com.ruta.sanJuanDePuelenje.models.Recreation;
@@ -28,16 +29,16 @@ public class ReserveServiceImpl implements IReserveService{
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<ReserveDTO>> findAllReserve() {
+	public Response<List<ReserveQueryDTO>> findAllReserve() {
 		List<Reserve> reserveEntity = iReserveRepository.findAll();
-		Response<List<ReserveDTO>> response = new Response<>();
+		Response<List<ReserveQueryDTO>> response = new Response<>();
 		if(reserveEntity.isEmpty()) {
 			response.setStatus(404);
 			response.setUserMessage("No se encontraron reservas");
 			response.setMoreInfo("http://localhost:8080/reserve/ConsultAllReserve");
 			response.setData(null);
 		}else {
-			List<ReserveDTO> reserveDTOs = reserveEntity.stream().map(reserve -> modelMapper.map(reserve, ReserveDTO.class)).collect(Collectors.toList());
+			List<ReserveQueryDTO> reserveDTOs = reserveEntity.stream().map(reserve -> modelMapper.map(reserve, ReserveQueryDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Reservas encontradas con éxito");
 			response.setMoreInfo("http://localhost:8080/reserve/ConsultAllReserve");
@@ -48,16 +49,16 @@ public class ReserveServiceImpl implements IReserveService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<ReserveDTO> findByReserveId(Integer reserveId) {
+	public Response<ReserveQueryDTO> findByReserveId(Integer reserveId) {
 		Reserve reserve = iReserveRepository.findById(reserveId).orElse(null);
-		Response<ReserveDTO> response = new Response<>();
+		Response<ReserveQueryDTO> response = new Response<>();
 		if(reserve == null) {
 			response.setStatus(404);
 			response.setUserMessage("No se encontró la reserva");
 			response.setMoreInfo("http://localhost:8080/user/ConsultById/{id}");
 			response.setData(null);
 		}
-		ReserveDTO reserveDTO = modelMapper.map(reserve, ReserveDTO.class);
+		ReserveQueryDTO reserveDTO = modelMapper.map(reserve, ReserveQueryDTO.class);
 		response.setStatus(200);
 		response.setUserMessage("Reserva encontrada con éxito");
 		response.setMoreInfo("http://localhost:8080/user/ConsultById/{id}");
@@ -67,15 +68,15 @@ public class ReserveServiceImpl implements IReserveService{
 
 	@Override
 	@Transactional
-	public Response<ReserveDTO> saveReserve(ReserveDTO reserve) {
-		Response<ReserveDTO> response = new Response<>();
+	public Response<ReserveCommandDTO> saveReserve(ReserveCommandDTO reserve) {
+		Response<ReserveCommandDTO> response = new Response<>();
 		if(reserve != null) {
 			Reserve reserveEntity  = this.modelMapper.map(reserve, Reserve.class);
 			reserveEntity.setState(true);
 			double totalPrice = calculateTotalPrice2(reserve);
 			reserveEntity.setTotalPriceReserve(totalPrice);
 			Reserve objReserve = this.iReserveRepository.save(reserveEntity);
-			ReserveDTO reserveDTO = this.modelMapper.map(objReserve, ReserveDTO.class);
+			ReserveCommandDTO reserveDTO = this.modelMapper.map(objReserve, ReserveCommandDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Reserva creada con éxito");
 			response.setMoreInfo("http://localhost:8080/reserve/SaveReserve");
@@ -91,8 +92,8 @@ public class ReserveServiceImpl implements IReserveService{
 
 	@Override
 	@Transactional
-	public Response<ReserveDTO> updateReserve(Integer reserveId, ReserveDTO reserve) {
-		Response<ReserveDTO> response = new Response<>();
+	public Response<ReserveQueryDTO> updateReserve(Integer reserveId, ReserveCommandDTO reserve) {
+		Response<ReserveQueryDTO> response = new Response<>();
 		if(reserve != null && reserveId != null) {
 			Reserve reserveEntity = this.modelMapper.map(reserve, Reserve.class);
 			Reserve reserveEntity1 = this.iReserveRepository.findById(reserveId).get();
@@ -116,7 +117,7 @@ public class ReserveServiceImpl implements IReserveService{
 			reserveEntity1.setLstLunch(reserveEntity.getLstLunch());
 			reserveEntity1.setTotalPriceReserve(totalPrice);
 			this.iReserveRepository.save(reserveEntity1);
-			ReserveDTO reserveDTO = this.modelMapper.map(reserveEntity1, ReserveDTO.class);
+			ReserveQueryDTO reserveDTO = this.modelMapper.map(reserveEntity1, ReserveQueryDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Reserva actualizada con éxito");
 			response.setMoreInfo("http://localhost:8080/reserve/UpdateReserve/{id}");
@@ -175,11 +176,11 @@ public class ReserveServiceImpl implements IReserveService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<ReserveDTO>> findReservesByUser(Integer reserveId) {
+	public Response<List<ReserveQueryDTO>> findReservesByUser(Integer reserveId) {
 		List<Reserve> reserveEntity = iReserveRepository.reservasUsuario(reserveId);
-		Response<List<ReserveDTO>> response = new Response<>();
+		Response<List<ReserveQueryDTO>> response = new Response<>();
 		if(!reserveEntity.isEmpty()) {
-			List<ReserveDTO> reserveDTO = reserveEntity.stream().map(reserve -> modelMapper.map(reserve, ReserveDTO.class)).collect(Collectors.toList());
+			List<ReserveQueryDTO> reserveDTO = reserveEntity.stream().map(reserve -> modelMapper.map(reserve, ReserveQueryDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Reservas encontradas con éxito");
 			response.setMoreInfo("http://localhost:8080/reserve/ConsultAllReserveUser");
@@ -194,7 +195,7 @@ public class ReserveServiceImpl implements IReserveService{
 	}
 	
 	//se calcula el precio total de la reserva y el precio total por cada item que el usuario selecciona
-	private Double calculateTotalPrice2(ReserveDTO reserve) {
+	private Double calculateTotalPrice2(ReserveCommandDTO reserve) {
 		Reserve reserveEntity = this.modelMapper.map(reserve, Reserve.class);
 		double totalPrice = 0;
 		//ya tengo que recorrer la lista de lodging de talkin de recreation y demas...

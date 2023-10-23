@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ruta.sanJuanDePuelenje.DTO.RecreationDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
+import com.ruta.sanJuanDePuelenje.DTO.Command.RecreationCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.RecreationQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Recreation;
 import com.ruta.sanJuanDePuelenje.repository.IRecreationRepository;
 
@@ -23,17 +24,17 @@ public class RecreationServiceImpl implements IRecreationService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<RecreationDTO>> findAllRecreation() {
+	public Response<List<RecreationQueryDTO>> findAllRecreation() {
 		List<Recreation> recreationEntity = iRecreationRepository.findAll();
-		Response<List<RecreationDTO>> response = new Response<>();
+		Response<List<RecreationQueryDTO>> response = new Response<>();
 		if (recreationEntity.isEmpty()) {
 			response.setStatus(404);
 			response.setUserMessage("Actividades de recreación no encontrados");
 			response.setMoreInfo("http://localhost:8080/recreation/ConsultAllRecreation");
 			response.setData(null);
 		}else {
-			List<RecreationDTO> recreationDTOs = recreationEntity.stream()
-					.map(recreation -> modelMapper.map(recreation, RecreationDTO.class)).collect(Collectors.toList());
+			List<RecreationQueryDTO> recreationDTOs = recreationEntity.stream()
+					.map(recreation -> modelMapper.map(recreation, RecreationQueryDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Actividades de recreación encontradas con éxito");
 			response.setMoreInfo("http://localhost:8080/recreation/ConsultAllRecreation");
@@ -44,16 +45,16 @@ public class RecreationServiceImpl implements IRecreationService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<RecreationDTO> findByRecreationId(Integer recreationId) {
+	public Response<RecreationQueryDTO> findByRecreationId(Integer recreationId) {
 		Recreation recreation = iRecreationRepository.findById(recreationId).orElse(null);
-		Response<RecreationDTO> response = new Response<>();
+		Response<RecreationQueryDTO> response = new Response<>();
 		if (recreation == null) {
 			response.setStatus(404);
 			response.setUserMessage("Actividad no encontrada");
 			response.setMoreInfo("http://localhost:8080/recreation/ConsultById/{id}");
 			response.setData(null);
 		}
-		RecreationDTO recreationDTO = modelMapper.map(recreation, RecreationDTO.class);
+		RecreationQueryDTO recreationDTO = modelMapper.map(recreation, RecreationQueryDTO.class);
 		response.setStatus(200);
 		response.setUserMessage("Actividad encontrada con éxito");
 		response.setMoreInfo("http://localhost:8080/recreation/ConsultById/{id}");
@@ -63,13 +64,13 @@ public class RecreationServiceImpl implements IRecreationService {
 
 	@Override
 	@Transactional
-	public Response<RecreationDTO> saveRecreation(RecreationDTO recreation) {
-		Response<RecreationDTO> response = new Response<>();
+	public Response<RecreationCommandDTO> saveRecreation(RecreationCommandDTO recreation) {
+		Response<RecreationCommandDTO> response = new Response<>();
 		if(recreation != null) {
 			Recreation recreationEntity = this.modelMapper.map(recreation, Recreation.class);
 			recreationEntity.setState(true);
 			Recreation objRecreation = this.iRecreationRepository.save(recreationEntity);
-			RecreationDTO recreationDTO = this.modelMapper.map(objRecreation, RecreationDTO.class);
+			RecreationCommandDTO recreationDTO = this.modelMapper.map(objRecreation, RecreationCommandDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Actividad de recreación creada con éxito");
 			response.setMoreInfo("http://localhost:8080/recreation/SaveRecreation");
@@ -85,8 +86,8 @@ public class RecreationServiceImpl implements IRecreationService {
 
 	@Override
 	@Transactional
-	public Response<RecreationDTO> updateRecreation(Integer recreationId, RecreationDTO recreation) {
-		Response<RecreationDTO> response = new Response<>();
+	public Response<RecreationQueryDTO> updateRecreation(Integer recreationId, RecreationCommandDTO recreation) {
+		Response<RecreationQueryDTO> response = new Response<>();
 		if(recreation != null && recreationId != null) {
 			Recreation recreationEntity = this.modelMapper.map(recreation, Recreation.class);
 			Recreation recreationEntity1 = this.iRecreationRepository.findById(recreationId).get();
@@ -101,7 +102,7 @@ public class RecreationServiceImpl implements IRecreationService {
 			recreationEntity1.setFinca(recreationEntity.getFinca());
 			recreationEntity1.setLstReserve(recreationEntity.getLstReserve());
 			this.iRecreationRepository.save(recreationEntity1);
-			RecreationDTO recreationDTO = this.modelMapper.map(recreationEntity1, RecreationDTO.class);
+			RecreationQueryDTO recreationDTO = this.modelMapper.map(recreationEntity1, RecreationQueryDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Actividad de recreación actualizada con éxito");
 			response.setMoreInfo("http://localhost:8080/recreation/UpdateRecreation/{id}");
@@ -140,11 +141,11 @@ public class RecreationServiceImpl implements IRecreationService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<RecreationDTO>> findAllRecreationBytState(boolean state) {
+	public Response<List<RecreationQueryDTO>> findAllRecreationBytState(boolean state) {
 		List<Recreation> recreationEntity = this.iRecreationRepository.LstRecreationByState(state);
-		Response<List<RecreationDTO>> response = new Response<>();
+		Response<List<RecreationQueryDTO>> response = new Response<>();
 		if(!recreationEntity.isEmpty()) {
-			List<RecreationDTO> recreationDTO = recreationEntity.stream().map(recreation -> modelMapper.map(recreation, RecreationDTO.class)).collect(Collectors.toList());
+			List<RecreationQueryDTO> recreationDTO = recreationEntity.stream().map(recreation -> modelMapper.map(recreation, RecreationQueryDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Actividades de recreación encontradas con éxito");
 			response.setMoreInfo("http://localhost:8080/recreation/ConsultAllRecreationByState");

@@ -2,8 +2,6 @@ package com.ruta.sanJuanDePuelenje.models;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;

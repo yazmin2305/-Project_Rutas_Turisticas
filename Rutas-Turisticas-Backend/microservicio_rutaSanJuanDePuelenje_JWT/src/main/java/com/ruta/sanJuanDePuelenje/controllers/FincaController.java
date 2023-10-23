@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import com.ruta.sanJuanDePuelenje.DTO.FincaDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
+import com.ruta.sanJuanDePuelenje.DTO.Command.FincaCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.FincaQueryDTO;
 import com.ruta.sanJuanDePuelenje.services.IFincaService;
 
 import jakarta.annotation.security.PermitAll;
@@ -24,28 +25,28 @@ public class FincaController {
 	@PermitAll
 	@GetMapping("/ConsultAllFincas")
 	//@RequestMapping(value = {"/ConsultAllFincas", "/"} , method = RequestMethod.GET )
-	public Response<List<FincaDTO>> ConsultAllFincas() {
+	public Response<List<FincaQueryDTO>> ConsultAllFincas() {
 		return this.iFincaService.findAllFincas();
 	}
 
 	// Consultar finca por id
 	@Secured({"ADMIN", "USER"})
 	@GetMapping("/ConsultById/{id}")
-	public Response<FincaDTO> ConsultFincaById(@PathVariable Integer id) {
+	public Response<FincaQueryDTO> ConsultFincaById(@PathVariable Integer id) {
 		return this.iFincaService.findByFincaId(id);
 	}
 
 	// Guardar finca
 	@Secured("ADMIN")
 	@PostMapping("/SaveFinca")
-	public Response<FincaDTO> SaveFinca(@RequestBody FincaDTO finca) {
+	public Response<FincaCommandDTO> SaveFinca(@RequestBody FincaCommandDTO finca) {
 		return this.iFincaService.saveFinca(finca);
 	}
 
 	// Actualizar finca
 	@Secured("ADMIN")
 	@PutMapping("/UpdateFinca/{id}")
-	public Response<FincaDTO> UpdateFinca(@RequestBody FincaDTO finca, @PathVariable Integer id) {
+	public Response<FincaQueryDTO> UpdateFinca(@RequestBody FincaCommandDTO finca, @PathVariable Integer id) {
 		return this.iFincaService.updateFinca(id, finca);
 	}
 
@@ -59,7 +60,7 @@ public class FincaController {
 	// Consultar las fincas dependiento su estado: activado - desactivado
 	@Secured({"ADMIN", "USER"})
 	@GetMapping("ConsultAllFincaByState/{state}")
-	public Response<List<FincaDTO>> ConsultAllFincaByState(@PathVariable Boolean state) {
+	public Response<List<FincaQueryDTO>> ConsultAllFincaByState(@PathVariable Boolean state) {
 		return this.iFincaService.findAllFincaBytState(state);
 	}
 }

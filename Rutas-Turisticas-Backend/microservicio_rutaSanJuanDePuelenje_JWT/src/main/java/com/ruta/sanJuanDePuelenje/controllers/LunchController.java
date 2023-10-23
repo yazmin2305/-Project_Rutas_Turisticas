@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import com.ruta.sanJuanDePuelenje.DTO.LunchDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
+import com.ruta.sanJuanDePuelenje.DTO.Command.LunchCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.LunchQueryDTO;
 import com.ruta.sanJuanDePuelenje.services.ILunchService;
 
 @RestController
@@ -20,28 +21,28 @@ public class LunchController {
 
 	// Consultar todos los almuerzos
 	@GetMapping("/ConsultAllLunch")
-	public Response<List<LunchDTO>> ConsultAllLunch() {
+	public Response<List<LunchQueryDTO>> ConsultAllLunch() {
 		return this.iLunchService.findAllLunch();
 	}
 
 	// Consultar un almuerzo por id
 	@Secured({"ADMIN", "USER"})
 	@GetMapping("/ConsultById/{id}")
-	public Response<LunchDTO> ConsultLunchById(@PathVariable Integer id) {
+	public Response<LunchQueryDTO> ConsultLunchById(@PathVariable Integer id) {
 		return this.iLunchService.findByLunchId(id);
 	}
 
 	// Guardar almuerzo
 	@Secured("ADMIN")
 	@PostMapping("/SaveLunch")
-	public Response<LunchDTO> SaveLunch(@RequestBody LunchDTO lunch) {
+	public Response<LunchCommandDTO> SaveLunch(@RequestBody LunchCommandDTO lunch) {
 		return this.iLunchService.saveLunch(lunch);
 	}
 
 	// Actualizar almuerzo
 	@Secured("ADMIN")
 	@PutMapping("/UpdateLunch/{id}")
-	public Response<LunchDTO> UpdateLunch(@RequestBody LunchDTO lunch, @PathVariable Integer id) {
+	public Response<LunchQueryDTO> UpdateLunch(@RequestBody LunchCommandDTO lunch, @PathVariable Integer id) {
 		return this.iLunchService.updateLunch(id, lunch);
 	}
 
@@ -55,7 +56,7 @@ public class LunchController {
 	// Consultar los almuerzos dependiento su estado: activado - desactivado
 	@Secured({"ADMIN", "USER"})
 	@GetMapping("ConsultAllLunchByState/{state}")
-	public Response<List<LunchDTO>> ConsultAllLunchByState(@PathVariable Boolean state) {
+	public Response<List<LunchQueryDTO>> ConsultAllLunchByState(@PathVariable Boolean state) {
 		return this.iLunchService.findAllLunchBytState(state);
 	}
 }

@@ -7,8 +7,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ruta.sanJuanDePuelenje.DTO.LodgingDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
+import com.ruta.sanJuanDePuelenje.DTO.Command.LodgingCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.LodgingQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Lodging;
 import com.ruta.sanJuanDePuelenje.repository.ILodgingRepository;
 
@@ -21,16 +22,16 @@ public final class LodgingServiceImpl implements ILodgingService{
 	private ModelMapper modelMapper;
 	
 	@Override
-	public Response<List<LodgingDTO>> findAllLodging() {
+	public Response<List<LodgingQueryDTO>> findAllLodging() {
 		List<Lodging> lodgingEntity = iLodgingRepository.findAll();
-		Response<List<LodgingDTO>> response = new Response<>();
+		Response<List<LodgingQueryDTO>> response = new Response<>();
 		if(lodgingEntity.isEmpty()) {
 			response.setStatus(404);
 			response.setUserMessage("Hospedajes no encontrados");
 			response.setMoreInfo("http://localhost:8080/lodging/ConsultAllLodging");
 			response.setData(null);
 		}else {
-			List<LodgingDTO> lodgingDTOs = lodgingEntity.stream().map(lodging -> modelMapper.map(lodging, LodgingDTO.class)).collect(Collectors.toList());
+			List<LodgingQueryDTO> lodgingDTOs = lodgingEntity.stream().map(lodging -> modelMapper.map(lodging, LodgingQueryDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Hospedajes encontrados con éxito");
 			response.setMoreInfo("http://localhost:8080/lodging/ConsultAllLodging");
@@ -40,16 +41,16 @@ public final class LodgingServiceImpl implements ILodgingService{
 	}
 
 	@Override
-	public Response<LodgingDTO> findByLodgingId(Integer lodgingId) {
+	public Response<LodgingQueryDTO> findByLodgingId(Integer lodgingId) {
 		Lodging lodging = iLodgingRepository.findById(lodgingId).orElse(null);
-		Response<LodgingDTO> response = new Response<>();
+		Response<LodgingQueryDTO> response = new Response<>();
 		if(lodging == null) {
 			response.setStatus(404);
 			response.setUserMessage("Hospedaje no encontrado");
 			response.setMoreInfo("http://localhost:8080/lodging/ConsultById/{id}");
 			response.setData(null);
 		}else {
-			LodgingDTO lodgingDTO = modelMapper.map(lodging, LodgingDTO.class);
+			LodgingQueryDTO lodgingDTO = modelMapper.map(lodging, LodgingQueryDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Hospedaje encontrado con éxito");
 			response.setMoreInfo("http://localhost:8080/lodging/ConsultById/{id}");
@@ -59,13 +60,13 @@ public final class LodgingServiceImpl implements ILodgingService{
 	}
 
 	@Override
-	public Response<LodgingDTO> saveLodging(LodgingDTO lodging) {
+	public Response<LodgingCommandDTO> saveLodging(LodgingCommandDTO lodging) {
 		Lodging lodgingEntity  = this.modelMapper.map(lodging, Lodging.class);
-		Response<LodgingDTO> response = new Response<>();
+		Response<LodgingCommandDTO> response = new Response<>();
 		if(lodging != null) {
 			lodgingEntity.setState(true);
 			Lodging objLodging = this.iLodgingRepository.save(lodgingEntity);
-			LodgingDTO lodgingDTO = this.modelMapper.map(objLodging, LodgingDTO.class);
+			LodgingCommandDTO lodgingDTO = this.modelMapper.map(objLodging, LodgingCommandDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Hospedaje creado con éxito");
 			response.setMoreInfo("http://localhost:8080/lodging/SaveLodging");
@@ -80,8 +81,8 @@ public final class LodgingServiceImpl implements ILodgingService{
 	}
 
 	@Override
-	public Response<LodgingDTO> updateLodging(Integer lodgingId, LodgingDTO lodging) {
-		Response<LodgingDTO> response = new Response<>();
+	public Response<LodgingQueryDTO> updateLodging(Integer lodgingId, LodgingCommandDTO lodging) {
+		Response<LodgingQueryDTO> response = new Response<>();
 		if(lodging != null && lodgingId != null) {
 			Lodging lodgingEntity = this.modelMapper.map(lodging, Lodging.class);
 			Lodging lodgingEntity1 = this.iLodgingRepository.findById(lodgingId).get();
@@ -94,7 +95,7 @@ public final class LodgingServiceImpl implements ILodgingService{
 			lodgingEntity1.setFinca(lodgingEntity.getFinca());
 			lodgingEntity1.setLstReserve(lodgingEntity.getLstReserve());
 			this.iLodgingRepository.save(lodgingEntity1);
-			LodgingDTO lodgingDTO = this.modelMapper.map(lodgingEntity1, LodgingDTO.class);
+			LodgingQueryDTO lodgingDTO = this.modelMapper.map(lodgingEntity1, LodgingQueryDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Hospedaje actualizado con éxito");
 			response.setMoreInfo("http://localhost:8080/lodging/UpdateLodging/{id}");
@@ -131,11 +132,11 @@ public final class LodgingServiceImpl implements ILodgingService{
 	}
 
 	@Override
-	public Response<List<LodgingDTO>> findAllLodgingBytState(boolean state) {
+	public Response<List<LodgingQueryDTO>> findAllLodgingBytState(boolean state) {
 		List<Lodging> lodgingEntity = this.iLodgingRepository.LstLodgingByState(state);
-		Response<List<LodgingDTO>> response = new Response<>();
+		Response<List<LodgingQueryDTO>> response = new Response<>();
 		if(!lodgingEntity.isEmpty()) {
-			List<LodgingDTO> lodgingDTO = lodgingEntity.stream().map(lodging -> modelMapper.map(lodging, LodgingDTO.class)).collect(Collectors.toList());
+			List<LodgingQueryDTO> lodgingDTO = lodgingEntity.stream().map(lodging -> modelMapper.map(lodging, LodgingQueryDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Hospedajes encontrados con éxito");
 			response.setMoreInfo("http://localhost:8080/lodging/ConsultAllLodgingByState");

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
-import com.ruta.sanJuanDePuelenje.DTO.RutaQueryDTO;
-import com.ruta.sanJuanDePuelenje.DTO.RutaCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Command.RutaCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.RutaQueryDTO;
 import com.ruta.sanJuanDePuelenje.services.IRutaService;
 
 @RestController

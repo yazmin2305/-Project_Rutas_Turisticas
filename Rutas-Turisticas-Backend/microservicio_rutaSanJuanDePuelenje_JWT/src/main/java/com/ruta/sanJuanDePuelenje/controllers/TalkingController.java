@@ -7,8 +7,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
-import com.ruta.sanJuanDePuelenje.DTO.TalkingCommandDTO;
-import com.ruta.sanJuanDePuelenje.DTO.TalkingQueryDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Command.TalkingCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.TalkingQueryDTO;
 import com.ruta.sanJuanDePuelenje.services.ITalkingService;
 
 @RestController

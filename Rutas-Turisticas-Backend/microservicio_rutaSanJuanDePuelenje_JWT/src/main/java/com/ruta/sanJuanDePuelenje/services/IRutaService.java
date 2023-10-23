@@ -3,8 +3,8 @@ package com.ruta.sanJuanDePuelenje.services;
 import java.util.List;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
-import com.ruta.sanJuanDePuelenje.DTO.RutaCommandDTO;
-import com.ruta.sanJuanDePuelenje.DTO.RutaQueryDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Command.RutaCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.RutaQueryDTO;
 
 public interface IRutaService {
 	public Response<List<RutaQueryDTO>> findAllRutas();

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
-import com.ruta.sanJuanDePuelenje.DTO.TalkingCommandDTO;
-import com.ruta.sanJuanDePuelenje.DTO.TalkingQueryDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Command.TalkingCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.TalkingQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Talking;
 import com.ruta.sanJuanDePuelenje.repository.ITalkingRepository;
 

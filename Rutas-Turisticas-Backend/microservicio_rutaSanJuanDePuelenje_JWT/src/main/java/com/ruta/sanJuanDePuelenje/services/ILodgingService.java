@@ -2,20 +2,21 @@ package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
 
-import com.ruta.sanJuanDePuelenje.DTO.LodgingDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
+import com.ruta.sanJuanDePuelenje.DTO.Command.LodgingCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.LodgingQueryDTO;
 
 public interface ILodgingService {
 	
-	public Response<List<LodgingDTO>> findAllLodging();
+	public Response<List<LodgingQueryDTO>> findAllLodging();
 	
-	public Response<LodgingDTO> findByLodgingId(Integer lodgingId);
+	public Response<LodgingQueryDTO> findByLodgingId(Integer lodgingId);
 	
-	public Response<LodgingDTO> saveLodging(LodgingDTO lodging);
+	public Response<LodgingCommandDTO> saveLodging(LodgingCommandDTO lodging);
 	
-	public Response<LodgingDTO> updateLodging(Integer lodgingId, LodgingDTO lodging);
+	public Response<LodgingQueryDTO> updateLodging(Integer lodgingId, LodgingCommandDTO lodging);
 	
 	public Response<Boolean> disableLodging(Integer lodgingId);
 	
-	public Response<List<LodgingDTO>> findAllLodgingBytState(boolean state);
+	public Response<List<LodgingQueryDTO>> findAllLodgingBytState(boolean state);
 }

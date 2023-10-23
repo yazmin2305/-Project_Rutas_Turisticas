@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
-import com.ruta.sanJuanDePuelenje.DTO.RutaQueryDTO;
-import com.ruta.sanJuanDePuelenje.DTO.RutaCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Command.RutaCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.RutaQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Ruta;
 import com.ruta.sanJuanDePuelenje.repository.IRutaRepository;
 

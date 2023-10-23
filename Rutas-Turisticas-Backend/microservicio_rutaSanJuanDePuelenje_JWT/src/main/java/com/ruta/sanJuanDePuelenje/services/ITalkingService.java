@@ -3,8 +3,8 @@ package com.ruta.sanJuanDePuelenje.services;
 import java.util.List;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
-import com.ruta.sanJuanDePuelenje.DTO.TalkingCommandDTO;
-import com.ruta.sanJuanDePuelenje.DTO.TalkingQueryDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Command.TalkingCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.TalkingQueryDTO;
 
 
 public interface ITalkingService {

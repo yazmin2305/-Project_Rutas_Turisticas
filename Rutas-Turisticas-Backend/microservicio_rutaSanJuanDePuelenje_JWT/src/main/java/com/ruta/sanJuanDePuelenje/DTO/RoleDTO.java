@@ -2,6 +2,8 @@ package com.ruta.sanJuanDePuelenje.DTO;
 
 import java.util.List;
 
+import com.ruta.sanJuanDePuelenje.DTO.Command.UserCommandDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,5 +16,5 @@ import lombok.Setter;
 public class RoleDTO {
 	private Integer roleId;
 	private String roleName;
-	private List<UserDTO> lstUserRolDTO;
+	private List<UserCommandDTO> lstUserRolDTO;
 }

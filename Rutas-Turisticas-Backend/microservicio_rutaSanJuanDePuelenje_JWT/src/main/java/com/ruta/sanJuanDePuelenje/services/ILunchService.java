@@ -2,21 +2,22 @@ package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
 
-import com.ruta.sanJuanDePuelenje.DTO.LunchDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
+import com.ruta.sanJuanDePuelenje.DTO.Command.LunchCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.LunchQueryDTO;
 
 public interface ILunchService {
 	
-	public Response<List<LunchDTO>> findAllLunch();
+	public Response<List<LunchQueryDTO>> findAllLunch();
 	
-	public Response<LunchDTO> findByLunchId(Integer lunchId);
+	public Response<LunchQueryDTO> findByLunchId(Integer lunchId);
 	
-	public Response<LunchDTO> saveLunch(LunchDTO lunch);
+	public Response<LunchCommandDTO> saveLunch(LunchCommandDTO lunch);
 	
-	public Response<LunchDTO> updateLunch(Integer lunchId, LunchDTO lunch);
+	public Response<LunchQueryDTO> updateLunch(Integer lunchId, LunchCommandDTO lunch);
 	
 	public Response<Boolean> disableLunch(Integer lunchId);
 	
-	public Response<List<LunchDTO>> findAllLunchBytState(boolean state);
+	public Response<List<LunchQueryDTO>> findAllLunchBytState(boolean state);
 	
 }
