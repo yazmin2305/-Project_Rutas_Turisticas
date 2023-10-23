@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
-import com.ruta.sanJuanDePuelenje.DTO.RutaDTO;
+import com.ruta.sanJuanDePuelenje.DTO.RutaQueryDTO;
+import com.ruta.sanJuanDePuelenje.DTO.RutaCommandDTO;
 import com.ruta.sanJuanDePuelenje.models.Ruta;
 import com.ruta.sanJuanDePuelenje.repository.IRutaRepository;
 
@@ -23,16 +24,16 @@ public class RutaServiceImpl implements IRutaService{
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<RutaDTO>> findAllRutas() {
+	public Response<List<RutaQueryDTO>> findAllRutas() {
 		List<Ruta> rutaEntity = iRutaRepository.findAll();
-		Response<List<RutaDTO>> response = new Response<>();
+		Response<List<RutaQueryDTO>> response = new Response<>();
 		if(rutaEntity.isEmpty()) {
 			response.setStatus(404);
 			response.setUserMessage("Rutas no encontradas");
 			response.setMoreInfo("http://localhost:8080/ruta/ConsultAllRutas");
 			response.setData(null);
 		}else {
-			List<RutaDTO> rutaDTOs = rutaEntity.stream().map(ruta -> modelMapper.map(ruta, RutaDTO.class)).collect(Collectors.toList());
+			List<RutaQueryDTO> rutaDTOs = rutaEntity.stream().map(ruta -> modelMapper.map(ruta, RutaQueryDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Rutas encontradas con éxito");
 			response.setMoreInfo("http://localhost:8080/ruta/ConsultAllRutas");
@@ -43,16 +44,16 @@ public class RutaServiceImpl implements IRutaService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<RutaDTO> findByRutaId(Integer RutaId) {
+	public Response<RutaQueryDTO> findByRutaId(Integer RutaId) {
 		Ruta ruta = iRutaRepository.findById(RutaId).orElse(null);
-		Response<RutaDTO> response = new Response<>();
+		Response<RutaQueryDTO> response = new Response<>();
 		if(ruta == null) {
 			response.setStatus(404);
 			response.setUserMessage("Ruta no encontrada");
 			response.setMoreInfo("http://localhost:8080/ruta/ConsultById/{id}");
 			response.setData(null);
 		}else {
-			RutaDTO rutaDTO = modelMapper.map(ruta, RutaDTO.class);
+			RutaQueryDTO rutaDTO = modelMapper.map(ruta, RutaQueryDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Ruta encontrada con éxito");
 			response.setMoreInfo("http://localhost:8080/ruta/ConsultById/{id}");
@@ -63,13 +64,13 @@ public class RutaServiceImpl implements IRutaService{
 
 	@Override
 	@Transactional
-	public Response<RutaDTO> saveRuta(RutaDTO ruta) {
-		Response<RutaDTO> response = new Response<>();
+	public Response<RutaCommandDTO> saveRuta(RutaCommandDTO ruta) {
+		Response<RutaCommandDTO> response = new Response<>();
 		if(ruta != null) {
 			Ruta rutaEntity  = this.modelMapper.map(ruta, Ruta.class);
 			rutaEntity.setState(true);
 			Ruta objRuta = this.iRutaRepository.save(rutaEntity);
-			RutaDTO rutaDTO = this.modelMapper.map(objRuta, RutaDTO.class);
+			RutaCommandDTO rutaDTO = this.modelMapper.map(objRuta, RutaCommandDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Ruta creada con éxito");
 			response.setMoreInfo("http://localhost:8080/ruta/SaveRuta");
@@ -85,8 +86,8 @@ public class RutaServiceImpl implements IRutaService{
 
 	@Override
 	@Transactional
-	public Response<RutaDTO> updateRuta(Integer rutaId, RutaDTO ruta) {
-		Response<RutaDTO> response = new Response<>();
+	public Response<RutaCommandDTO> updateRuta(Integer rutaId, RutaCommandDTO ruta) {
+		Response<RutaCommandDTO> response = new Response<>();
 		if(ruta != null && rutaId != null) {
 			Ruta rutaEntity = this.modelMapper.map(ruta, Ruta.class);
 			Ruta rutaEntity1 = this.iRutaRepository.findById(rutaId).get();
@@ -101,7 +102,7 @@ public class RutaServiceImpl implements IRutaService{
 			rutaEntity1.setLstLunch(rutaEntity.getLstLunch());
 			rutaEntity1.setLstReserve(rutaEntity.getLstReserve());
 			rutaEntity1.setLstUser(rutaEntity.getLstUser());
-			RutaDTO rutaDTO = this.modelMapper.map(rutaEntity1, RutaDTO.class);
+			RutaCommandDTO rutaDTO = this.modelMapper.map(rutaEntity1, RutaCommandDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Ruta actualizada con éxito");
 			response.setMoreInfo("http://localhost:8080/ruta/UpdateRuta/{id}");
@@ -139,11 +140,11 @@ public class RutaServiceImpl implements IRutaService{
 	}
 
 	@Override
-	public Response<List<RutaDTO>> findAllRutasBytState(boolean state) {
+	public Response<List<RutaQueryDTO>> findAllRutasBytState(boolean state) {
 		List<Ruta> rutaEntity = this.iRutaRepository.LstRutasByState(state);
-		Response<List<RutaDTO>> response = new Response<>();
+		Response<List<RutaQueryDTO>> response = new Response<>();
 		if(!rutaEntity.isEmpty()) {
-			List<RutaDTO> rutaDTO = rutaEntity.stream().map(ruta -> modelMapper.map(ruta, RutaDTO.class)).collect(Collectors.toList());
+			List<RutaQueryDTO> rutaDTO = rutaEntity.stream().map(ruta -> modelMapper.map(ruta, RutaQueryDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Rutas encontrados con éxito");
 			response.setMoreInfo("http://localhost:8080/ruta/ConsultAllRutasByState");

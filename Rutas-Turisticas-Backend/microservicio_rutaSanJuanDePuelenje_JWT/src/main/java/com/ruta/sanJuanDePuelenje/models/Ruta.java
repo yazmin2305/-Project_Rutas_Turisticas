@@ -2,9 +2,12 @@ package com.ruta.sanJuanDePuelenje.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.Getter;
 
 @Entity
 @Table(name = "ruta")
@@ -26,6 +29,7 @@ public class Ruta {
 	private Boolean state;
 	
 	@Nullable
+	//@JsonIgnore
 	@OneToMany(mappedBy = "ruta")
 	private List<Talking> LstTalking;
 	

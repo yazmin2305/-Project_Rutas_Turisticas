@@ -2,6 +2,8 @@ package com.ruta.sanJuanDePuelenje.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +31,7 @@ public class Finca {
 	@Column(nullable = true)
 	private Boolean state;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "finca")
 	private List<Talking> LstTalking;
 	

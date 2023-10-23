@@ -17,10 +17,10 @@ public class FincaDTO {
 	private String fincaDescription;
 	private String fincaLocation;
 	private Boolean fincaState;
-	private List<TalkingDTO> lstTalkingDTOs;
+	private List<TalkingQueryDTO> lstTalkingDTOs;
 	private List<WorkshopDTO> lstWorkshopDTOs;
 	private List<RecreationDTO> lstRecreationDTOs;
 	private List<LodgingDTO> lstLodgingDTOs;
 	private List<FestivalDTO> lstFestivalDTOs;
-	
+	private RutaCommandDTO ruta;
 }

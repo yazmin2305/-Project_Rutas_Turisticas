@@ -23,4 +23,5 @@ public class WorkshopDTO {
 	private WorkshopTypeDTO workshopType;
 	private FincaDTO finca;
 	private List<ReserveDTO> lstReserveDTOs;
+	private RutaCommandDTO ruta;
 }

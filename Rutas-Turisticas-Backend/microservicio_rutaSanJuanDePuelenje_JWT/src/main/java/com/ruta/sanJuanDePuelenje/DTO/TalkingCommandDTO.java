@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TalkingDTO {
+public class TalkingCommandDTO {
 	private Integer talkingId;
 	private String talkingName;
 	private String talkingDescription;
@@ -22,4 +22,5 @@ public class TalkingDTO {
 	private Boolean talkingState;
 	private FincaDTO finca;
 	private List<ReserveDTO> lstReserveDTOs;
+	private RutaCommandDTO ruta;
 }

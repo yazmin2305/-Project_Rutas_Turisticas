@@ -7,7 +7,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
-import com.ruta.sanJuanDePuelenje.DTO.TalkingDTO;
+import com.ruta.sanJuanDePuelenje.DTO.TalkingCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.TalkingQueryDTO;
 import com.ruta.sanJuanDePuelenje.services.ITalkingService;
 
 @RestController
@@ -20,28 +21,28 @@ public class TalkingController {
 
 	// Consultar todas las charlas
 	@GetMapping("/ConsultAllTalking")
-	public Response<List<TalkingDTO>> ConsultAllTalking() {
+	public Response<List<TalkingQueryDTO>> ConsultAllTalking() {
 		return this.iTalkingService.findAllTalking();
 	}
 
 	// Consultar una charla por su id
 	@Secured({"ADMIN", "USER"})
 	@GetMapping("/ConsultById/{id}")
-	public Response<TalkingDTO> ConsultTalkingById(@PathVariable Integer id) {
+	public Response<TalkingQueryDTO> ConsultTalkingById(@PathVariable Integer id) {
 		return this.iTalkingService.findByTalkingId(id);
 	}
 
 	// Guardar una charla
 	@Secured("ADMIN")
 	@PostMapping("/SaveTalking")
-	public Response<TalkingDTO> SaveTalking(@RequestBody TalkingDTO Talking) {
+	public Response<TalkingCommandDTO> SaveTalking(@RequestBody TalkingCommandDTO Talking) {
 		return this.iTalkingService.saveTalking(Talking);
 	}
 
 	// Actualizar una charla
 	@Secured("ADMIN")
 	@PutMapping("/UpdateTalking/{id}")
-	public Response<TalkingDTO> UpdateTalking(@RequestBody TalkingDTO Talking, @PathVariable Integer id) {
+	public Response<TalkingQueryDTO> UpdateTalking(@RequestBody TalkingCommandDTO Talking, @PathVariable Integer id) {
 		return this.iTalkingService.updateTalking(id, Talking);
 	}
 
@@ -55,14 +56,14 @@ public class TalkingController {
 	//Consultar todas las charlas deshabilitadas
 	@Secured({"ADMIN", "USER"})
 	@GetMapping("ConsultAllTalkingDisabled")
-	public Response<List<TalkingDTO>> ConsultAllTalkingDisabled(){
+	public Response<List<TalkingQueryDTO>> ConsultAllTalkingDisabled(){
 		return this.iTalkingService.findAllTalkingDisabled();
 	}
 	
 	//Consultar las charlas dependiento su estado: activado - desactivado
 	@Secured({"ADMIN", "USER"})
 	@GetMapping("ConsultAllTalkingByState/{state}")
-	public Response<List<TalkingDTO>> ConsultAllTalkingByState(@PathVariable Boolean state){
+	public Response<List<TalkingQueryDTO>> ConsultAllTalkingByState(@PathVariable Boolean state){
 		return this.iTalkingService.findAllTalkingBytState(state);
 	}
 	

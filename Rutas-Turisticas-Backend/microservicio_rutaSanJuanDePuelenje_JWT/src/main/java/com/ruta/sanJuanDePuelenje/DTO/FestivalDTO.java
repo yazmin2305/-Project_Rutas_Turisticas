@@ -12,12 +12,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FestivalDTO {
-	private Integer festivalId;
+	//private Integer festivalId;
 	private String festivalName;
 	private String festivalDescription;
 	private Date festivalDate;
 	private Boolean festivalState;
 	private FincaDTO finca;
-
+	private RutaCommandDTO ruta;
 }
  

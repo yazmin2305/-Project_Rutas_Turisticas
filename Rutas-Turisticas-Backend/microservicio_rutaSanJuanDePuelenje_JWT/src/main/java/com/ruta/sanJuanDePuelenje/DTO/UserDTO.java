@@ -22,4 +22,5 @@ public class UserDTO {
 	private String userPassword;
 	private RoleDTO role;
 	private List<ReserveDTO> lstReserveDTOs;
+	private RutaCommandDTO ruta;
 }

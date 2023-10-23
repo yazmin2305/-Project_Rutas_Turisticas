@@ -3,22 +3,23 @@ package com.ruta.sanJuanDePuelenje.services;
 import java.util.List;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
-import com.ruta.sanJuanDePuelenje.DTO.TalkingDTO;
+import com.ruta.sanJuanDePuelenje.DTO.TalkingCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.TalkingQueryDTO;
 
 
 public interface ITalkingService {
 	
-	public Response<List<TalkingDTO>> findAllTalking();
+	public Response<List<TalkingQueryDTO>> findAllTalking();
 	
-	public Response<TalkingDTO> findByTalkingId(Integer talkingId);
+	public Response<TalkingQueryDTO> findByTalkingId(Integer talkingId);
 	
-	public Response<TalkingDTO> saveTalking(TalkingDTO talking);
+	public Response<TalkingCommandDTO> saveTalking(TalkingCommandDTO talking);
 	
-	public Response<TalkingDTO> updateTalking(Integer talkingId, TalkingDTO talking);
+	public Response<TalkingQueryDTO> updateTalking(Integer talkingId, TalkingCommandDTO talking);
 	
 	public Response<Boolean> disableTalking(Integer talkingId);
 	
-	public Response<List<TalkingDTO>> findAllTalkingDisabled();
+	public Response<List<TalkingQueryDTO>> findAllTalkingDisabled();
 	
-	public Response<List<TalkingDTO>> findAllTalkingBytState(boolean state);
+	public Response<List<TalkingQueryDTO>> findAllTalkingBytState(boolean state);
 }

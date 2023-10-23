@@ -8,11 +8,11 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RutaDTO {
+public class RutaCommandDTO {
 	private Integer rutaId;
 	private String rutaName;
 	private String rutaState;
-	private List<TalkingDTO> LstTalking;
+	private List<TalkingCommandDTO> LstTalking;
 	private List<WorkshopDTO> LstWorkshop;
 	private List<RecreationDTO> LstRecreation;
 	private List<LodgingDTO> LstLodging;
@@ -21,6 +21,5 @@ public class RutaDTO {
 	private List<LunchDTO> LstLunch;
 	private List<ReserveDTO> LstReserve;
 	private List<UserDTO> LstUser;
-	
-	
+
 }

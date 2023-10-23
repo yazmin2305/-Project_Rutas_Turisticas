@@ -2,8 +2,6 @@ package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.ruta.sanJuanDePuelenje.DTO.FestivalDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 
@@ -13,7 +11,7 @@ public interface IFestivalService {
 	
 	public Response<FestivalDTO> findByFestivalId(Integer festivalId);
 	
-	//public Response<FestivalDTO> saveFestival(FestivalDTO festival);
+	public Response<FestivalDTO> saveFestival(FestivalDTO festival);
 	
 	public Response<FestivalDTO> updateFestival(Integer festivalId, FestivalDTO festival);
 	
@@ -21,5 +19,5 @@ public interface IFestivalService {
 	
 	public Response<List<FestivalDTO>> findAllFestivalBytState(boolean state);
 
-	Response<FestivalDTO> saveFestival(FestivalDTO festival, MultipartFile imagen);
+	//Response<FestivalDTO> saveFestival(FestivalDTO festival, MultipartFile imagen);
 }

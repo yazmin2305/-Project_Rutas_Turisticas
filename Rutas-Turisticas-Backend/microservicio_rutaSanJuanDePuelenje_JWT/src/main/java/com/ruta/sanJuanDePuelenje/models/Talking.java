@@ -39,14 +39,14 @@ public class Talking {
 	@Column(nullable = true)
 	private Boolean state;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "finca_id")
 	private Finca finca;
 	
 	@ManyToMany(mappedBy = "LstTalking")
 	private List<Reserve> LstReserve;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ruta_id")
 	private Ruta ruta;
 }

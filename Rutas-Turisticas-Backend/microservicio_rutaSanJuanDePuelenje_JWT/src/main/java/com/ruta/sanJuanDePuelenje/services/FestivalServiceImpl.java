@@ -1,9 +1,6 @@
 package com.ruta.sanJuanDePuelenje.services;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,7 +8,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ruta.sanJuanDePuelenje.DTO.FestivalDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
@@ -68,7 +64,7 @@ public class FestivalServiceImpl implements IFestivalService{
 
 	@Override
 	@Transactional
-	public Response<FestivalDTO> saveFestival(FestivalDTO festival, MultipartFile imagen) {
+	public Response<FestivalDTO> saveFestival(FestivalDTO festival) {
 		Response<FestivalDTO> response = new Response<>();
 		if(festival != null) {
 			Festival festivalEntity  = this.modelMapper.map(festival, Festival.class);
@@ -79,19 +75,19 @@ public class FestivalServiceImpl implements IFestivalService{
 			response.setUserMessage("Festival creado con éxito");
 			response.setMoreInfo("http://localhost:8080/festival/SaveFestival");
 			response.setData(festivalDTO);
-			if(!imagen.isEmpty()) {
-				String rutaAbsoluta  = "C://Producto//imagenes";
-				
-				try {
-					byte[] bytesImg = imagen.getBytes();
-					Path rutaCompleta = Paths.get(rutaAbsoluta + "//"+ imagen.getOriginalFilename());
-					Files.write(rutaCompleta, bytesImg);
-					festivalEntity.setImagen(imagen.getOriginalFilename());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-			}
+//			if(!imagen.isEmpty()) {
+//				String rutaAbsoluta  = "C://Producto//imagenes";
+//				
+//				try {
+//					byte[] bytesImg = imagen.getBytes();
+//					Path rutaCompleta = Paths.get(rutaAbsoluta + "//"+ imagen.getOriginalFilename());
+//					Files.write(rutaCompleta, bytesImg);
+//					festivalEntity.setImagen(imagen.getOriginalFilename());
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//				
+//			}
 		}else {
 			response.setStatus(500);
 			response.setUserMessage("Error al crear el festival");
@@ -171,6 +167,5 @@ public class FestivalServiceImpl implements IFestivalService{
 		}
 		return response;
 	}
-
 
 }

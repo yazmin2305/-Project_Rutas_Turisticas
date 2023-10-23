@@ -5,11 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ruta.sanJuanDePuelenje.DTO.FestivalDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.services.IFestivalService;
+
+import jakarta.annotation.security.PermitAll;
 
 @RestController
 @RequestMapping("/festival")
@@ -20,6 +21,7 @@ public class FestivalController {
 	private IFestivalService iFestivalService;
 
 	// Consultar todos los festivales
+	@PermitAll
 	@GetMapping("/ConsultAllFestivales")
 	public Response<List<FestivalDTO>> ConsultAllFestival() {
 		return this.iFestivalService.findAllFestival();
@@ -36,8 +38,8 @@ public class FestivalController {
 	// Guardar festival
 	@Secured("ADMIN")
 	@PostMapping("/SaveFestival")
-	public Response<FestivalDTO> SaveFestival(@RequestBody FestivalDTO festival, @RequestParam("file") MultipartFile imagen) {
-		return this.iFestivalService.saveFestival(festival, imagen);
+	public Response<FestivalDTO> SaveFestival(@RequestBody FestivalDTO festival) {
+		return this.iFestivalService.saveFestival(festival);
 	}
 
 	// Actualizar festival

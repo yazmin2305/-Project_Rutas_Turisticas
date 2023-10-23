@@ -10,6 +10,8 @@ import com.ruta.sanJuanDePuelenje.DTO.FincaDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.services.IFincaService;
 
+import jakarta.annotation.security.PermitAll;
+
 @RestController
 @RequestMapping("/finca")
 @CrossOrigin("*")
@@ -19,6 +21,7 @@ public class FincaController {
 	private IFincaService iFincaService;
 
 	// Consultar todas las fincas
+	@PermitAll
 	@GetMapping("/ConsultAllFincas")
 	//@RequestMapping(value = {"/ConsultAllFincas", "/"} , method = RequestMethod.GET )
 	public Response<List<FincaDTO>> ConsultAllFincas() {

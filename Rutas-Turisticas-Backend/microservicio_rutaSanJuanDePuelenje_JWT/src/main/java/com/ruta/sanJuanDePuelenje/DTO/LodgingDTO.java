@@ -19,7 +19,7 @@ public class LodgingDTO {
 	private Double lodgingUnitPrice;
 	private Integer lodgingNumberNights;
 	private Boolean lodgingState;
-	private FincaDTO fincaDTO;
+	private FincaDTO finca;
 	private List<ReserveDTO> lstReserveDTOs;
-
+	private RutaCommandDTO ruta;
 }

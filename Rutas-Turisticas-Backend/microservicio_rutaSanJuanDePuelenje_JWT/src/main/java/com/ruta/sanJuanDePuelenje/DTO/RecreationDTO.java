@@ -21,5 +21,5 @@ public class RecreationDTO {
 	private Boolean recreationState;
 	private FincaDTO finca;
 	private List<ReserveDTO> lstReserveDTOs;
-
+	private RutaCommandDTO ruta;
 }

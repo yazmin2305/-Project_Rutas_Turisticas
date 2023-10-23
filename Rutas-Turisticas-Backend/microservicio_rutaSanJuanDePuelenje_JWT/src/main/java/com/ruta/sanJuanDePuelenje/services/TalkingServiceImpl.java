@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
-import com.ruta.sanJuanDePuelenje.DTO.TalkingDTO;
+import com.ruta.sanJuanDePuelenje.DTO.TalkingCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.TalkingQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Talking;
 import com.ruta.sanJuanDePuelenje.repository.ITalkingRepository;
 
@@ -23,16 +24,16 @@ public class TalkingServiceImpl implements ITalkingService{
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<TalkingDTO>> findAllTalking() {
+	public Response<List<TalkingQueryDTO>> findAllTalking() {
 		List<Talking> talkingEntity = iTalkingRepository.findAll();
-		Response<List<TalkingDTO>> response = new Response<>();
+		Response<List<TalkingQueryDTO>> response = new Response<>();
 		if(talkingEntity.isEmpty()) {
 			response.setStatus(404);
 			response.setUserMessage("Charlas no encontradas");
 			response.setMoreInfo("http://localhost:8080/talking/ConsultAllTalking");
 			response.setData(null);
 		}else {
-			List<TalkingDTO> talkingDTOs = talkingEntity.stream().map(talking -> modelMapper.map(talking, TalkingDTO.class)).collect(Collectors.toList());
+			List<TalkingQueryDTO> talkingDTOs = talkingEntity.stream().map(talking -> modelMapper.map(talking, TalkingQueryDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Charlas encontradas con éxito");
 			response.setMoreInfo("http://localhost:8080/talking/ConsultAllTalking");
@@ -43,16 +44,16 @@ public class TalkingServiceImpl implements ITalkingService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<TalkingDTO> findByTalkingId(Integer talkingId) {
+	public Response<TalkingQueryDTO> findByTalkingId(Integer talkingId) {
 		Talking talking = iTalkingRepository.findById(talkingId).orElse(null);
-		Response<TalkingDTO> response = new Response<>();
+		Response<TalkingQueryDTO> response = new Response<>();
 		if(talking == null) {
 			response.setStatus(404);
 			response.setUserMessage("Charla no encontrada");
 			response.setMoreInfo("http://localhost:8080/talking/ConsultById/{id}");
 			response.setData(null);
 		}else {
-			TalkingDTO talkingDTO = modelMapper.map(talking, TalkingDTO.class);
+			TalkingQueryDTO talkingDTO = modelMapper.map(talking, TalkingQueryDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Charla encontrada con éxito");
 			response.setMoreInfo("http://localhost:8080/talking/ConsultById/{id}");
@@ -63,13 +64,13 @@ public class TalkingServiceImpl implements ITalkingService{
 
 	@Override
 	@Transactional
-	public Response<TalkingDTO> saveTalking(TalkingDTO talking) {
-		Response<TalkingDTO> response = new Response<>();
+	public Response<TalkingCommandDTO> saveTalking(TalkingCommandDTO talking) {
+		Response<TalkingCommandDTO> response = new Response<>();
 		if(talking != null) {
 			Talking talkingEntity  = this.modelMapper.map(talking, Talking.class);
 			talkingEntity.setState(true);
 			Talking objTalking = this.iTalkingRepository.save(talkingEntity);
-			TalkingDTO talkingDTO = this.modelMapper.map(objTalking, TalkingDTO.class);
+			TalkingCommandDTO talkingDTO = this.modelMapper.map(objTalking, TalkingCommandDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Charla creada con éxito");
 			response.setMoreInfo("http://localhost:8080/talking/SaveTalking");
@@ -85,8 +86,8 @@ public class TalkingServiceImpl implements ITalkingService{
 
 	@Override
 	@Transactional
-	public Response<TalkingDTO> updateTalking(Integer talkingId, TalkingDTO talking) {
-		Response<TalkingDTO> response = new Response<>();
+	public Response<TalkingQueryDTO> updateTalking(Integer talkingId, TalkingCommandDTO talking) {
+		Response<TalkingQueryDTO> response = new Response<>();
 		if(talking != null && talkingId != null) {
 			Talking talkingEntity = this.modelMapper.map(talking, Talking.class);
 			Talking talkingEntity1 = this.iTalkingRepository.findById(talkingId).get();
@@ -99,7 +100,8 @@ public class TalkingServiceImpl implements ITalkingService{
 			talkingEntity1.setState(talkingEntity.getState());
 			talkingEntity1.setFinca(talkingEntity.getFinca());
 			talkingEntity1.setLstReserve(talkingEntity.getLstReserve());
-			TalkingDTO talkingDTO = this.modelMapper.map(talkingEntity1, TalkingDTO.class);
+			this.iTalkingRepository.save(talkingEntity1);
+			TalkingQueryDTO talkingDTO = this.modelMapper.map(talkingEntity1, TalkingQueryDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Charla actualizada con éxito");
 			response.setMoreInfo("http://localhost:8080/talking/UpdateTalking/{id}");
@@ -138,11 +140,11 @@ public class TalkingServiceImpl implements ITalkingService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<TalkingDTO>> findAllTalkingDisabled() {
+	public Response<List<TalkingQueryDTO>> findAllTalkingDisabled() {
 		List<Talking> talkingEntity = this.iTalkingRepository.LstTalkingDisabled();
-		Response<List<TalkingDTO>> response = new Response<>();
+		Response<List<TalkingQueryDTO>> response = new Response<>();
 		if(!talkingEntity.isEmpty()) {
-			List<TalkingDTO> talkingDTO = talkingEntity.stream().map(talking -> modelMapper.map(talking, TalkingDTO.class)).collect(Collectors.toList());
+			List<TalkingQueryDTO> talkingDTO = talkingEntity.stream().map(talking -> modelMapper.map(talking, TalkingQueryDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Charlas encontrados con éxito");
 			response.setMoreInfo("http://localhost:8080/talking/ConsultAllTalkingDisabled");
@@ -158,11 +160,11 @@ public class TalkingServiceImpl implements ITalkingService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<TalkingDTO>> findAllTalkingBytState(boolean state) {
+	public Response<List<TalkingQueryDTO>> findAllTalkingBytState(boolean state) {
 		List<Talking> talkingEntity = this.iTalkingRepository.LstTalkingByState(state);
-		Response<List<TalkingDTO>> response = new Response<>();
+		Response<List<TalkingQueryDTO>> response = new Response<>();
 		if(!talkingEntity.isEmpty()) {
-			List<TalkingDTO> talkingDTO = talkingEntity.stream().map(talking -> modelMapper.map(talking, TalkingDTO.class)).collect(Collectors.toList());
+			List<TalkingQueryDTO> talkingDTO = talkingEntity.stream().map(talking -> modelMapper.map(talking, TalkingQueryDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Charlas encontrados con éxito");
 			response.setMoreInfo("http://localhost:8080/talking/ConsultAllTalkingByState");

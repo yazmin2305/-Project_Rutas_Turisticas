@@ -16,5 +16,5 @@ public class LunchDTO {
 	private Double lunchUnitPrice;
 	private Boolean lunchState;
 	private List<ReserveDTO> lsReserveDTOs;
-
+	private RutaCommandDTO ruta;
 }
