@@ -26,11 +26,14 @@ public class Lunch {
 	@Column(nullable = true)
 	private Boolean state;
 	
+	@Column(nullable = false)
+	private Integer cantidad;
+	
 	@ManyToMany(mappedBy = "LstLunch")
 	private List<Reserve> LstReserve ;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ruta_id")
 	private Ruta ruta;
-
+	
 }

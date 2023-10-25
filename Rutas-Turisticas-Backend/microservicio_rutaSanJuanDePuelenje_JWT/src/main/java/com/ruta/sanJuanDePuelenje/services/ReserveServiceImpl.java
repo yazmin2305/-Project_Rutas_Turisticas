@@ -221,7 +221,10 @@ public class ReserveServiceImpl implements IReserveService{
 			}
 		}if(reserveEntity.getLstLunch() != null) {
 			for(Lunch lunch : reserveEntity.getLstLunch()) {
-				reserveEntity.setTotalPriceLunch(reserveEntity.getAmountPersons() * lunch.getUnitPrice());
+				/* No se multiplica por la cantidad de personas ya que si un usuario reserva para un grupo de personas
+				*  es muy probable que todas tengas gustos diferentes, por eso en la entidad Lunch se define un campo cantidad
+				*/
+				reserveEntity.setTotalPriceLunch(lunch.getCantidad() * lunch.getUnitPrice());
 				totalPrice += reserveEntity.getTotalPriceLunch();
 			}
 		}
