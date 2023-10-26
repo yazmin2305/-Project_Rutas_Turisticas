@@ -1,6 +1,5 @@
 package com.ruta.sanJuanDePuelenje.DTO.Command;
 
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +19,6 @@ public class RecreationCommandDTO {
 	private Double recreationUnitPrice;
 	private Boolean recreationState;
 	private FincaCommandDTO finca;
-	private List<ReserveCommandDTO> lstReserveDTOs;
+	//private List<ReserveCommandDTO> lstReserveDTOs;
 	private RutaCommandDTO ruta;
 }

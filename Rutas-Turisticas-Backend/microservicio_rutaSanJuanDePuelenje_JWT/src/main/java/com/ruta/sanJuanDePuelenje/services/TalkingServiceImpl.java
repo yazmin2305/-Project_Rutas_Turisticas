@@ -99,7 +99,7 @@ public class TalkingServiceImpl implements ITalkingService{
 			talkingEntity1.setUnitPrice(talkingEntity.getUnitPrice());
 			talkingEntity1.setState(talkingEntity.getState());
 			talkingEntity1.setFinca(talkingEntity.getFinca());
-			talkingEntity1.setLstReserve(talkingEntity.getLstReserve());
+//			talkingEntity1.setLstReserve(talkingEntity.getLstReserve());
 			this.iTalkingRepository.save(talkingEntity1);
 			TalkingQueryDTO talkingDTO = this.modelMapper.map(talkingEntity1, TalkingQueryDTO.class);
 			response.setStatus(200);

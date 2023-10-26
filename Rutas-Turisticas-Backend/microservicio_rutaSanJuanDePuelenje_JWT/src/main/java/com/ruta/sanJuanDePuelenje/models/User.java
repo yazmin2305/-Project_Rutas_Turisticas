@@ -1,7 +1,5 @@
 package com.ruta.sanJuanDePuelenje.models;
 
-import java.util.List;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
@@ -48,8 +46,8 @@ public class User {
 	@JoinColumn(name = "rol_id", nullable = true)
 	private Role role;
 	
-	@OneToMany(mappedBy = "user")
-	private List<Reserve> LstReserve ;
+//	@OneToMany(mappedBy = "user")
+//	private List<Reserve> LstReserve ;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ruta_id")

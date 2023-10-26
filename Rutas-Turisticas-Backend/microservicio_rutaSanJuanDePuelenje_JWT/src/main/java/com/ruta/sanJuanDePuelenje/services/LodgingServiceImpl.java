@@ -93,7 +93,7 @@ public final class LodgingServiceImpl implements ILodgingService{
 			lodgingEntity1.setUnitPrice(lodgingEntity.getUnitPrice());
 			lodgingEntity1.setState(lodgingEntity.getState());
 			lodgingEntity1.setFinca(lodgingEntity.getFinca());
-			lodgingEntity1.setLstReserve(lodgingEntity.getLstReserve());
+			//lodgingEntity1.setLstReserve(lodgingEntity.getLstReserve());
 			this.iLodgingRepository.save(lodgingEntity1);
 			LodgingQueryDTO lodgingDTO = this.modelMapper.map(lodgingEntity1, LodgingQueryDTO.class);
 			response.setStatus(200);

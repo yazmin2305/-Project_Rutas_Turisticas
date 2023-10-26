@@ -1,7 +1,5 @@
 package com.ruta.sanJuanDePuelenje.DTO.Command;
 
-import java.util.List;
-
 import com.ruta.sanJuanDePuelenje.DTO.RoleDTO;
 
 import lombok.AllArgsConstructor;
@@ -22,6 +20,6 @@ public class UserCommandDTO {
 	private Boolean userState;
 	private String userPassword;
 	private RoleDTO role;
-	private List<ReserveCommandDTO> lstReserveDTOs;
+	//private List<ReserveCommandDTO> lstReserveDTOs;
 	private RutaCommandDTO ruta;
 }

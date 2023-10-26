@@ -26,8 +26,6 @@ public class Lunch {
 	@Column(nullable = true)
 	private Boolean state;
 	
-	@Column(nullable = false)
-	private Integer cantidad;
 	
 	@ManyToMany(mappedBy = "LstLunch")
 	private List<Reserve> LstReserve ;

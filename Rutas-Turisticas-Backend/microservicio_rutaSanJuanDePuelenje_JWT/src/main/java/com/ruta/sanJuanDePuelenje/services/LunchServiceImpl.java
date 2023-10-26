@@ -93,9 +93,7 @@ public class LunchServiceImpl implements ILunchService{
 			Lunch lunchEntity1 = this.iLunchRepository.findById(lunchId).get();
 			lunchEntity1.setMenu(lunchEntity.getMenu());
 			lunchEntity1.setUnitPrice(lunchEntity.getUnitPrice());
-//			lunchEntity1.setTotalPrice(lunchEntity.getTotalPrice());
 			lunchEntity1.setState(lunchEntity.getState());
-			lunchEntity1.setLstReserve(lunchEntity.getLstReserve());
 			this.iLunchRepository.save(lunchEntity1);
 			LunchQueryDTO lunchDTO = this.modelMapper.map(lunchEntity1, LunchQueryDTO.class);
 			response.setStatus(200);

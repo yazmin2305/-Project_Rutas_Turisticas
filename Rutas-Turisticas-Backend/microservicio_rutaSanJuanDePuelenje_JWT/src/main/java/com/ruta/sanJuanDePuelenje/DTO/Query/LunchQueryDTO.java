@@ -13,5 +13,4 @@ public class LunchQueryDTO {
 	private String lunchMenu;
 	private Double lunchUnitPrice;
 	private Boolean lunchState;
-	private Integer lunchCantidad;
 }

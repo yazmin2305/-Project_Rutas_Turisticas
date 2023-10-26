@@ -32,9 +32,6 @@ public class Lodging {
 	@Column(name = "unit_price" ,nullable = false)
 	private Double unitPrice;
 	
-//	@Column(name = "number_nights" ,nullable = true)
-//	private Integer numberNights;
-	
 	@Column(nullable = true)
 	private Boolean state;
 	

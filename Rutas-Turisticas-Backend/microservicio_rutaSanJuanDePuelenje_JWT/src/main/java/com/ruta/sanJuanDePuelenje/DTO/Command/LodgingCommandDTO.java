@@ -1,7 +1,5 @@
 package com.ruta.sanJuanDePuelenje.DTO.Command;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +18,6 @@ public class LodgingCommandDTO {
 	private Integer lodgingNumberNights;
 	private Boolean lodgingState;
 	private FincaCommandDTO finca;
-	private List<ReserveCommandDTO> lstReserveDTOs;
+	//private List<ReserveCommandDTO> lstReserveDTOs;
 	private RutaCommandDTO ruta;
 }

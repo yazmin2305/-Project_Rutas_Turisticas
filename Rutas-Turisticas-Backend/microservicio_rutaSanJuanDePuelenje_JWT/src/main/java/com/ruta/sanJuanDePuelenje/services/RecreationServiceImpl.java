@@ -97,10 +97,8 @@ public class RecreationServiceImpl implements IRecreationService {
 			recreationEntity1.setAvailability(recreationEntity.getAvailability());
 			recreationEntity1.setMaxAmountPerson(recreationEntity.getMaxAmountPerson());
 			recreationEntity1.setUnitPrice(recreationEntity.getUnitPrice());
-//			recreationEntity1.setTotalPrice(recreationEntity.getTotalPrice());
 			recreationEntity1.setState(recreationEntity.getState());
 			recreationEntity1.setFinca(recreationEntity.getFinca());
-			recreationEntity1.setLstReserve(recreationEntity.getLstReserve());
 			this.iRecreationRepository.save(recreationEntity1);
 			RecreationQueryDTO recreationDTO = this.modelMapper.map(recreationEntity1, RecreationQueryDTO.class);
 			response.setStatus(200);

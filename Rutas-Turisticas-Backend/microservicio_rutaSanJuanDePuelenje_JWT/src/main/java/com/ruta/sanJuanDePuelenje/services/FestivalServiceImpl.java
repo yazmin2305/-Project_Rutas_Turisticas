@@ -15,7 +15,6 @@ import com.ruta.sanJuanDePuelenje.DTO.Query.FestivalQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Festival;
 import com.ruta.sanJuanDePuelenje.repository.IFestivalRepository;
 
-
 @Service
 public class FestivalServiceImpl implements IFestivalService{
 	@Autowired
@@ -76,19 +75,6 @@ public class FestivalServiceImpl implements IFestivalService{
 			response.setUserMessage("Festival creado con éxito");
 			response.setMoreInfo("http://localhost:8080/festival/SaveFestival");
 			response.setData(festivalDTO);
-//			if(!imagen.isEmpty()) {
-//				String rutaAbsoluta  = "C://Producto//imagenes";
-//				
-//				try {
-//					byte[] bytesImg = imagen.getBytes();
-//					Path rutaCompleta = Paths.get(rutaAbsoluta + "//"+ imagen.getOriginalFilename());
-//					Files.write(rutaCompleta, bytesImg);
-//					festivalEntity.setImagen(imagen.getOriginalFilename());
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//				
-//			}
 		}else {
 			response.setStatus(500);
 			response.setUserMessage("Error al crear el festival");

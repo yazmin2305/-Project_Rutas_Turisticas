@@ -101,7 +101,7 @@ public class WorkshopServiceImpl implements IWorkshopService{
 			workshopEntity1.setWorkshopType(workshopEntity.getWorkshopType());
 			workshopEntity1.setState(workshopEntity.getState());
 			workshopEntity1.setFinca(workshopEntity.getFinca());
-			workshopEntity1.setLstReserve(workshopEntity.getLstReserve());
+//			workshopEntity1.setLstReserve(workshopEntity.getLstReserve());
 			this.iWorkshopRerpository.save(workshopEntity1);
 			WorkshopQueryDTO workshopDTO = this.modelMapper.map(workshopEntity1, WorkshopQueryDTO.class);
 			response.setStatus(200);

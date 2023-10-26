@@ -1,7 +1,5 @@
 package com.ruta.sanJuanDePuelenje.DTO.Command;
 
-import java.util.List;
-
 import com.ruta.sanJuanDePuelenje.DTO.WorkshopTypeDTO;
 
 import lombok.AllArgsConstructor;
@@ -24,6 +22,6 @@ public class WorkshopCommandDTO {
 	private Boolean workshopState;
 	private WorkshopTypeDTO workshopType;
 	private FincaCommandDTO finca;
-	private List<ReserveCommandDTO> lstReserveDTOs;
+//	private List<ReserveCommandDTO> lstReserveDTOs;
 	private RutaCommandDTO ruta;
 }

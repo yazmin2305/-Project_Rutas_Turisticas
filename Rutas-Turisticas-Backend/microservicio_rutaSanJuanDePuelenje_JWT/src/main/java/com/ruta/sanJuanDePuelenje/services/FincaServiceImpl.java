@@ -95,11 +95,11 @@ public class FincaServiceImpl implements IFincaService{
 			fincaEntity1.setDescription(fincaEntity.getDescription());
 			fincaEntity1.setLocation(fincaEntity.getLocation());
 			fincaEntity1.setState(fincaEntity.getState());
-			fincaEntity1.setLstTalking(fincaEntity.getLstTalking());
-			fincaEntity1.setLstWorkshop(fincaEntity.getLstWorkshop());
-			fincaEntity1.setLstRecreation(fincaEntity.getLstRecreation());
-			fincaEntity1.setLstLodging(fincaEntity.getLstLodging());
-			fincaEntity1.setLstFestival(fincaEntity.getLstFestival());
+//			fincaEntity1.setLstTalking(fincaEntity.getLstTalking());
+//			fincaEntity1.setLstWorkshop(fincaEntity.getLstWorkshop());
+//			fincaEntity1.setLstRecreation(fincaEntity.getLstRecreation());
+//			fincaEntity1.setLstLodging(fincaEntity.getLstLodging());
+//			fincaEntity1.setLstFestival(fincaEntity.getLstFestival());
 			this.iFincaRepository.save(fincaEntity1);
 			FincaQueryDTO fincaDTO = this.modelMapper.map(fincaEntity1, FincaQueryDTO.class);
 			response.setStatus(200);

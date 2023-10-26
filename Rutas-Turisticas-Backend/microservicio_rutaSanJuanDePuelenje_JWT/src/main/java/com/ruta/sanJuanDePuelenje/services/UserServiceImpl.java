@@ -115,8 +115,6 @@ public class UserServiceImpl implements IUserService {
 			userEntity1.setPhone(userEntity.getPhone());
 			userEntity1.setEmail(userEntity.getEmail());
 			//solo la persona que tiene el rol superusuario puede cambiar el rol de un usuario....falta???
-			//userEntity1.setRole(userEntity.getRole());
-			userEntity1.setLstReserve(userEntity.getLstReserve());
 			userEntity1.setState(userEntity.getState());
 			this.iUserRepository.save(userEntity1);
 			UserQueryDTO userDTO = this.modelMapper.map(userEntity1, UserQueryDTO.class);

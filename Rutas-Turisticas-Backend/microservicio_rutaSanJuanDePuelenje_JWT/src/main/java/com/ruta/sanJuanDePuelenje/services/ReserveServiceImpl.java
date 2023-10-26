@@ -12,7 +12,6 @@ import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.ReserveCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.ReserveQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Lodging;
-import com.ruta.sanJuanDePuelenje.models.Lunch;
 import com.ruta.sanJuanDePuelenje.models.Recreation;
 import com.ruta.sanJuanDePuelenje.models.Reserve;
 import com.ruta.sanJuanDePuelenje.models.Talking;
@@ -198,35 +197,39 @@ public class ReserveServiceImpl implements IReserveService{
 	private Double calculateTotalPrice2(ReserveCommandDTO reserve) {
 		Reserve reserveEntity = this.modelMapper.map(reserve, Reserve.class);
 		double totalPrice = 0;
-		//ya tengo que recorrer la lista de lodging de talkin de recreation y demas...
 		if(reserveEntity.getLstTalking() != null) {
+			double totalPriceTalking = 0;
 			for(Talking talking : reserveEntity.getLstTalking()) {
-				reserveEntity.setTotalPriceTalking(reserveEntity.getAmountPersons() * talking.getUnitPrice());   
-				totalPrice += reserveEntity.getTotalPriceTalking();
+				totalPriceTalking += reserveEntity.getAmountPersons() * talking.getUnitPrice();   
 			}
+			reserveEntity.setTotalPriceTalking(totalPriceTalking);
+			totalPrice = reserveEntity.getTotalPriceTalking();
 		}if(reserveEntity.getLstWorkshop() != null) {
+			double totalPriceWorkshop = 0;
 			for(Workshop workshop : reserveEntity.getLstWorkshop()) {
-				reserveEntity.setTotalPriceWorkshop(reserveEntity.getAmountPersons() * workshop.getUnitPrice()); 
-				totalPrice += reserveEntity.getTotalPriceWorkshop();
+				totalPriceWorkshop += reserveEntity.getAmountPersons() * workshop.getUnitPrice(); 
 			}
+			reserveEntity.setTotalPriceWorkshop(totalPriceWorkshop);
+			totalPrice = reserveEntity.getTotalPriceWorkshop();
 		}if(reserveEntity.getLstLodging() != null) {
+			double totalPriceLodging = 0;
 			for(Lodging lodging : reserveEntity.getLstLodging()) {
-				reserveEntity.setTotalPriceLodging(reserveEntity.getAmountPersons() * lodging.getUnitPrice());
-				totalPrice += reserveEntity.getTotalPriceLodging();
+				totalPriceLodging += reserveEntity.getAmountPersons() * lodging.getUnitPrice();
 			}
+			reserveEntity.setTotalPriceLodging(totalPriceLodging);
+			totalPrice = reserveEntity.getTotalPriceLodging();
 		}if(reserveEntity.getLstRecreation() != null) {
+			double totalPriceRecreation = 0;
 			for(Recreation recreation : reserveEntity.getLstRecreation()) {
-				reserveEntity.setTotalPriceRecreation(reserveEntity.getAmountPersons() * recreation.getUnitPrice());
-				totalPrice += reserveEntity.getTotalPriceRecreation();
+				totalPriceRecreation += reserveEntity.getAmountPersons() * recreation.getUnitPrice();
 			}
+			reserveEntity.setTotalPriceRecreation(totalPriceRecreation);
+			totalPrice = reserveEntity.getTotalPriceRecreation();
 		}if(reserveEntity.getLstLunch() != null) {
-			for(Lunch lunch : reserveEntity.getLstLunch()) {
-				/* No se multiplica por la cantidad de personas ya que si un usuario reserva para un grupo de personas
-				*  es muy probable que todas tengas gustos diferentes, por eso en la entidad Lunch se define un campo cantidad
-				*/
-				reserveEntity.setTotalPriceLunch(lunch.getCantidad() * lunch.getUnitPrice());
-				totalPrice += reserveEntity.getTotalPriceLunch();
-			}
+			/* Con el fin de que se pueda reservar diferentes menus para un grupo de personas,
+			 * se realiza el cálculo total y se envia directamente*/
+			reserveEntity.setTotalPriceLunch(reserveEntity.getTotalPriceLunch());
+			
 		}
 		return totalPrice;
 	}
