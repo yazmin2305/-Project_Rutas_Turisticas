@@ -41,14 +41,14 @@ public class TalkingController {
 
 	// Actualizar una charla
 	@Secured("ADMIN")
-	@PutMapping("/UpdateTalking/{id}")
+	@PatchMapping("/UpdateTalking/{id}")
 	public Response<TalkingQueryDTO> UpdateTalking(@RequestBody TalkingCommandDTO Talking, @PathVariable Integer id) {
 		return this.iTalkingService.updateTalking(id, Talking);
 	}
 
 	// Desabilitar una charla registrada en el sistema
 	@Secured("ADMIN")
-	@PutMapping("/DisableTalking/{id}")
+	@PatchMapping("/DisableTalking/{id}")
 	public Response<Boolean> DisableTalking(@PathVariable Integer id) {
 		return this.iTalkingService.disableTalking(id);
 	}

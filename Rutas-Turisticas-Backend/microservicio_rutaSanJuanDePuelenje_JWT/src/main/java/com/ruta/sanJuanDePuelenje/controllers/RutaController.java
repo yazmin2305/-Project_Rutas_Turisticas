@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,13 +43,13 @@ public class RutaController {
 	}
 	
 	@Secured("SUPER")
-	@PutMapping("/UpdateRuta/{id}")
+	@PatchMapping("/UpdateRuta/{id}")
 	public Response<RutaCommandDTO> UpdateRuta(@RequestBody RutaCommandDTO Ruta, @PathVariable Integer id) {
 		return this.iRutaService.updateRuta(id, Ruta);
 	}
 	
 	@Secured("SUPER")
-	@PutMapping("/DisableTalking/{id}")
+	@PatchMapping("/DisableTalking/{id}")
 	public Response<Boolean> DisableTalking(@PathVariable Integer id) {
 		return this.iRutaService.disableRuta(id);
 	}

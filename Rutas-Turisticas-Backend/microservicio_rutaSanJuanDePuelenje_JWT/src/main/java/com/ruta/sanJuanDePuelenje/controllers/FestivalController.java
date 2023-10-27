@@ -45,14 +45,14 @@ public class FestivalController {
 
 	// Actualizar festival
 	@Secured("ADMIN")
-	@PutMapping("/UpdateFestival/{id}")
+	@PatchMapping("/UpdateFestival/{id}")
 	public Response<FestivalQueryDTO> UpdateFestival(@RequestBody FestivalCommandDTO festival, @PathVariable Integer id) {
 		return this.iFestivalService.updateFestival(id, festival);
 	}
 
 	// Desabilitar un festival registrado en el sistema
 	@Secured("ADMIN")
-	@PutMapping("/DisableFestival/{id}")
+	@PatchMapping("/DisableFestival/{id}")
 	public Response<Boolean> DisableFestival(@PathVariable Integer id) {
 		return this.iFestivalService.disableFestival(id);
 	}

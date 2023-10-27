@@ -45,14 +45,14 @@ public class FincaController {
 
 	// Actualizar finca
 	@Secured("ADMIN")
-	@PutMapping("/UpdateFinca/{id}")
+	@PatchMapping("/UpdateFinca/{id}")
 	public Response<FincaQueryDTO> UpdateFinca(@RequestBody FincaCommandDTO finca, @PathVariable Integer id) {
 		return this.iFincaService.updateFinca(id, finca);
 	}
 
 	// Desabilitar una finca registrada en el sistema
 	@Secured("ADMIN")
-	@PutMapping("/DisableFinca/{id}")
+	@PatchMapping("/DisableFinca/{id}")
 	public Response<Boolean> DisableFinca(@PathVariable Integer id) {
 		return this.iFincaService.disableFinca(id);
 	}

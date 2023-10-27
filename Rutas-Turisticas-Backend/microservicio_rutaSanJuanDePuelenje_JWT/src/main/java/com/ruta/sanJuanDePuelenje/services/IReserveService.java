@@ -4,11 +4,12 @@ import java.util.List;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.ReserveCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.ReserveQueryDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.UserQueryDTO;
 
 
 public interface IReserveService {
 	
-	public Response<List<ReserveQueryDTO>> findAllReserve();
+	public Response<List<ReserveQueryDTO>> findAllReserve(Integer rutaId);
 	
 	public Response<ReserveQueryDTO> findByReserveId(Integer reserveId);
 	
@@ -21,5 +22,7 @@ public interface IReserveService {
 	public Response<Boolean> deleteReserve(Integer reserveId);
 	
 	public Response<List<ReserveQueryDTO>> findReservesByUser(Integer reserveId);
+	
+	public Response<List<UserQueryDTO>> findAllUsersByRuta(Integer rutaId);
 
 }

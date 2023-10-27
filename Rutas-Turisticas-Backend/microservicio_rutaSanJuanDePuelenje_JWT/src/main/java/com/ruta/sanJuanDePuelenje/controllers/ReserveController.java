@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.ReserveCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.ReserveQueryDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.UserQueryDTO;
 import com.ruta.sanJuanDePuelenje.services.IReserveService;
 
 @RestController
@@ -21,9 +22,9 @@ public class ReserveController {
 
 	// Consultar todos las reservas
 	@Secured("ADMIN")
-	@GetMapping("/ConsultAllReserve")
-	public Response<List<ReserveQueryDTO>> ConsultAllReserve() {
-		return this.iReserveService.findAllReserve();
+	@GetMapping("/ConsultAllReserve{id}")
+	public Response<List<ReserveQueryDTO>> ConsultAllReserve(@PathVariable Integer rutaId) {
+		return this.iReserveService.findAllReserve(rutaId);
 	}
 
 	// Consultar una reserva por su id
@@ -42,14 +43,14 @@ public class ReserveController {
 
 	// Actualizar una reserva
 	@Secured("ADMIN")
-	@PutMapping("/UpdateReserve/{id}")
+	@PatchMapping("/UpdateReserve/{id}")
 	public Response<ReserveQueryDTO> UpdateReserve(@RequestBody ReserveCommandDTO Reserve, @PathVariable Integer id) {
 		return this.iReserveService.updateReserve(id, Reserve);
 	}
 
 	// Desabilitar una reserva registrada en el sistema
 	@Secured("ADMIN")
-	@PutMapping("/DisableReserve/{id}")
+	@PatchMapping("/DisableReserve/{id}")
 	public Response<Boolean> DisableReserve(@PathVariable Integer id) {
 		return this.iReserveService.disableReserve(id);
 	}
@@ -66,6 +67,12 @@ public class ReserveController {
 	@GetMapping("/ConsultAllReserveUser/{id}")
 	public Response<List<ReserveQueryDTO>> consulReserveDTOs(@PathVariable Integer id){
 		return this.iReserveService.findReservesByUser(id);
+	}
+	
+	@Secured("ADMIN")
+	@GetMapping("/ConsultAllUsersByRuta/{id}")
+	public Response<List<UserQueryDTO>> ConsultAllUsersByRuta(@PathVariable Integer id){
+		return this.iReserveService.findAllUsersByRuta(id);
 	}
 	
 }

@@ -41,14 +41,14 @@ public class LunchController {
 
 	// Actualizar almuerzo
 	@Secured("ADMIN")
-	@PutMapping("/UpdateLunch/{id}")
+	@PatchMapping("/UpdateLunch/{id}")
 	public Response<LunchQueryDTO> UpdateLunch(@RequestBody LunchCommandDTO lunch, @PathVariable Integer id) {
 		return this.iLunchService.updateLunch(id, lunch);
 	}
 
 	// Desabilitar un almuerzo registrado en el sistema
 	@Secured("ADMIN")
-	@PutMapping("/DisableLunch/{id}")
+	@PatchMapping("/DisableLunch/{id}")
 	public Response<Boolean> DisableLunch(@PathVariable Integer id) {
 		return this.iLunchService.disableLunch(id);
 	}

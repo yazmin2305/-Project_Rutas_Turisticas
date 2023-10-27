@@ -41,14 +41,14 @@ public class RecreationController {
 
 	// Actualizar una actividad recreativa
 	@Secured("ADMIN")
-	@PutMapping("/UpdateRecreation/{id}")
+	@PatchMapping("/UpdateRecreation/{id}")
 	public Response<RecreationQueryDTO> UpdateRecreation(@RequestBody RecreationCommandDTO recreation, @PathVariable Integer id) {
 		return this.iRecreationService.updateRecreation(id, recreation);
 	}
 
 	// Desabilitar una actividad recreativa registrada en el sistema
 	@Secured("ADMIN")
-	@PutMapping("/DisableRecreation/{id}")
+	@PatchMapping("/DisableRecreation/{id}")
 	public Response<Boolean> DisableRecreation(@PathVariable Integer id) {
 		return this.iRecreationService.disableRecreation(id);
 	}

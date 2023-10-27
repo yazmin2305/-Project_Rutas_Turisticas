@@ -41,14 +41,14 @@ public class WorkshopController {
 
 	// Actualizar un taller
 	@Secured("ADMIN")
-	@PutMapping("/UpdateWorkshop/{id}")
+	@PatchMapping("/UpdateWorkshop/{id}")
 	public Response<WorkshopQueryDTO> UpdateWorkshop(@RequestBody WorkshopCommandDTO workshop, @PathVariable Integer id) {
 		return this.iWorkshopService.updateWorkshop(id, workshop);
 	}
 
 	// Desabilitar un taller registrada en el sistema
 	@Secured("ADMIN")
-	@PutMapping("/DisableWorkshop/{id}")
+	@PatchMapping("/DisableWorkshop/{id}")
 	public Response<Boolean> DisableWorkshop(@PathVariable Integer id) {
 		return this.iWorkshopService.disableWorkshop(id);
 	}

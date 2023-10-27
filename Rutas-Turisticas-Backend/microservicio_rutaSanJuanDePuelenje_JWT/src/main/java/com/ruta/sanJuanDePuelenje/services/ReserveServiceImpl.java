@@ -11,10 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.ReserveCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.ReserveQueryDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Query.UserQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Lodging;
 import com.ruta.sanJuanDePuelenje.models.Recreation;
 import com.ruta.sanJuanDePuelenje.models.Reserve;
 import com.ruta.sanJuanDePuelenje.models.Talking;
+import com.ruta.sanJuanDePuelenje.models.User;
 import com.ruta.sanJuanDePuelenje.models.Workshop;
 import com.ruta.sanJuanDePuelenje.repository.IReserveRepository;
 
@@ -28,8 +30,8 @@ public class ReserveServiceImpl implements IReserveService{
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<ReserveQueryDTO>> findAllReserve() {
-		List<Reserve> reserveEntity = iReserveRepository.findAll();
+	public Response<List<ReserveQueryDTO>> findAllReserve(Integer rutaId) {
+		List<Reserve> reserveEntity = iReserveRepository.LstReserveByRuta(rutaId);
 		Response<List<ReserveQueryDTO>> response = new Response<>();
 		if(reserveEntity.isEmpty()) {
 			response.setStatus(404);
@@ -193,6 +195,26 @@ public class ReserveServiceImpl implements IReserveService{
 		return response;
 	}
 	
+	@Transactional(readOnly = true)
+	@Override
+	public Response<List<UserQueryDTO>> findAllUsersByRuta(Integer rutaId) {
+		List<User> userEntity = this.iReserveRepository.LstUserByRuta(rutaId);
+		Response<List<UserQueryDTO>> response = new Response<>();
+		if(userEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("No se encontraron usuarios");
+			response.setMoreInfo("http://localhost:8080/reserve/ConsultAllUsersByRuta/{id}");
+			response.setData(null);
+		}else {
+			List<UserQueryDTO> userDTOs = userEntity.stream().map(user -> modelMapper.map(user, UserQueryDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Usuarios encontrados con éxito");
+			response.setMoreInfo("http://localhost:8080/reserve/ConsultAllUsersByRuta/{id}");
+			response.setData(userDTOs);
+		}
+		return response;
+	}
+	
 	//se calcula el precio total de la reserva y el precio total por cada item que el usuario selecciona
 	private Double calculateTotalPrice2(ReserveCommandDTO reserve) {
 		Reserve reserveEntity = this.modelMapper.map(reserve, Reserve.class);
@@ -233,5 +255,7 @@ public class ReserveServiceImpl implements IReserveService{
 		}
 		return totalPrice;
 	}
+
+	
 
 }

@@ -41,14 +41,14 @@ public class WorkshopTypeController {
 
 	// Actualizar un tipo de taller
 	@Secured("ADMIN")
-	@PutMapping("/UpdateWorkshopType/{id}")
+	@PatchMapping("/UpdateWorkshopType/{id}")
 	public Response<WorkshopTypeDTO> UpdateWorkshopType(@RequestBody WorkshopTypeDTO workshopType, @PathVariable Integer id) {
 		return this.iWorkshopTypeTypeService.updateWorkshopType(id, workshopType);
 	}
 
 	// Desabilitar un tipo de taller registrado en el sistema
 	@Secured("ADMIN")
-	@PutMapping("/DisableWorkshopType/{id}")
+	@PatchMapping("/DisableWorkshopType/{id}")
 	public Response<Boolean> DisableWorkshopType(@PathVariable Integer id) {
 		return this.iWorkshopTypeTypeService.disableWorkshopType(id);
 	}

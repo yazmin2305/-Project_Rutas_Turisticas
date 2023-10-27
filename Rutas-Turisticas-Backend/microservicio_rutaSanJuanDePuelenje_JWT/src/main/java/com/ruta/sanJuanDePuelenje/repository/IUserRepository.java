@@ -13,5 +13,8 @@ public interface IUserRepository extends JpaRepository<User, Integer> {
 	@Query(value = "SELECT * FROM user WHERE state=?1", nativeQuery = true)
 	List<User> LstUserByState(boolean state);
 	
+	//Query que obtiene el usuario a partir de un correo electronico
 	public User findByEmail(String email);
+	
+
 }

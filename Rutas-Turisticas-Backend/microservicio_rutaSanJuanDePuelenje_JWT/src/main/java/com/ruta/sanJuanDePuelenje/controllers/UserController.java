@@ -23,7 +23,7 @@ public class UserController {
 	private IUserService iUserService;
 
 	// Consultar todos los usuarios
-	@Secured("ADMIN")
+	@Secured("SUPER")
 	@GetMapping("/ConsultAllUsers")
 	public Response<List<UserQueryDTO>> ConsultAllUsers() {
 		return this.iUserService.findAllUsers();
@@ -45,14 +45,14 @@ public class UserController {
 
 	// Actualizar usuario
 	@Secured({"ADMIN", "USER"})
-	@PutMapping("/UpdateUser/{id}")
+	@PatchMapping("/UpdateUser/{id}")
 	public Response<UserQueryDTO> UpdateUser(@RequestBody UserCommandDTO user, @PathVariable Integer id) {
 		return this.iUserService.updateUser(id, user);
 	}
 
 	// Desabilitar un usuario registrado en el sistema
 	@Secured("ADMIN")
-	@PutMapping("/DisableUser/{id}")
+	@PatchMapping("/DisableUser/{id}")
 	public Response<Boolean> DisableUser(@PathVariable Integer id) {
 		return this.iUserService.disableUser(id);
 	}

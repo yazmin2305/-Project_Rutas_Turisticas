@@ -41,14 +41,14 @@ public class LodgingController {
 
 	// Actualizar usuario
 	@Secured("ADMIN")
-	@PutMapping("/UpdateLodging/{id}")
+	@PatchMapping("/UpdateLodging/{id}")
 	public Response<LodgingQueryDTO> UpdateLodging(@RequestBody LodgingCommandDTO lodging, @PathVariable Integer id) {
 		return this.iLodgingService.updateLodging(id, lodging);
 	}
 
 	// Desabilitar un usuario registrado en el sistema
 	@Secured("ADMIN")
-	@PutMapping("/DisableLodging/{id}")
+	@PatchMapping("/DisableLodging/{id}")
 	public Response<Boolean> DisableLodging(@PathVariable Integer id) {
 		return this.iLodgingService.disableLodging(id);
 	}
