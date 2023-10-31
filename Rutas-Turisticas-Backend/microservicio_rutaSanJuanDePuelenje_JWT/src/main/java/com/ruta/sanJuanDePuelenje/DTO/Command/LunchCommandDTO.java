@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LunchCommandDTO {
+	private Integer lunchId;
 	private String lunchMenu;
 	private Double lunchUnitPrice;
 	private Boolean lunchState;

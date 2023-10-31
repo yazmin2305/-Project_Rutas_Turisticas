@@ -2,12 +2,16 @@ package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Query.FestivalQueryDTO;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
+import com.ruta.sanJuanDePuelenje.util.exception.RoutesException;
 import com.ruta.sanJuanDePuelenje.DTO.Command.FestivalCommandDTO;
 public interface IFestivalService {
 	
-	public Response<List<FestivalQueryDTO>> findAllFestival();
+	public GenericPageableResponse findAllFestival(Pageable pageable);
 	
 	public Response<FestivalQueryDTO> findByFestivalId(Integer festivalId);
 	
@@ -18,6 +22,4 @@ public interface IFestivalService {
 	public Response<Boolean> disableFestival(Integer festivalId);
 	
 	public Response<List<FestivalQueryDTO>> findAllFestivalBytState(boolean state);
-
-	//Response<FestivalDTO> saveFestival(FestivalDTO festival, MultipartFile imagen);
 }

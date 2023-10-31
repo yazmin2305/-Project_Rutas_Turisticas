@@ -3,6 +3,10 @@ package com.ruta.sanJuanDePuelenje.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +14,10 @@ import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.FestivalCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.FestivalQueryDTO;
 import com.ruta.sanJuanDePuelenje.services.IFestivalService;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
+import com.ruta.sanJuanDePuelenje.util.exception.RoutesException;
+
+import org.springframework.http.HttpStatus;
 
 import jakarta.annotation.security.PermitAll;
 
@@ -24,8 +32,9 @@ public class FestivalController {
 	// Consultar todos los festivales
 	@PermitAll
 	@GetMapping("/ConsultAllFestivales")
-	public Response<List<FestivalQueryDTO>> ConsultAllFestival() {
-		return this.iFestivalService.findAllFestival();
+	public ResponseEntity<GenericPageableResponse> ConsultAllFestival(@RequestParam Integer page, @RequestParam Integer size, @RequestParam String sort, @RequestParam String order) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order),sort));
+        return ResponseEntity.status(HttpStatus.OK).body(this.iFestivalService.findAllFestival(pageable));
 	}
 
 	// Consultar festival por id

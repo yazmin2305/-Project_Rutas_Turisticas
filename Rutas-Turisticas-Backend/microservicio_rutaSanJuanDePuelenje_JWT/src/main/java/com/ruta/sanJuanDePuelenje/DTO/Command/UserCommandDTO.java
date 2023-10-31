@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserCommandDTO {
+	private Integer userId;
 	private String userIdentification;
 	private String userName;
 	private String userLastName;

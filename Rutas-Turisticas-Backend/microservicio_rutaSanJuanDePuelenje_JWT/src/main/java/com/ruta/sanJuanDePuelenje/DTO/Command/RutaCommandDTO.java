@@ -7,6 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RutaCommandDTO {
+	private Integer rutaId;
 	private String rutaName;
 	private String rutaState;
 //	private List<TalkingCommandDTO> LstTalking;

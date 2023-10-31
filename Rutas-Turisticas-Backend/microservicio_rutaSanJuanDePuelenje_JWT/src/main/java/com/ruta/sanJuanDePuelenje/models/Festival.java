@@ -27,8 +27,6 @@ public class Festival {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 	
-	private String imagen;
-	
 	@Column(nullable = true)
 	private Boolean state;
 	

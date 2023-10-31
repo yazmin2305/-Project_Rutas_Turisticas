@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FestivalCommandDTO {
+	private Integer festivalId;
 	private String festivalName;
 	private String festivalDescription;
 	private Date festivalDate;

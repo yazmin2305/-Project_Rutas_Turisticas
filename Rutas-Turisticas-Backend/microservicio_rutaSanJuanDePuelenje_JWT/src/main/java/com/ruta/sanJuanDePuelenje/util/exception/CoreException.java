@@ -8,7 +8,7 @@ import lombok.*;
 
 @Getter
 @Setter
-public class Exception extends RuntimeException{
+public class CoreException extends RuntimeException{
 	
 	private static final long serialVersionUID = 6365652257268547172L;
 
@@ -24,7 +24,7 @@ public class Exception extends RuntimeException{
     private static final ResourceBundle messages =
             ResourceBundle.getBundle("exceptions", LocaleContextHolder.getLocale());
     
-    Exception(String key, String arg) {
+    CoreException(String key, String arg) {
         super(formatMessage(getMessage(key), arg));
         this.status = 0;
         this.Message = "";
@@ -33,7 +33,7 @@ public class Exception extends RuntimeException{
     /**
      * Método constructor
      */
-    public Exception (String Message, int status, Throwable e) {
+    public CoreException (String Message, int status, Throwable e) {
         super(e);
         this.Message = Message;
         this.status = status;
@@ -42,7 +42,7 @@ public class Exception extends RuntimeException{
     /**
      * Método constructor
      */
-    public Exception (String Message, int status) {
+    public CoreException (String Message, int status) {
         super(Message);
 		this.Message = Message;
         this.status = status;

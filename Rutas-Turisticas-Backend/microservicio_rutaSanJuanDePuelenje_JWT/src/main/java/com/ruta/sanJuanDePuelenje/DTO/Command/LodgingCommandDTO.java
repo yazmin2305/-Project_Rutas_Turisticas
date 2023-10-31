@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LodgingCommandDTO {
+	private Integer lodgingId;
 	private String lodgingName;
 	private String lodgingDescription;
 	private Integer lodgingBedsAvailable;
