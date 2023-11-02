@@ -8,7 +8,7 @@ public class RoutesBadRuntimeException extends CoreException{
 
 	private static final long serialVersionUID = 1L;
 	
-	 public RoutesBadRuntimeException(String key, String arg) {
+	public RoutesBadRuntimeException(String key, String arg) {
 	        super(key, arg);
 	}
 

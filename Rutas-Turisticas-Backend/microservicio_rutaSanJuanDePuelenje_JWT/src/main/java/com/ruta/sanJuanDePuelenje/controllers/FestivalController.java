@@ -15,7 +15,6 @@ import com.ruta.sanJuanDePuelenje.DTO.Command.FestivalCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.FestivalQueryDTO;
 import com.ruta.sanJuanDePuelenje.services.IFestivalService;
 import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
-import com.ruta.sanJuanDePuelenje.util.exception.RoutesException;
 
 import org.springframework.http.HttpStatus;
 

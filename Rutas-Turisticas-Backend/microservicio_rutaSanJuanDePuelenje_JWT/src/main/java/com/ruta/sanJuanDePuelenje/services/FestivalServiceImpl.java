@@ -18,7 +18,6 @@ import com.ruta.sanJuanDePuelenje.repository.IFestivalRepository;
 import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 import com.ruta.sanJuanDePuelenje.util.PageableUtils;
 import com.ruta.sanJuanDePuelenje.util.exception.RoutesBadRuntimeException;
-import com.ruta.sanJuanDePuelenje.util.exception.RoutesException;
 
 @Service
 public class FestivalServiceImpl implements IFestivalService {
@@ -32,7 +31,7 @@ public class FestivalServiceImpl implements IFestivalService {
 	public GenericPageableResponse findAllFestival(Pageable pageable){
 
 		Page<Festival> festivalesPage = this.iFestivalRepository.findAll(pageable);
-		if (festivalesPage.isEmpty()) throw new RoutesException("festival no encontrado");
+		if (festivalesPage.isEmpty()) throw new RoutesBadRuntimeException("bad.request.festival.empty", "200");
 			System.out.println("nada");
 		return this.validatePageList(festivalesPage);
 	}

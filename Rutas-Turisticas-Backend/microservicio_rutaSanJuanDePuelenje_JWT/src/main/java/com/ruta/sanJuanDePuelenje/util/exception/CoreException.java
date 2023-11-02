@@ -10,7 +10,12 @@ import lombok.*;
 @Setter
 public class CoreException extends RuntimeException{
 	
-	private static final long serialVersionUID = 6365652257268547172L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	//private static final long serialVersionUID = 6365652257268547172L;
 
 	/** Mensaje informativo para el usuario */
     private final String Message;

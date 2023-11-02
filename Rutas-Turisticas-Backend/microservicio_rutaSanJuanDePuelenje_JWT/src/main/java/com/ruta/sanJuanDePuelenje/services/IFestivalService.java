@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Query.FestivalQueryDTO;
 import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
-import com.ruta.sanJuanDePuelenje.util.exception.RoutesException;
 import com.ruta.sanJuanDePuelenje.DTO.Command.FestivalCommandDTO;
 public interface IFestivalService {
 	
