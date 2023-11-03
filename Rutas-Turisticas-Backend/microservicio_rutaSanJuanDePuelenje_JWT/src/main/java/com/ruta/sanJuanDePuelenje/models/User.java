@@ -39,6 +39,12 @@ public class User {
 	@Column(nullable = false, length = 60)
 	private String password;
 	
+	/* Cuando se pide un cambio de contraseña se crea un nuevo token 
+	 * y se guarda en este campo que luego volvera a estar nulo	
+	*/
+	@Column(nullable = true, length = 50)
+	private String tokenPassword;
+	
 	/*Este campo queda vacio ya que solo se van a crear usuarios con rol USER,
 	 * los usuarios con Rol ADMIN van a estar almacenados previamente en la base de datos */
 	//Esta relacion se cambio por unidireccional ya que no necesito acceser a la lista de usuarios por medio de la entidad Role
