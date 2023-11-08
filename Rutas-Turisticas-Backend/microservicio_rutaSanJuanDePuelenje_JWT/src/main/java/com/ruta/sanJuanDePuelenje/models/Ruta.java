@@ -54,10 +54,6 @@ public class Ruta {
 //	@Nullable
 //	@OneToMany(mappedBy = "ruta")
 //	private List<Reserve> LstReserve;
-//	
-//	@Nullable
-//	@OneToMany(mappedBy = "ruta")
-//	private List<User> LstUser;
 		
 	
 }

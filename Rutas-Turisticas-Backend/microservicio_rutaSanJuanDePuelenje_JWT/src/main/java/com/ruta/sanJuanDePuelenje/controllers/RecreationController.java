@@ -1,8 +1,11 @@
 package com.ruta.sanJuanDePuelenje.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +13,7 @@ import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.RecreationCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.RecreationQueryDTO;
 import com.ruta.sanJuanDePuelenje.services.IRecreationService;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 @RestController
 @RequestMapping("/recreation")
@@ -21,12 +25,14 @@ public class RecreationController {
 
 	// Consultar todos las actividades de recreación
 	@GetMapping("/ConsultAllRecreation")
-	public Response<List<RecreationQueryDTO>> ConsultAllRecreation() {
-		return this.iRecreationService.findAllRecreation();
+	public ResponseEntity<GenericPageableResponse> ConsultAllRecreation(@RequestParam Integer page,
+			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
+		return ResponseEntity.status(HttpStatus.OK).body(this.iRecreationService.findAllRecreation(pageable));
 	}
 
 	// Consultar una actividad recreativa por su id
-	@Secured({"ADMIN", "USER"})
+	@Secured({ "ADMIN", "USER" })
 	@GetMapping("/ConsultById/{id}")
 	public Response<RecreationQueryDTO> ConsultRecreationById(@PathVariable Integer id) {
 		return this.iRecreationService.findByRecreationId(id);
@@ -42,7 +48,8 @@ public class RecreationController {
 	// Actualizar una actividad recreativa
 	@Secured("ADMIN")
 	@PatchMapping("/UpdateRecreation/{id}")
-	public Response<RecreationQueryDTO> UpdateRecreation(@RequestBody RecreationCommandDTO recreation, @PathVariable Integer id) {
+	public Response<RecreationQueryDTO> UpdateRecreation(@RequestBody RecreationCommandDTO recreation,
+			@PathVariable Integer id) {
 		return this.iRecreationService.updateRecreation(id, recreation);
 	}
 
@@ -53,10 +60,22 @@ public class RecreationController {
 		return this.iRecreationService.disableRecreation(id);
 	}
 
-	// Consultar las actividades de recreacion dependiento su estado: activado - desactivado
-	@Secured({"ADMIN", "USER"})
+	// Habilitar una actividad recreativa registrada en el sistema
+	@Secured("ADMIN")
+	@PatchMapping("/EnableRecreation/{id}")
+	public Response<Boolean> EnableRecreation(@PathVariable Integer id) {
+		return this.iRecreationService.enableRecreation(id);
+	}
+
+	// Consultar las actividades de recreacion dependiento su estado: activado -
+	// desactivado
+	@Secured({ "ADMIN", "USER" })
 	@GetMapping("ConsultAllRecreationByState/{state}")
-	public Response<List<RecreationQueryDTO>> ConsultAllRecreationByState(@PathVariable Boolean state) {
-		return this.iRecreationService.findAllRecreationBytState(state);
+	public ResponseEntity<GenericPageableResponse> ConsultAllRecreationByState(@RequestParam Integer page,
+			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order,
+			@PathVariable Boolean state) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(this.iRecreationService.findAllRecreationBytState(state, pageable));
 	}
 }

@@ -1,13 +1,14 @@
 package com.ruta.sanJuanDePuelenje.services;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.WorkshopTypeDTO;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 public interface IWorkshopTypeService {
 	
-	public Response<List<WorkshopTypeDTO>> findAllWorkshopTypes();
+	public GenericPageableResponse findAllWorkshopTypes(Pageable pageable);
 	
 	public Response<WorkshopTypeDTO> findByWorkshopTypeId(Integer WorkshopTypeId);
 	
@@ -17,5 +18,7 @@ public interface IWorkshopTypeService {
 	
 	public Response<Boolean> disableWorkshopType(Integer workshopTypeId);
 	
-	public Response<List<WorkshopTypeDTO>> findAllWorkshopTypeBytState(boolean state);
+	public Response<Boolean> enableWorkshopType(Integer workshopTypeId);
+	
+	public GenericPageableResponse findAllWorkshopTypeBytState(boolean state, Pageable pageable);
 }

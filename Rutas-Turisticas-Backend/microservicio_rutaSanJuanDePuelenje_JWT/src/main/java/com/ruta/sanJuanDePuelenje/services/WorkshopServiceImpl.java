@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +15,8 @@ import com.ruta.sanJuanDePuelenje.DTO.Command.WorkshopCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.WorkshopQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Workshop;
 import com.ruta.sanJuanDePuelenje.repository.IWorkshopRerpository;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
+import com.ruta.sanJuanDePuelenje.util.PageableUtils;
 
 @Service
 public class WorkshopServiceImpl implements IWorkshopService{
@@ -24,22 +28,11 @@ public class WorkshopServiceImpl implements IWorkshopService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<WorkshopQueryDTO>> findAllWorkshop() {
-		List<Workshop> workshopEntity = iWorkshopRerpository.findAll();
-		Response<List<WorkshopQueryDTO>> response = new Response<>();
-		if(workshopEntity.isEmpty()) {
-			response.setStatus(404);
-			response.setUserMessage("Talleres no encontrados");
-			response.setMoreInfo("http://localhost:8080/workshop/ConsultAllWorkshop");
-			response.setData(null);
-		}else {
-			List<WorkshopQueryDTO> workshopDTOs = workshopEntity.stream().map(workshop -> modelMapper.map(workshop, WorkshopQueryDTO.class)).collect(Collectors.toList());
-			response.setStatus(200);
-			response.setUserMessage("Talleres encontrados con éxito");
-			response.setMoreInfo("http://localhost:8080/workshop/ConsultAllWorkshop");
-			response.setData(workshopDTOs);
-		}
-		return response;
+	public GenericPageableResponse findAllWorkshop(Pageable pageable) {
+		Page<Workshop> workshopPage = this.iWorkshopRerpository.findAll(pageable);
+		if (workshopPage.isEmpty())
+			return GenericPageableResponse.emptyResponse("Talleres no encontrados");
+		return this.validatePageList(workshopPage);
 	}
 
 	@Override
@@ -97,7 +90,6 @@ public class WorkshopServiceImpl implements IWorkshopService{
 			workshopEntity1.setAvailability(workshopEntity.getAvailability());
 			workshopEntity1.setMaxAmountPerson(workshopEntity.getMaxAmountPerson());
 			workshopEntity1.setUnitPrice(workshopEntity.getUnitPrice());
-//			workshopEntity1.setTotalPrice(workshopEntity.getTotalPrice());
 			workshopEntity1.setWorkshopType(workshopEntity.getWorkshopType());
 			workshopEntity1.setState(workshopEntity.getState());
 			workshopEntity1.setFinca(workshopEntity.getFinca());
@@ -140,26 +132,44 @@ public class WorkshopServiceImpl implements IWorkshopService{
 		}
 		return response;
 	}
-
+	
 	@Override
-	@Transactional(readOnly = true)
-	public Response<List<WorkshopQueryDTO>> findAllWorkshopBytState(boolean state) {
-		List<Workshop> workshopEntity = this.iWorkshopRerpository.LstWorkshopByState(state);
-		Response<List<WorkshopQueryDTO>> response = new Response<>();
-		if(!workshopEntity.isEmpty()) {
-			List<WorkshopQueryDTO> workshopDTO = workshopEntity.stream().map(workshop -> modelMapper.map(workshop, WorkshopQueryDTO.class)).collect(Collectors.toList());
-			response.setStatus(200);
-			response.setUserMessage("Talleres encontrados con éxito");
-			response.setMoreInfo("http://localhost:8080/workshop/ConsultAllWorkshopByState");
-			response.setData(workshopDTO);
-		}else {
-			response.setStatus(404);
-			response.setUserMessage("No se encuentran los talleres relacionados a este estado");
-			response.setMoreInfo("http://localhost:8080/workshop/ConsultAllWorkshopByState");
-			response.setData(null);
+	@Transactional
+	public Response<Boolean> enableWorkshop(Integer workshopId) {
+		Workshop workshopEntity = this.iWorkshopRerpository.findById(workshopId).get();
+		Response<Boolean> response = new Response<>();
+		if (workshopEntity != null) {
+			if(workshopEntity.getState() == false){
+				workshopEntity.setState(true);
+				this.iWorkshopRerpository.save(workshopEntity);
+				response.setStatus(200);
+				response.setUserMessage("Taller habilitado con éxito");
+				response.setMoreInfo("http://localhost:8080/workshop/EnableWorkshop/{id}");
+				response.setData(true);
+			}else {
+				response.setStatus(500);
+				response.setUserMessage("El Taller ya esta habilitado");
+				response.setMoreInfo("http://localhost:8080/workshop/EnableWorkshop/{id}");
+				response.setData(false);
+			}
+			
 		}
 		return response;
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public GenericPageableResponse findAllWorkshopBytState(boolean state, Pageable pageable) {
+		Page<Workshop> workshopPage = this.iWorkshopRerpository.LstWorkshopByState(state, pageable);
+		if (workshopPage.isEmpty())
+			return GenericPageableResponse.emptyResponse("No se encuentran talleres relacionados a este estado");
+		return this.validatePageList(workshopPage);
+	}
+	
+	private GenericPageableResponse validatePageList(Page<Workshop> workshopPage) {
+		List<WorkshopQueryDTO> workshopDTOS = workshopPage.stream().map(x -> modelMapper.map(x, WorkshopQueryDTO.class))
+				.collect(Collectors.toList());
+		return PageableUtils.createPageableResponse(workshopPage, workshopDTOS);
+	}
 
 }

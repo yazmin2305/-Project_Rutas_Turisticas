@@ -1,13 +1,15 @@
 package com.ruta.sanJuanDePuelenje.services;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.RutaCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.RutaQueryDTO;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 public interface IRutaService {
-	public Response<List<RutaQueryDTO>> findAllRutas();
+	
+	public GenericPageableResponse findAllRutas(Pageable pageable);
 	
 	public Response<RutaQueryDTO> findByRutaId(Integer RutaId);
 	
@@ -17,5 +19,7 @@ public interface IRutaService {
 	
 	public Response<Boolean> disableRuta(Integer rutaId);
 	
-	public Response<List<RutaQueryDTO>> findAllRutasBytState(boolean state);
+	public Response<Boolean> enableRuta(Integer rutaId);
+	
+	public GenericPageableResponse findAllRutasBytState(boolean state, Pageable pageable);
 }

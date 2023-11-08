@@ -1,7 +1,5 @@
 package com.ruta.sanJuanDePuelenje.services;
 
-import java.util.List;
-
 import org.springframework.data.domain.Pageable;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
@@ -20,5 +18,7 @@ public interface IFestivalService {
 	
 	public Response<Boolean> disableFestival(Integer festivalId);
 	
-	public Response<List<FestivalQueryDTO>> findAllFestivalBytState(boolean state);
+	public Response<Boolean> enableFestival(Integer festivalId);
+	
+	public GenericPageableResponse findAllFestivalBytState(boolean state, Pageable pageable);
 }

@@ -1,7 +1,5 @@
 package com.ruta.sanJuanDePuelenje.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,14 +29,15 @@ public class FestivalController {
 	// Consultar todos los festivales
 	@PermitAll
 	@GetMapping("/ConsultAllFestivales")
-	public ResponseEntity<GenericPageableResponse> ConsultAllFestival(@RequestParam Integer page, @RequestParam Integer size, @RequestParam String sort, @RequestParam String order) {
-		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order),sort));
-        return ResponseEntity.status(HttpStatus.OK).body(this.iFestivalService.findAllFestival(pageable));
+	public ResponseEntity<GenericPageableResponse> ConsultAllFestival(@RequestParam Integer page,
+			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
+		return ResponseEntity.status(HttpStatus.OK).body(this.iFestivalService.findAllFestival(pageable));
 	}
 
 	// Consultar festival por id
-	//las consultas por id para que rol son?
-	@Secured({"ADMIN", "USER"})
+	// las consultas por id para que rol son?
+	@Secured({ "ADMIN", "USER" })
 	@GetMapping("/ConsultById/{id}")
 	public Response<FestivalQueryDTO> ConsultFestivalById(@PathVariable Integer id) {
 		return this.iFestivalService.findByFestivalId(id);
@@ -54,7 +53,8 @@ public class FestivalController {
 	// Actualizar festival
 	@Secured("ADMIN")
 	@PatchMapping("/UpdateFestival/{id}")
-	public Response<FestivalQueryDTO> UpdateFestival(@RequestBody FestivalCommandDTO festival, @PathVariable Integer id) {
+	public Response<FestivalQueryDTO> UpdateFestival(@RequestBody FestivalCommandDTO festival,
+			@PathVariable Integer id) {
 		return this.iFestivalService.updateFestival(id, festival);
 	}
 
@@ -65,10 +65,21 @@ public class FestivalController {
 		return this.iFestivalService.disableFestival(id);
 	}
 
+	// Habilitar un festival registrado en el sistema
+	@Secured("ADMIN")
+	@PatchMapping("/EnableFestival/{id}")
+	public Response<Boolean> EnableFestival(@PathVariable Integer id) {
+		return this.iFestivalService.enableFestival(id);
+	}
+
 	// Consultar los festivales dependiento su estado: activado - desactivado
-	@Secured({"ADMIN", "USER"})
+	@Secured({ "ADMIN", "USER" })
 	@GetMapping("ConsultAllFestivalByState/{state}")
-	public Response<List<FestivalQueryDTO>> ConsultAllFestivalByState(@PathVariable Boolean state) {
-		return this.iFestivalService.findAllFestivalBytState(state);
+	public ResponseEntity<GenericPageableResponse> ConsultAllFestivalByState(@RequestParam Integer page,
+			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order,
+			@PathVariable Boolean state) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(this.iFestivalService.findAllFestivalBytState(state, pageable));
 	}
 }

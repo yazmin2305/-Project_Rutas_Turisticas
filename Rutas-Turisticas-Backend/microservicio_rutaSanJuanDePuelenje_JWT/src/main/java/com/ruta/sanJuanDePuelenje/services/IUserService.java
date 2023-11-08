@@ -1,15 +1,16 @@
 package com.ruta.sanJuanDePuelenje.services;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.RoleDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Command.UserCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.UserQueryDTO;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 public interface IUserService {
 	
-	public Response<List<UserQueryDTO>> findAllUsers();
+	public GenericPageableResponse findAllUsers(Pageable pageable);
 	
 	public Response<UserQueryDTO> findByUserId(Integer userId);
 	
@@ -19,7 +20,9 @@ public interface IUserService {
 	
 	public Response<Boolean> disableUser(Integer userId);
 	
-	public Response<List<UserQueryDTO>> findAllUserBytState(boolean state);
+	public Response<Boolean> enableUser(Integer userId);
+	
+	public GenericPageableResponse findAllUserBytState(boolean state, Pageable pageable);
 	
 	public Response<Boolean> changeRolUser(Integer userId, RoleDTO role);
 }

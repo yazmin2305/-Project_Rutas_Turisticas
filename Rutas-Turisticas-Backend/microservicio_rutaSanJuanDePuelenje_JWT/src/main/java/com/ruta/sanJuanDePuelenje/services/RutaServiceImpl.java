@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +15,8 @@ import com.ruta.sanJuanDePuelenje.DTO.Command.RutaCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.RutaQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Ruta;
 import com.ruta.sanJuanDePuelenje.repository.IRutaRepository;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
+import com.ruta.sanJuanDePuelenje.util.PageableUtils;
 
 @Service
 public class RutaServiceImpl implements IRutaService{
@@ -24,22 +28,11 @@ public class RutaServiceImpl implements IRutaService{
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<RutaQueryDTO>> findAllRutas() {
-		List<Ruta> rutaEntity = iRutaRepository.findAll();
-		Response<List<RutaQueryDTO>> response = new Response<>();
-		if(rutaEntity.isEmpty()) {
-			response.setStatus(404);
-			response.setUserMessage("Rutas no encontradas");
-			response.setMoreInfo("http://localhost:8080/ruta/ConsultAllRutas");
-			response.setData(null);
-		}else {
-			List<RutaQueryDTO> rutaDTOs = rutaEntity.stream().map(ruta -> modelMapper.map(ruta, RutaQueryDTO.class)).collect(Collectors.toList());
-			response.setStatus(200);
-			response.setUserMessage("Rutas encontradas con éxito");
-			response.setMoreInfo("http://localhost:8080/ruta/ConsultAllRutas");
-			response.setData(rutaDTOs);
-		}
-		return response;
+	public GenericPageableResponse findAllRutas(Pageable pageable) {
+		Page<Ruta> rutasPage = this.iRutaRepository.findAll(pageable);
+		if (rutasPage.isEmpty())
+			return GenericPageableResponse.emptyResponse("Rutas no encontradas");
+		return this.validatePageList(rutasPage);
 	}
 
 	@Override
@@ -139,25 +132,42 @@ public class RutaServiceImpl implements IRutaService{
 		}
 		return response;
 	}
-
+	
 	@Override
-	public Response<List<RutaQueryDTO>> findAllRutasBytState(boolean state) {
-		List<Ruta> rutaEntity = this.iRutaRepository.LstRutasByState(state);
-		Response<List<RutaQueryDTO>> response = new Response<>();
-		if(!rutaEntity.isEmpty()) {
-			List<RutaQueryDTO> rutaDTO = rutaEntity.stream().map(ruta -> modelMapper.map(ruta, RutaQueryDTO.class)).collect(Collectors.toList());
-			response.setStatus(200);
-			response.setUserMessage("Rutas encontrados con éxito");
-			response.setMoreInfo("http://localhost:8080/ruta/ConsultAllRutasByState");
-			response.setData(rutaDTO);
-		}else {
-			response.setStatus(404);
-			response.setUserMessage("No existen rutas relacionadas a este estado");
-			response.setMoreInfo("http://localhost:8080/ruta/ConsultAllRutasByState");
-			response.setData(null);
+	@Transactional
+	public Response<Boolean> enableRuta(Integer rutaId) {
+		Ruta rutaEntity = this.iRutaRepository.findById(rutaId).get();
+		Response<Boolean> response = new Response<>();
+		if (rutaEntity != null) {
+			if(rutaEntity.getState() == false){
+				rutaEntity.setState(true);
+				this.iRutaRepository.save(rutaEntity);
+				response.setStatus(200);
+				response.setUserMessage("Ruta habilitada con éxito");
+				response.setMoreInfo("http://localhost:8080/ruta/EnableRuta/{id}");
+				response.setData(true);
+			}else {
+				response.setStatus(500);
+				response.setUserMessage("La ruta ya está habilitada");
+				response.setMoreInfo("http://localhost:8080/ruta/EnableRuta/{id}");
+				response.setData(false);
+			}
 		}
 		return response;
 	}
+
+	@Override
+	public GenericPageableResponse findAllRutasBytState(boolean state, Pageable pageable) {
+		Page<Ruta> rutasPage = this.iRutaRepository.LstRutasByState(state, pageable);
+		if (rutasPage.isEmpty())
+			return GenericPageableResponse.emptyResponse("No se encuentran rutas relacionadas a este estado");
+		return this.validatePageList(rutasPage);
+	}
+	
+	private GenericPageableResponse validatePageList(Page<Ruta> rutaPage){
+        List<RutaQueryDTO> rutaDTOS = rutaPage.stream().map(x->modelMapper.map(x, RutaQueryDTO.class)).collect(Collectors.toList());
+        return PageableUtils.createPageableResponse(rutaPage, rutaDTOS);
+ }
 
 
 }

@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +15,8 @@ import com.ruta.sanJuanDePuelenje.DTO.Command.LunchCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.LunchQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Lunch;
 import com.ruta.sanJuanDePuelenje.repository.ILunchRepository;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
+import com.ruta.sanJuanDePuelenje.util.PageableUtils;
 
 @Service
 public class LunchServiceImpl implements ILunchService{
@@ -24,22 +28,11 @@ public class LunchServiceImpl implements ILunchService{
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<LunchQueryDTO>> findAllLunch() {
-		List<Lunch> lunchEntity = iLunchRepository.findAll();
-		Response<List<LunchQueryDTO>> response = new Response<>();
-		if(lunchEntity.isEmpty()) {
-			response.setStatus(404);
-			response.setUserMessage("Menú no encontrado");
-			response.setMoreInfo("http://localhost:8080/lunch/ConsultAllLunch");
-			response.setData(null);
-		}else {
-			List<LunchQueryDTO> lunchDTOs = lunchEntity.stream().map(lunch -> modelMapper.map(lunch, LunchQueryDTO.class)).collect(Collectors.toList());
-			response.setStatus(200);
-			response.setUserMessage("Menú encontrado con éxito");
-			response.setMoreInfo("http://localhost:8080/lunch/ConsultAllLunch");
-			response.setData(lunchDTOs);
-		}
-		return response;
+	public GenericPageableResponse findAllLunch(Pageable pageable) {
+		Page<Lunch> lunchPage = this.iLunchRepository.findAll(pageable);
+		if (lunchPage.isEmpty())
+			return GenericPageableResponse.emptyResponse("Festivales no encontrados");
+		return this.validatePageList(lunchPage);
 	}
 
 	@Override
@@ -131,25 +124,42 @@ public class LunchServiceImpl implements ILunchService{
 		}
 		return response;
 	}
+	
+	@Override
+	@Transactional
+	public Response<Boolean> enableLunch(Integer lunchId) {
+		Lunch lunchEntity = this.iLunchRepository.findById(lunchId).get();
+		Response<Boolean> response = new Response<>();
+		if(lunchEntity != null) {
+			if(lunchEntity.getState() == false){
+				lunchEntity.setState(true);
+				this.iLunchRepository.save(lunchEntity);
+				response.setStatus(200);
+				response.setUserMessage("Menú habilitado con éxito");
+				response.setMoreInfo("http://localhost:8080/lunch/EnableLunch/{id}");
+				response.setData(true);
+			}else {
+				response.setStatus(500);
+				response.setUserMessage("El menú ya esta deshabilitado");
+				response.setMoreInfo("http://localhost:8080/lunch/EnableLunch/{id}");
+				response.setData(false);
+			}
+		}
+		return response;
+	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<LunchQueryDTO>> findAllLunchBytState(boolean state) {
-		List<Lunch> lunchEntity = this.iLunchRepository.LstLunchByState(state);
-		Response<List<LunchQueryDTO>> response = new Response<>();
-		if(!lunchEntity.isEmpty()) {
-			List<LunchQueryDTO> lunchDTO = lunchEntity.stream().map(lunch -> modelMapper.map(lunch, LunchQueryDTO.class)).collect(Collectors.toList());
-			response.setStatus(200);
-			response.setUserMessage("Items del menú encontrados con éxito");
-			response.setMoreInfo("http://localhost:8080/lunch/ConsultAllLunchByState");
-			response.setData(lunchDTO);
-		}else {
-			response.setStatus(404);
-			response.setUserMessage("No existen items del menú relacionados a este estado");
-			response.setMoreInfo("http://localhost:8080/lunch/ConsultAllLunchByState");
-			response.setData(null);
-		}
-		return response;
+	public GenericPageableResponse findAllLunchBytState(boolean state, Pageable pageable) {
+		Page<Lunch> lunchPage = this.iLunchRepository.LstLunchByState(state, pageable);
+		if (lunchPage.isEmpty())
+			return GenericPageableResponse.emptyResponse("No se encuentran menus relacionados a este estado");
+		return this.validatePageList(lunchPage);
+	}
+	
+	private GenericPageableResponse validatePageList(Page<Lunch> lunchPage){
+        List<LunchQueryDTO> lunchDTOS = lunchPage.stream().map(x->modelMapper.map(x, LunchQueryDTO.class)).collect(Collectors.toList());
+        return PageableUtils.createPageableResponse(lunchPage, lunchDTOS);
 	}
 
 }

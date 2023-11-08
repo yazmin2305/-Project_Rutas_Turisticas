@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +15,8 @@ import com.ruta.sanJuanDePuelenje.DTO.Command.FincaCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.FincaQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Finca;
 import com.ruta.sanJuanDePuelenje.repository.IFincaRepository;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
+import com.ruta.sanJuanDePuelenje.util.PageableUtils;
 
 @Service
 public class FincaServiceImpl implements IFincaService{
@@ -24,22 +28,11 @@ public class FincaServiceImpl implements IFincaService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<FincaQueryDTO>> findAllFincas() {
-		List<Finca> fincaEntity = iFincaRepository.findAll();
-		Response<List<FincaQueryDTO>> response = new Response<>();
-		if(fincaEntity.isEmpty()) {
-			response.setStatus(404);
-			response.setUserMessage("Fincas no encontradas");
-			response.setMoreInfo("http://localhost:8080/finca/ConsultAllFincas");
-			response.setData(null);
-		}else {
-			List<FincaQueryDTO> fincaDTO = fincaEntity.stream().map(finca -> modelMapper.map(finca, FincaQueryDTO.class)).collect(Collectors.toList());
-			response.setStatus(200);
-			response.setUserMessage("Fincas encontradas con éxito");
-			response.setMoreInfo("http://localhost:8080/finca/ConsultAllFincas");
-			response.setData(fincaDTO);
-		}
-		return response;
+	public GenericPageableResponse findAllFincas(Pageable pageable) {
+		Page<Finca> fincaPage = this.iFincaRepository.findAll(pageable);
+		if (fincaPage.isEmpty())
+			return GenericPageableResponse.emptyResponse("Festivales no encontrados");
+		return this.validatePageList(fincaPage);
 	}
 
 	@Override
@@ -138,25 +131,42 @@ public class FincaServiceImpl implements IFincaService{
 		}
 		return response;
 	}
+	
+	@Override
+	@Transactional
+	public Response<Boolean> enableFinca(Integer fincaId) {
+		Finca fincaEntity = this.iFincaRepository.findById(fincaId).get();
+		Response<Boolean> response = new Response<>();
+		if (fincaEntity != null) {
+			if (fincaEntity.getState() == false) {
+				fincaEntity.setState(true);
+				this.iFincaRepository.save(fincaEntity);
+				response.setStatus(200);
+				response.setUserMessage("Finca habilitada con éxito");
+				response.setMoreInfo("http://localhost:8080/finca/EnableFinca/{id}");
+				response.setData(true);
+			} else {
+				response.setStatus(500);
+				response.setUserMessage("La finca ya esta habilitada");
+				response.setMoreInfo("http://localhost:8080/finca/EnableFinca/{id}");
+				response.setData(false);
+			}
+		}
+		return response;
+	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<FincaQueryDTO>> findAllFincaBytState(boolean state) {
-		List<Finca> fincaEntity = this.iFincaRepository.LstFincaByState(state);
-		Response<List<FincaQueryDTO>> response = new Response<>();
-		if(!fincaEntity.isEmpty()) {
-			List<FincaQueryDTO> fincaDTO = fincaEntity.stream().map(finca -> modelMapper.map(finca, FincaQueryDTO.class)).collect(Collectors.toList());
-			response.setStatus(200);
-			response.setUserMessage("Fincas encontradas con éxito");
-			response.setMoreInfo("http://localhost:8080/finca/ConsultAllFincaByState");
-			response.setData(fincaDTO);
-		}else {
-			response.setStatus(500);
-			response.setUserMessage("No se encuentran las fincas relacionadas a este estado");
-			response.setMoreInfo("http://localhost:8080/finca/ConsultAllFincaByState");
-			response.setData(null);
-		}		
-		return response;
+	public GenericPageableResponse findAllFincaBytState(boolean state, Pageable pageable) {
+		Page<Finca> fincaPage = this.iFincaRepository.LstFincaByState(state, pageable);
+		if (fincaPage.isEmpty())
+			return GenericPageableResponse.emptyResponse("No se encuentran fincas relacionadas a este estado");
+		return this.validatePageList(fincaPage);
+	}
+	
+	private GenericPageableResponse validatePageList(Page<Finca> fincaPage){
+        List<FincaQueryDTO> fincaDTOS = fincaPage.stream().map(x->modelMapper.map(x, FincaQueryDTO.class)).collect(Collectors.toList());
+        return PageableUtils.createPageableResponse(fincaPage, fincaDTOS);
 	}
 	
 	

@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +15,8 @@ import com.ruta.sanJuanDePuelenje.DTO.Command.RecreationCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.RecreationQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Recreation;
 import com.ruta.sanJuanDePuelenje.repository.IRecreationRepository;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
+import com.ruta.sanJuanDePuelenje.util.PageableUtils;
 
 @Service
 public class RecreationServiceImpl implements IRecreationService {
@@ -24,23 +28,11 @@ public class RecreationServiceImpl implements IRecreationService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<RecreationQueryDTO>> findAllRecreation() {
-		List<Recreation> recreationEntity = iRecreationRepository.findAll();
-		Response<List<RecreationQueryDTO>> response = new Response<>();
-		if (recreationEntity.isEmpty()) {
-			response.setStatus(404);
-			response.setUserMessage("Actividades de recreación no encontrados");
-			response.setMoreInfo("http://localhost:8080/recreation/ConsultAllRecreation");
-			response.setData(null);
-		}else {
-			List<RecreationQueryDTO> recreationDTOs = recreationEntity.stream()
-					.map(recreation -> modelMapper.map(recreation, RecreationQueryDTO.class)).collect(Collectors.toList());
-			response.setStatus(200);
-			response.setUserMessage("Actividades de recreación encontradas con éxito");
-			response.setMoreInfo("http://localhost:8080/recreation/ConsultAllRecreation");
-			response.setData(recreationDTOs);
-		}
-		return response;
+	public GenericPageableResponse findAllRecreation(Pageable pageable) {
+		Page<Recreation> recreationPage = this.iRecreationRepository.findAll(pageable);
+		if (recreationPage.isEmpty())
+			return GenericPageableResponse.emptyResponse("Actividades de recreación no encontradas");
+		return this.validatePageList(recreationPage);
 	}
 
 	@Override
@@ -136,25 +128,42 @@ public class RecreationServiceImpl implements IRecreationService {
 		}
 		return response;
 	}
-
+	
 	@Override
-	@Transactional(readOnly = true)
-	public Response<List<RecreationQueryDTO>> findAllRecreationBytState(boolean state) {
-		List<Recreation> recreationEntity = this.iRecreationRepository.LstRecreationByState(state);
-		Response<List<RecreationQueryDTO>> response = new Response<>();
-		if(!recreationEntity.isEmpty()) {
-			List<RecreationQueryDTO> recreationDTO = recreationEntity.stream().map(recreation -> modelMapper.map(recreation, RecreationQueryDTO.class)).collect(Collectors.toList());
-			response.setStatus(200);
-			response.setUserMessage("Actividades de recreación encontradas con éxito");
-			response.setMoreInfo("http://localhost:8080/recreation/ConsultAllRecreationByState");
-			response.setData(recreationDTO);
-		}else {
-			response.setStatus(404);
-			response.setUserMessage("No se encuentran actividades de recreación relacionadas a este estado");
-			response.setMoreInfo("http://localhost:8080/recreation/ConsultAllRecreationByState");
-			response.setData(null);
+	@Transactional
+	public Response<Boolean> enableRecreation(Integer recreationId) {
+		Recreation recreationEntity = this.iRecreationRepository.findById(recreationId).get();
+		Response<Boolean> response = new Response<>();
+		if (recreationEntity != null) {
+			if(recreationEntity.getState() == false){
+				recreationEntity.setState(true);
+				this.iRecreationRepository.save(recreationEntity);
+				response.setStatus(200);
+				response.setUserMessage("Actividad de recreación habilitada con éxito");
+				response.setMoreInfo("http://localhost:8080/recreation/EnableRecreation/{id}");
+				response.setData(true);
+			}else {
+				response.setStatus(500);
+				response.setUserMessage("La actividad de recreación ya esta habilitada");
+				response.setMoreInfo("http://localhost:8080/recreation/EnableRecreation/{id}");
+				response.setData(false);
+			}
 		}
 		return response;
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public GenericPageableResponse findAllRecreationBytState(boolean state, Pageable pageable) {
+		Page<Recreation> recreationPage = this.iRecreationRepository.LstRecreationByState(state, pageable);
+		if (recreationPage.isEmpty())
+			return GenericPageableResponse.emptyResponse("No se encuentran actividades de recreación relacionados a este estado");
+		return this.validatePageList(recreationPage);
+	}
+	
+	private GenericPageableResponse validatePageList(Page<Recreation> recreationPage){
+        List<RecreationQueryDTO> recreationDTOS = recreationPage.stream().map(x->modelMapper.map(x, RecreationQueryDTO.class)).collect(Collectors.toList());
+        return PageableUtils.createPageableResponse(recreationPage, recreationDTOS);
+ }
 
 }

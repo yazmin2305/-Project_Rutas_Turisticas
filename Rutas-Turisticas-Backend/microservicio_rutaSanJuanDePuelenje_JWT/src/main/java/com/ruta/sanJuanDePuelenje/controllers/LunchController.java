@@ -1,8 +1,11 @@
 package com.ruta.sanJuanDePuelenje.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +13,7 @@ import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.LunchCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.LunchQueryDTO;
 import com.ruta.sanJuanDePuelenje.services.ILunchService;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 @RestController
 @RequestMapping("/lunch")
@@ -21,8 +25,10 @@ public class LunchController {
 
 	// Consultar todos los almuerzos
 	@GetMapping("/ConsultAllLunch")
-	public Response<List<LunchQueryDTO>> ConsultAllLunch() {
-		return this.iLunchService.findAllLunch();
+	public ResponseEntity<GenericPageableResponse> ConsultAllLunch(@RequestParam Integer page,
+			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
+		return ResponseEntity.status(HttpStatus.OK).body(this.iLunchService.findAllLunch(pageable));
 	}
 
 	// Consultar un almuerzo por id
@@ -52,11 +58,20 @@ public class LunchController {
 	public Response<Boolean> DisableLunch(@PathVariable Integer id) {
 		return this.iLunchService.disableLunch(id);
 	}
+	
+	// Habilitar un almuerzo registrado en el sistema
+	@Secured("ADMIN")
+	@PatchMapping("/EnableLunch/{id}")
+	public Response<Boolean> EnableLunch(@PathVariable Integer id) {
+		return this.iLunchService.enableLunch(id);
+	}
 
 	// Consultar los almuerzos dependiento su estado: activado - desactivado
 	@Secured({"ADMIN", "USER"})
 	@GetMapping("ConsultAllLunchByState/{state}")
-	public Response<List<LunchQueryDTO>> ConsultAllLunchByState(@PathVariable Boolean state) {
-		return this.iLunchService.findAllLunchBytState(state);
+	public ResponseEntity<GenericPageableResponse> ConsultAllLunchByState(@RequestParam Integer page,
+			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order, @PathVariable Boolean state) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
+		return ResponseEntity.status(HttpStatus.OK).body(this.iLunchService.findAllLunchBytState(state, pageable));
 	}
 }

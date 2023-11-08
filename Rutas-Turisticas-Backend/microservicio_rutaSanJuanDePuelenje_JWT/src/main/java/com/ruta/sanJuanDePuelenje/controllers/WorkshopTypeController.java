@@ -1,14 +1,18 @@
 package com.ruta.sanJuanDePuelenje.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.WorkshopTypeDTO;
 import com.ruta.sanJuanDePuelenje.services.IWorkshopTypeService;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 @RestController
 @RequestMapping("/workshopType")
@@ -19,14 +23,16 @@ public class WorkshopTypeController {
 	private IWorkshopTypeService iWorkshopTypeTypeService;
 
 	// Consultar todos los tipos de talleres
-	@Secured({"ADMIN", "USER"})
+	@Secured({ "ADMIN", "USER" })
 	@GetMapping("/ConsultAllWorkshopType")
-	public Response<List<WorkshopTypeDTO>> ConsultAllWorkshopType() {
-		return this.iWorkshopTypeTypeService.findAllWorkshopTypes();
+	public ResponseEntity<GenericPageableResponse> ConsultAllWorkshopType(@RequestParam Integer page,
+			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
+		return ResponseEntity.status(HttpStatus.OK).body(this.iWorkshopTypeTypeService.findAllWorkshopTypes(pageable));
 	}
 
 	// Consultar un tipo de taller por su id
-	@Secured({"ADMIN", "USER"})
+	@Secured({ "ADMIN", "USER" })
 	@GetMapping("/ConsultById/{id}")
 	public Response<WorkshopTypeDTO> ConsultWorkshopTypeById(@PathVariable Integer id) {
 		return this.iWorkshopTypeTypeService.findByWorkshopTypeId(id);
@@ -42,7 +48,8 @@ public class WorkshopTypeController {
 	// Actualizar un tipo de taller
 	@Secured("ADMIN")
 	@PatchMapping("/UpdateWorkshopType/{id}")
-	public Response<WorkshopTypeDTO> UpdateWorkshopType(@RequestBody WorkshopTypeDTO workshopType, @PathVariable Integer id) {
+	public Response<WorkshopTypeDTO> UpdateWorkshopType(@RequestBody WorkshopTypeDTO workshopType,
+			@PathVariable Integer id) {
 		return this.iWorkshopTypeTypeService.updateWorkshopType(id, workshopType);
 	}
 
@@ -53,10 +60,21 @@ public class WorkshopTypeController {
 		return this.iWorkshopTypeTypeService.disableWorkshopType(id);
 	}
 
+	// Habilitar un tipo de taller registrado en el sistema
+	@Secured("ADMIN")
+	@PatchMapping("/EnableWorkshopType/{id}")
+	public Response<Boolean> EnableWorkshopType(@PathVariable Integer id) {
+		return this.iWorkshopTypeTypeService.enableWorkshopType(id);
+	}
+
 	// Consultar los tipos talleres dependiento su estado: activado - desactivado
-	@Secured({"ADMIN", "USER"})
+	@Secured({ "ADMIN", "USER" })
 	@GetMapping("ConsultAllWorkshopTypeByState/{state}")
-	public Response<List<WorkshopTypeDTO>> ConsultAllWorkshopTypeByState(@PathVariable Boolean state) {
-		return this.iWorkshopTypeTypeService.findAllWorkshopTypeBytState(state);
+	public ResponseEntity<GenericPageableResponse> ConsultAllWorkshopTypeByState(@RequestParam Integer page,
+			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order,
+			@PathVariable Boolean state) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(this.iWorkshopTypeTypeService.findAllWorkshopTypeBytState(state, pageable));
 	}
 }

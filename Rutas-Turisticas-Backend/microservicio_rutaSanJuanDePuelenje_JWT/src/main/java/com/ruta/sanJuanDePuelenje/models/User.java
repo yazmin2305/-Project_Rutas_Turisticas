@@ -45,8 +45,7 @@ public class User {
 	private String tokenPassword;
 	
 	/*Este campo queda vacio ya que solo se van a crear usuarios con rol USER,
-	 * los usuarios con Rol ADMIN van a estar almacenados previamente en la base de datos */
-	//Esta relacion se cambio por unidireccional ya que no necesito acceser a la lista de usuarios por medio de la entidad Role
+	 * Esta relacion se cambio por unidireccional ya que no necesito acceser a la lista de usuarios por medio de la entidad Role*/
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "rol_id", nullable = true)
 	private Role role;
@@ -54,8 +53,8 @@ public class User {
 //	@OneToMany(mappedBy = "user")
 //	private List<Reserve> LstReserve ;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "ruta_id")
-	private Ruta ruta;
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(name = "ruta_id")
+//	private Ruta ruta;
 }
 

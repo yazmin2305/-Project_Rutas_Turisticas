@@ -2,6 +2,8 @@ package com.ruta.sanJuanDePuelenje.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,5 +17,5 @@ public interface ILodgingRepository extends JpaRepository<Lodging, Integer>{
 	
 	//query para listar los hospedajes por su estado, ya sea activado o desactivado
 	@Query(value = "SELECT * FROM lodging WHERE state=?1", nativeQuery = true)
-	List<Lodging> LstLodgingByState(boolean state);
+	Page<Lodging> LstLodgingByState(boolean state, Pageable pageable);
 }

@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
@@ -12,6 +14,8 @@ import com.ruta.sanJuanDePuelenje.DTO.Command.LodgingCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.LodgingQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Lodging;
 import com.ruta.sanJuanDePuelenje.repository.ILodgingRepository;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
+import com.ruta.sanJuanDePuelenje.util.PageableUtils;
 
 @Service
 public final class LodgingServiceImpl implements ILodgingService{
@@ -22,22 +26,11 @@ public final class LodgingServiceImpl implements ILodgingService{
 	private ModelMapper modelMapper;
 	
 	@Override
-	public Response<List<LodgingQueryDTO>> findAllLodging() {
-		List<Lodging> lodgingEntity = iLodgingRepository.findAll();
-		Response<List<LodgingQueryDTO>> response = new Response<>();
-		if(lodgingEntity.isEmpty()) {
-			response.setStatus(404);
-			response.setUserMessage("Hospedajes no encontrados");
-			response.setMoreInfo("http://localhost:8080/lodging/ConsultAllLodging");
-			response.setData(null);
-		}else {
-			List<LodgingQueryDTO> lodgingDTOs = lodgingEntity.stream().map(lodging -> modelMapper.map(lodging, LodgingQueryDTO.class)).collect(Collectors.toList());
-			response.setStatus(200);
-			response.setUserMessage("Hospedajes encontrados con éxito");
-			response.setMoreInfo("http://localhost:8080/lodging/ConsultAllLodging");
-			response.setData(lodgingDTOs);
-		}
-		return response;
+	public GenericPageableResponse findAllLodging(Pageable pageable) {
+		Page<Lodging> lodgingPage = this.iLodgingRepository.findAll(pageable);
+		if (lodgingPage.isEmpty())
+			return GenericPageableResponse.emptyResponse("Hospedajes no encontrados");
+		return this.validatePageList(lodgingPage);
 	}
 
 	@Override
@@ -130,24 +123,40 @@ public final class LodgingServiceImpl implements ILodgingService{
 		}
 		return response;
 	}
-
+	
 	@Override
-	public Response<List<LodgingQueryDTO>> findAllLodgingBytState(boolean state) {
-		List<Lodging> lodgingEntity = this.iLodgingRepository.LstLodgingByState(state);
-		Response<List<LodgingQueryDTO>> response = new Response<>();
-		if(!lodgingEntity.isEmpty()) {
-			List<LodgingQueryDTO> lodgingDTO = lodgingEntity.stream().map(lodging -> modelMapper.map(lodging, LodgingQueryDTO.class)).collect(Collectors.toList());
-			response.setStatus(200);
-			response.setUserMessage("Hospedajes encontrados con éxito");
-			response.setMoreInfo("http://localhost:8080/lodging/ConsultAllLodgingByState");
-			response.setData(lodgingDTO);
-		}else {
-			response.setStatus(404);
-			response.setUserMessage("No se encuentran hospedajes con este estado");
-			response.setMoreInfo("http://localhost:8080/lodging/ConsultAllLodgingByState");
-			response.setData(null);
+	public Response<Boolean> enableLodging(Integer lodgingId) {
+		Lodging lodgingEntity = this.iLodgingRepository.findById(lodgingId).get();
+		Response<Boolean> response = new Response<>();
+		if(lodgingEntity != null) {
+			if(lodgingEntity.getState() == false){
+				lodgingEntity.setState(true);
+				this.iLodgingRepository.save(lodgingEntity);
+				response.setStatus(200);
+				response.setUserMessage("Hospedaje habilitado con éxito");
+				response.setMoreInfo("http://localhost:8080/lodging/EnableLodging/{id}");
+				response.setData(true);
+			}else {
+				response.setStatus(500);
+				response.setUserMessage("El hospedaje ya esta habilitado");
+				response.setMoreInfo("http://localhost:8080/lodging/EnableLodging/{id}");
+				response.setData(false);
+			}
 		}
 		return response;
 	}
+
+	@Override
+	public GenericPageableResponse findAllLodgingBytState(boolean state, Pageable pageable) {
+		Page<Lodging> lodgingPage = this.iLodgingRepository.LstLodgingByState(state, pageable);
+		if (lodgingPage.isEmpty())
+			return GenericPageableResponse.emptyResponse("No se encuentran hospedajes relacionados a este estado");
+		return this.validatePageList(lodgingPage);
+	}
+	
+	private GenericPageableResponse validatePageList(Page<Lodging> lodgingPage){
+        List<LodgingQueryDTO> lodgingDTOS = lodgingPage.stream().map(x->modelMapper.map(x, LodgingQueryDTO.class)).collect(Collectors.toList());
+        return PageableUtils.createPageableResponse(lodgingPage, lodgingDTOS);
+ }
 
 }

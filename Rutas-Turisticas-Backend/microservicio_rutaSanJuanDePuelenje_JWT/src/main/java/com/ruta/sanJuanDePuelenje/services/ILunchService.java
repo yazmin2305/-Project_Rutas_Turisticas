@@ -1,14 +1,15 @@
 package com.ruta.sanJuanDePuelenje.services;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.LunchCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.LunchQueryDTO;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 public interface ILunchService {
 	
-	public Response<List<LunchQueryDTO>> findAllLunch();
+	public GenericPageableResponse findAllLunch(Pageable pageable);
 	
 	public Response<LunchQueryDTO> findByLunchId(Integer lunchId);
 	
@@ -18,6 +19,8 @@ public interface ILunchService {
 	
 	public Response<Boolean> disableLunch(Integer lunchId);
 	
-	public Response<List<LunchQueryDTO>> findAllLunchBytState(boolean state);
+	public Response<Boolean> enableLunch(Integer lunchId);
+	
+	public GenericPageableResponse findAllLunchBytState(boolean state, Pageable pageable);
 	
 }

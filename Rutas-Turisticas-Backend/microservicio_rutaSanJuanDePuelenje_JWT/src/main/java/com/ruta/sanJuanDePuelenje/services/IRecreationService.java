@@ -1,14 +1,15 @@
 package com.ruta.sanJuanDePuelenje.services;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.RecreationCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.RecreationQueryDTO;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 public interface IRecreationService {
 	
-	public Response<List<RecreationQueryDTO>> findAllRecreation();
+	public GenericPageableResponse findAllRecreation(Pageable pageable);
 	
 	public Response<RecreationQueryDTO> findByRecreationId(Integer recreationId);
 	
@@ -18,5 +19,7 @@ public interface IRecreationService {
 	
 	public Response<Boolean> disableRecreation(Integer recreationId);
 	
-	public Response<List<RecreationQueryDTO>> findAllRecreationBytState(boolean state);
+	public Response<Boolean> enableRecreation(Integer recreationId);
+	
+	public GenericPageableResponse findAllRecreationBytState(boolean state, Pageable pageable);
 }
