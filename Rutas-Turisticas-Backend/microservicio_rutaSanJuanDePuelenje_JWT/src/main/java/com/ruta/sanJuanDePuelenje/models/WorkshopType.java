@@ -7,8 +7,7 @@ import lombok.*;
 
 @Entity
 @Table(name = "workshopType")
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor 
 public class WorkshopType {

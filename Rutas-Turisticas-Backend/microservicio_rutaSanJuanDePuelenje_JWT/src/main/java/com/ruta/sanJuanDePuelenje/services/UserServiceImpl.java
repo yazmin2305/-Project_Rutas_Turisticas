@@ -22,6 +22,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	private IUserRepository iUserRepository;
+	
 	@Autowired
 	private ModelMapper modelMapper;
 	// añado esta dependencia para que me encripte la contraseña al momento de

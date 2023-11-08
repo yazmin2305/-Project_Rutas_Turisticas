@@ -8,7 +8,7 @@ import lombok.*;
 @Entity
 @Table(name = "recreation")
 @Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Recreation {

@@ -9,8 +9,7 @@ import lombok.*;
 
 @Entity
 @Table(name = "reserve")
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor 
 public class Reserve {

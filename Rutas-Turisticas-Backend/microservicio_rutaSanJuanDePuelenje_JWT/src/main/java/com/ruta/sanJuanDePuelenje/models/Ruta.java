@@ -3,12 +3,10 @@ package com.ruta.sanJuanDePuelenje.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.Getter;
 
 @Entity
 @Table(name = "ruta")
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Ruta {

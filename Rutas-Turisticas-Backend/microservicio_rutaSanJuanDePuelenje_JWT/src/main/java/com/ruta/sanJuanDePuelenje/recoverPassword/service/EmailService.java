@@ -2,6 +2,7 @@ package com.ruta.sanJuanDePuelenje.recoverPassword.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import com.ruta.sanJuanDePuelenje.models.User;
+import com.ruta.sanJuanDePuelenje.recoverPassword.domain.ChangePasswordDTO;
 import com.ruta.sanJuanDePuelenje.recoverPassword.domain.EmailValueDTO;
 import com.ruta.sanJuanDePuelenje.repository.IUserRepository;
 
@@ -32,6 +35,9 @@ public class EmailService implements IEmailService{
 	
 	@Autowired
 	IUserRepository iUserRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Value("${mail.urlFront}")
 	private String urlFront;
@@ -77,9 +83,16 @@ public class EmailService implements IEmailService{
 	}
 
 	@Override
-	public ResponseEntity<?> changePassword() {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<?> changePassword(ChangePasswordDTO changePassDTO) {
+		Optional<User> userOpt = this.iUserRepository.findByTokenPassword(changePassDTO.getTokenPassword());
+		if(!userOpt.isPresent())
+			return new ResponseEntity<>("No existe un usuario registrado con estas credenciales ", HttpStatus.NOT_FOUND);
+		User user = userOpt.get();
+		String newPassword = passwordEncoder.encode(changePassDTO.getPassword());
+		user.setPassword(newPassword);
+		user.setTokenPassword(null);
+		this.iUserRepository.save(user);
+		return new ResponseEntity<>("Contraseña actualizada ", HttpStatus.OK);
 	}
 
 }

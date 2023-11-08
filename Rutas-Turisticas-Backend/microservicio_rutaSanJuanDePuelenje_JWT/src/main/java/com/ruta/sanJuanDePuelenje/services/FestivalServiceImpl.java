@@ -17,22 +17,23 @@ import com.ruta.sanJuanDePuelenje.models.Festival;
 import com.ruta.sanJuanDePuelenje.repository.IFestivalRepository;
 import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 import com.ruta.sanJuanDePuelenje.util.PageableUtils;
-import com.ruta.sanJuanDePuelenje.util.exception.RoutesBadRuntimeException;
 
 @Service
 public class FestivalServiceImpl implements IFestivalService {
 	@Autowired
 	private IFestivalRepository iFestivalRepository;
+	
 	@Autowired
 	private ModelMapper modelMapper;
 
 	@Override
 	@Transactional(readOnly = true)
 	public GenericPageableResponse findAllFestival(Pageable pageable){
-
 		Page<Festival> festivalesPage = this.iFestivalRepository.findAll(pageable);
-		if (festivalesPage.isEmpty()) throw new RoutesBadRuntimeException("bad.request.festival.empty", "200");
-			System.out.println("nada");
+//		if (festivalesPage.isEmpty()) throw new RoutesBadRuntimeException("bad.request.festival.empty", "200");
+//			System.out.println("nada");
+		if (festivalesPage.isEmpty())
+			return GenericPageableResponse.emptyResponse("Festivales no encontrados");
 		return this.validatePageList(festivalesPage);
 	}
 

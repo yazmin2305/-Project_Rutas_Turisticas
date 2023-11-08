@@ -13,4 +13,14 @@ public class GenericPageableResponse {
 	private Object elements;
 
     private PageParameterResponse pagination;
+    
+    private String mensaje;
+    
+    
+    public static GenericPageableResponse emptyResponse(String message) {
+        return GenericPageableResponse.builder()
+                .mensaje(message)
+                .build();
+    }
+
 }
