@@ -1,14 +1,10 @@
 package com.ruta.sanJuanDePuelenje.DTO.Query;
 
-import com.ruta.sanJuanDePuelenje.DTO.RoleDTO;
-
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserQueryDTO {
@@ -19,6 +15,6 @@ public class UserQueryDTO {
 	private String userEmail;
 	private Boolean userState;
 	private String userPassword;
-	private RoleDTO role;
+	private RoleQueryDTO role;
 	//es necesario que al consultar me regrese el rol? o depende del rol persona que haga la consulta?
 }

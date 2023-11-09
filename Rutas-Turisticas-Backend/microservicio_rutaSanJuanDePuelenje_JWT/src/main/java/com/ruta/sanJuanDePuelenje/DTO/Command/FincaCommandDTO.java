@@ -1,17 +1,10 @@
 package com.ruta.sanJuanDePuelenje.DTO.Command;
 
-//import com.ruta.sanJuanDePuelenje.DTO.Query.FestivalQueryDTO;
-//import com.ruta.sanJuanDePuelenje.DTO.Query.LodgingQueryDTO;
-//import com.ruta.sanJuanDePuelenje.DTO.Query.RecreationQueryDTO;
-//import com.ruta.sanJuanDePuelenje.DTO.Query.TalkingQueryDTO;
-//import com.ruta.sanJuanDePuelenje.DTO.Query.WorkshopQueryDTO;
-
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-@Getter
-@Setter
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class FincaCommandDTO {

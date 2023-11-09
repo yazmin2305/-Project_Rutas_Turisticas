@@ -1,5 +1,7 @@
 package com.ruta.sanJuanDePuelenje.services;
 
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
@@ -10,7 +12,7 @@ import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 public interface ITalkingService {
 	
-	public GenericPageableResponse findAllTalking(Pageable pageable);
+	public Response<List<TalkingQueryDTO>> findAllTalking();
 	
 	public Response<TalkingQueryDTO> findByTalkingId(Integer talkingId);
 	

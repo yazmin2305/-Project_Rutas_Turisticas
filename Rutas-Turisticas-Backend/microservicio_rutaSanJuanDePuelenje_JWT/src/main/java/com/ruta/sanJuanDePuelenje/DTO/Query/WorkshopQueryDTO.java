@@ -1,14 +1,10 @@
 package com.ruta.sanJuanDePuelenje.DTO.Query;
 
-import com.ruta.sanJuanDePuelenje.DTO.WorkshopTypeDTO;
-
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkshopQueryDTO {
@@ -19,5 +15,5 @@ public class WorkshopQueryDTO {
 	private Integer workshopMaxAmountPerson;
 	private Double workshopUnitPrice;
 	private Boolean workshopState;
-	private WorkshopTypeDTO workshopType;
+	private WorkshopTypeQueryDTO workshopType;
 }

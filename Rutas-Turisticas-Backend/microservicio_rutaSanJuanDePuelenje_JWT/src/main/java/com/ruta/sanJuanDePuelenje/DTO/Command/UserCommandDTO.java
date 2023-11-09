@@ -1,14 +1,10 @@
 package com.ruta.sanJuanDePuelenje.DTO.Command;
 
-import com.ruta.sanJuanDePuelenje.DTO.RoleDTO;
-
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserCommandDTO {
@@ -20,7 +16,7 @@ public class UserCommandDTO {
 	private String userEmail;
 	private Boolean userState;
 	private String userPassword;
-	private RoleDTO role;
+	private RoleCommandDTO role;
 	//private List<ReserveCommandDTO> lstReserveDTOs;
-	private RutaCommandDTO ruta;
+	//private RutaCommandDTO ruta;
 }

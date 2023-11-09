@@ -1,5 +1,7 @@
 package com.ruta.sanJuanDePuelenje.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,10 +27,8 @@ public class TalkingController {
 
 	// Consultar todas las charlas
 	@GetMapping("/ConsultAllTalking")
-	public ResponseEntity<GenericPageableResponse> ConsultAllTalking(@RequestParam Integer page,
-			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order) {
-		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
-		return ResponseEntity.status(HttpStatus.OK).body(this.iTalkingService.findAllTalking(pageable));
+	public Response<List<TalkingQueryDTO>> ConsultAllTalking() {
+		return this.iTalkingService.findAllTalking();
 	}
 
 	// Consultar una charla por su id

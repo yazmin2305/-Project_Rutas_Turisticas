@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LunchQueryDTO {
-	private String lunchMenu;
-	private Double lunchUnitPrice;
-	private Boolean lunchState;
+public class RoleQueryDTO {
+	private String roleName;
 }

@@ -2,8 +2,7 @@ package com.ruta.sanJuanDePuelenje.DTO.Command;
 
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class RutaCommandDTO {

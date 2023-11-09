@@ -28,12 +28,24 @@ public class LunchServiceImpl implements ILunchService{
 	
 	@Override
 	@Transactional(readOnly = true)
-	public GenericPageableResponse findAllLunch(Pageable pageable) {
-		Page<Lunch> lunchPage = this.iLunchRepository.findAll(pageable);
-		if (lunchPage.isEmpty())
-			return GenericPageableResponse.emptyResponse("Festivales no encontrados");
-		return this.validatePageList(lunchPage);
+	public Response<List<LunchQueryDTO>> findAllLunch() {
+		List<Lunch> lunchEntity = iLunchRepository.findAll();
+		Response<List<LunchQueryDTO>> response = new Response<>();
+		if(lunchEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("Menú no encontrado");
+			response.setMoreInfo("http://localhost:8080/lunch/ConsultAllLunch");
+			response.setData(null);
+		}else {
+			List<LunchQueryDTO> lunchDTOs = lunchEntity.stream().map(lunch -> modelMapper.map(lunch, LunchQueryDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Menú encontrado con éxito");
+			response.setMoreInfo("http://localhost:8080/lunch/ConsultAllLunch");
+			response.setData(lunchDTOs);
+		}
+		return response;
 	}
+
 
 	@Override
 	@Transactional(readOnly = true)

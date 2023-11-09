@@ -1,5 +1,7 @@
 package com.ruta.sanJuanDePuelenje.services;
 
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
@@ -10,7 +12,7 @@ import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 public interface IWorkshopService {
 	
-	public GenericPageableResponse findAllWorkshop(Pageable pageable);
+	public Response<List<WorkshopQueryDTO>> findAllWorkshop();
 	
 	public Response<WorkshopQueryDTO> findByWorkshopId(Integer workshopId);
 	

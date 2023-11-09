@@ -1,5 +1,7 @@
 package com.ruta.sanJuanDePuelenje.services;
 
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
@@ -9,7 +11,7 @@ import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 public interface ILodgingService {
 	
-	public GenericPageableResponse findAllLodging(Pageable pageable);
+	public Response<List<LodgingQueryDTO>> findAllLodging();
 	
 	public Response<LodgingQueryDTO> findByLodgingId(Integer lodgingId);
 	

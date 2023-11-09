@@ -26,11 +26,22 @@ public final class LodgingServiceImpl implements ILodgingService{
 	private ModelMapper modelMapper;
 	
 	@Override
-	public GenericPageableResponse findAllLodging(Pageable pageable) {
-		Page<Lodging> lodgingPage = this.iLodgingRepository.findAll(pageable);
-		if (lodgingPage.isEmpty())
-			return GenericPageableResponse.emptyResponse("Hospedajes no encontrados");
-		return this.validatePageList(lodgingPage);
+	public Response<List<LodgingQueryDTO>> findAllLodging() {
+		List<Lodging> lodgingEntity = iLodgingRepository.findAll();
+		Response<List<LodgingQueryDTO>> response = new Response<>();
+		if(lodgingEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("Hospedajes no encontrados");
+			response.setMoreInfo("http://localhost:8080/lodging/ConsultAllLodging");
+			response.setData(null);
+		}else {
+			List<LodgingQueryDTO> lodgingDTOs = lodgingEntity.stream().map(lodging -> modelMapper.map(lodging, LodgingQueryDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Hospedajes encontrados con éxito");
+			response.setMoreInfo("http://localhost:8080/lodging/ConsultAllLodging");
+			response.setData(lodgingDTOs);
+		}
+		return response;
 	}
 
 	@Override

@@ -1,14 +1,10 @@
 package com.ruta.sanJuanDePuelenje.DTO.Command;
 
-import com.ruta.sanJuanDePuelenje.DTO.WorkshopTypeDTO;
-
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkshopCommandDTO {
@@ -20,7 +16,7 @@ public class WorkshopCommandDTO {
 	private Integer workshopMaxAmountPerson;
 	private Double workshopUnitPrice;
 	private Boolean workshopState;
-	private WorkshopTypeDTO workshopType;
+	private WorkshopTypeCommandDTO workshopType;
 	private FincaCommandDTO finca;
 //	private List<ReserveCommandDTO> lstReserveDTOs;
 	private RutaCommandDTO ruta;

@@ -1,7 +1,5 @@
 package com.ruta.sanJuanDePuelenje.models;
 
-import java.util.List;
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,7 +20,7 @@ public class WorkshopType {
 	@Column(nullable = true)
 	private Boolean state;
 	
-	@OneToMany(mappedBy = "workshopType")
-	private List<Workshop> lstWorkshops;
+//	@OneToMany(mappedBy = "workshopType")
+//	private List<Workshop> lstWorkshops;
 	
 }

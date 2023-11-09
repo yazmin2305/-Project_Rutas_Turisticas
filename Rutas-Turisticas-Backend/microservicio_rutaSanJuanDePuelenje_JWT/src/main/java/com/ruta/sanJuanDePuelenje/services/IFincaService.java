@@ -1,5 +1,7 @@
 package com.ruta.sanJuanDePuelenje.services;
 
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
@@ -9,7 +11,7 @@ import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 public interface IFincaService {
 	
-	public GenericPageableResponse findAllFincas(Pageable pageable);
+	public Response<List<FincaQueryDTO>> findAllFincas();
 	
 	public Response<FincaQueryDTO> findByFincaId(Integer fincaId);
 	

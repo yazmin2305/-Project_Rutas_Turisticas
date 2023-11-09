@@ -1,5 +1,7 @@
 package com.ruta.sanJuanDePuelenje.services;
 
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
@@ -9,7 +11,7 @@ import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 public interface ILunchService {
 	
-	public GenericPageableResponse findAllLunch(Pageable pageable);
+	public Response<List<LunchQueryDTO>> findAllLunch();
 	
 	public Response<LunchQueryDTO> findByLunchId(Integer lunchId);
 	

@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LunchQueryDTO {
-	private String lunchMenu;
-	private Double lunchUnitPrice;
-	private Boolean lunchState;
+public class WorkshopTypeQueryDTO {
+	private String workshopTypeName;
+	private Boolean WorkshopTypeState;
+//	private List<WorkshopQueryDTO> lstWorkshopDTOs;
 }

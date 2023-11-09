@@ -1,5 +1,7 @@
 package com.ruta.sanJuanDePuelenje.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,10 +27,8 @@ public class RecreationController {
 
 	// Consultar todos las actividades de recreación
 	@GetMapping("/ConsultAllRecreation")
-	public ResponseEntity<GenericPageableResponse> ConsultAllRecreation(@RequestParam Integer page,
-			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order) {
-		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
-		return ResponseEntity.status(HttpStatus.OK).body(this.iRecreationService.findAllRecreation(pageable));
+	public Response<List<RecreationQueryDTO>> ConsultAllRecreation() {
+		return this.iRecreationService.findAllRecreation();
 	}
 
 	// Consultar una actividad recreativa por su id

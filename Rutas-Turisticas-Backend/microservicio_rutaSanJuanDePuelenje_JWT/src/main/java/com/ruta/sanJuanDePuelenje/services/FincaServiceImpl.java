@@ -28,12 +28,24 @@ public class FincaServiceImpl implements IFincaService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public GenericPageableResponse findAllFincas(Pageable pageable) {
-		Page<Finca> fincaPage = this.iFincaRepository.findAll(pageable);
-		if (fincaPage.isEmpty())
-			return GenericPageableResponse.emptyResponse("Festivales no encontrados");
-		return this.validatePageList(fincaPage);
+	public Response<List<FincaQueryDTO>> findAllFincas() {
+		List<Finca> fincaEntity = iFincaRepository.findAll();
+		Response<List<FincaQueryDTO>> response = new Response<>();
+		if(fincaEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("Fincas no encontradas");
+			response.setMoreInfo("http://localhost:8080/finca/ConsultAllFincas");
+			response.setData(null);
+		}else {
+			List<FincaQueryDTO> fincaDTO = fincaEntity.stream().map(finca -> modelMapper.map(finca, FincaQueryDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Fincas encontradas con éxito");
+			response.setMoreInfo("http://localhost:8080/finca/ConsultAllFincas");
+			response.setData(fincaDTO);
+		}
+		return response;
 	}
+
 
 	@Override
 	@Transactional(readOnly = true)

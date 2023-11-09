@@ -1,5 +1,7 @@
 package com.ruta.sanJuanDePuelenje.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,10 +27,8 @@ public class LunchController {
 
 	// Consultar todos los almuerzos
 	@GetMapping("/ConsultAllLunch")
-	public ResponseEntity<GenericPageableResponse> ConsultAllLunch(@RequestParam Integer page,
-			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order) {
-		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
-		return ResponseEntity.status(HttpStatus.OK).body(this.iLunchService.findAllLunch(pageable));
+	public Response<List<LunchQueryDTO>> ConsultAllLunch() {
+		return this.iLunchService.findAllLunch();
 	}
 
 	// Consultar un almuerzo por id

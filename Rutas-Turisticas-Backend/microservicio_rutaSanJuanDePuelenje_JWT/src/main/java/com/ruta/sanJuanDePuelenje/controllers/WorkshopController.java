@@ -1,5 +1,7 @@
 package com.ruta.sanJuanDePuelenje.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,10 +27,8 @@ public class WorkshopController {
 
 	// Consultar todos los talleres
 	@GetMapping("/ConsultAllWorkshop")
-	public ResponseEntity<GenericPageableResponse> ConsultAllWorkshop(@RequestParam Integer page,
-			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order) {
-		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
-		return ResponseEntity.status(HttpStatus.OK).body(this.iWorkshopService.findAllWorkshop(pageable));
+	public Response<List<WorkshopQueryDTO>> ConsultAllWorkshop() {
+		return this.iWorkshopService.findAllWorkshop();
 	}
 
 	// Consultar un taller por su id

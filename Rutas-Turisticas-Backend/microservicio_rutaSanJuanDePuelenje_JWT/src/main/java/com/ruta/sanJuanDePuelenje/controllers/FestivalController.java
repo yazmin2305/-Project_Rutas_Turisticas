@@ -1,5 +1,7 @@
 package com.ruta.sanJuanDePuelenje.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,11 +30,9 @@ public class FestivalController {
 
 	// Consultar todos los festivales
 	@PermitAll
-	@GetMapping("/ConsultAllFestivales")
-	public ResponseEntity<GenericPageableResponse> ConsultAllFestival(@RequestParam Integer page,
-			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order) {
-		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
-		return ResponseEntity.status(HttpStatus.OK).body(this.iFestivalService.findAllFestival(pageable));
+	@GetMapping("/ConsultAllFestival")
+	public Response<List<FestivalQueryDTO>> ConsultAllFestival() {
+		return this.iFestivalService.findAllFestival();
 	}
 
 	// Consultar festival por id

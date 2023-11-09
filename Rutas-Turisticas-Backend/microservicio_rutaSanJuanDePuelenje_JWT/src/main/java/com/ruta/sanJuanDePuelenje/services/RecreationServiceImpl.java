@@ -28,12 +28,25 @@ public class RecreationServiceImpl implements IRecreationService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public GenericPageableResponse findAllRecreation(Pageable pageable) {
-		Page<Recreation> recreationPage = this.iRecreationRepository.findAll(pageable);
-		if (recreationPage.isEmpty())
-			return GenericPageableResponse.emptyResponse("Actividades de recreación no encontradas");
-		return this.validatePageList(recreationPage);
+	public Response<List<RecreationQueryDTO>> findAllRecreation() {
+		List<Recreation> recreationEntity = iRecreationRepository.findAll();
+		Response<List<RecreationQueryDTO>> response = new Response<>();
+		if (recreationEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("Actividades de recreación no encontrados");
+			response.setMoreInfo("http://localhost:8080/recreation/ConsultAllRecreation");
+			response.setData(null);
+		}else {
+			List<RecreationQueryDTO> recreationDTOs = recreationEntity.stream()
+					.map(recreation -> modelMapper.map(recreation, RecreationQueryDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Actividades de recreación encontradas con éxito");
+			response.setMoreInfo("http://localhost:8080/recreation/ConsultAllRecreation");
+			response.setData(recreationDTOs);
+		}
+		return response;
 	}
+
 
 	@Override
 	@Transactional(readOnly = true)

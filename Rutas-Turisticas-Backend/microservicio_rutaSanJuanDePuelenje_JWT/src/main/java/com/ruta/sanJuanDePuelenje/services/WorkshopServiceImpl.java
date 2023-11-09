@@ -28,11 +28,22 @@ public class WorkshopServiceImpl implements IWorkshopService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public GenericPageableResponse findAllWorkshop(Pageable pageable) {
-		Page<Workshop> workshopPage = this.iWorkshopRerpository.findAll(pageable);
-		if (workshopPage.isEmpty())
-			return GenericPageableResponse.emptyResponse("Talleres no encontrados");
-		return this.validatePageList(workshopPage);
+	public Response<List<WorkshopQueryDTO>> findAllWorkshop() {
+		List<Workshop> workshopEntity = iWorkshopRerpository.findAll();
+		Response<List<WorkshopQueryDTO>> response = new Response<>();
+		if(workshopEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("Talleres no encontrados");
+			response.setMoreInfo("http://localhost:8080/workshop/ConsultAllWorkshop");
+			response.setData(null);
+		}else {
+			List<WorkshopQueryDTO> workshopDTOs = workshopEntity.stream().map(workshop -> modelMapper.map(workshop, WorkshopQueryDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Talleres encontrados con éxito");
+			response.setMoreInfo("http://localhost:8080/workshop/ConsultAllWorkshop");
+			response.setData(workshopDTOs);
+		}
+		return response;
 	}
 
 	@Override

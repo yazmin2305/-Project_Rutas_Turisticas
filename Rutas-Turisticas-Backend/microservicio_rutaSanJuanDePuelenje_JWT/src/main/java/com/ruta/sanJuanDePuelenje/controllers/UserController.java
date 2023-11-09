@@ -10,7 +10,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
-import com.ruta.sanJuanDePuelenje.DTO.RoleDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Command.RoleCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Command.UserCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.UserQueryDTO;
 import com.ruta.sanJuanDePuelenje.services.IUserService;
@@ -83,7 +83,7 @@ public class UserController {
 	//Cambiar el rol de un usuario normal a administrador
 	@Secured("SUPER")
 	@PutMapping("/changeRolUser/{id}")
-	public Response<Boolean> changeRolUser(@PathVariable Integer id, @RequestBody RoleDTO role) {
+	public Response<Boolean> changeRolUser(@PathVariable Integer id, @RequestBody RoleCommandDTO role) {
 		return this.iUserService.changeRolUser(id, role);
 	}
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
-import com.ruta.sanJuanDePuelenje.DTO.RoleDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Command.RoleCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Command.UserCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.UserQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Role;
@@ -110,9 +110,8 @@ public class UserServiceImpl implements IUserService {
 			userEntity1.setLastName(userEntity.getLastName());
 			userEntity1.setPhone(userEntity.getPhone());
 			userEntity1.setEmail(userEntity.getEmail());
-			// solo la persona que tiene el rol superusuario puede cambiar el rol de un
-			// usuario....falta???
 			userEntity1.setState(userEntity.getState());
+			// solo la persona que tiene el rol superusuario puede cambiar el rol de un
 			this.iUserRepository.save(userEntity1);
 			UserQueryDTO userDTO = this.modelMapper.map(userEntity1, UserQueryDTO.class);
 			response.setStatus(200);
@@ -185,7 +184,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	@Transactional
-	public Response<Boolean> changeRolUser(Integer userId, RoleDTO roleDTO) {
+	public Response<Boolean> changeRolUser(Integer userId, RoleCommandDTO roleDTO) {
 		User userEntity = this.iUserRepository.findById(userId).get();
 		Response<Boolean> response = new Response<>();
 		if (userEntity != null) {

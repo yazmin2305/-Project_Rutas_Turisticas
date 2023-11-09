@@ -28,11 +28,22 @@ public class TalkingServiceImpl implements ITalkingService{
 	
 	@Override
 	@Transactional(readOnly = true)
-	public GenericPageableResponse findAllTalking(Pageable pageable) {
-		Page<Talking> talkingsPage = this.iTalkingRepository.findAll(pageable);
-		if (talkingsPage.isEmpty())
-			return GenericPageableResponse.emptyResponse("Charlas no encontradas");
-		return this.validatePageList(talkingsPage);
+	public Response<List<TalkingQueryDTO>> findAllTalking() {
+		List<Talking> talkingEntity = iTalkingRepository.findAll();
+		Response<List<TalkingQueryDTO>> response = new Response<>();
+		if(talkingEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("Charlas no encontradas");
+			response.setMoreInfo("http://localhost:8080/talking/ConsultAllTalking");
+			response.setData(null);
+		}else {
+			List<TalkingQueryDTO> talkingDTOs = talkingEntity.stream().map(talking -> modelMapper.map(talking, TalkingQueryDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Charlas encontradas con éxito");
+			response.setMoreInfo("http://localhost:8080/talking/ConsultAllTalking");
+			response.setData(talkingDTOs);
+		}
+		return response;
 	}
 
 	@Override
@@ -89,7 +100,6 @@ public class TalkingServiceImpl implements ITalkingService{
 			talkingEntity1.setDuration(talkingEntity.getDuration());
 			talkingEntity1.setAvailability(talkingEntity.getAvailability());
 			talkingEntity1.setMaxAmountPerson(talkingEntity.getMaxAmountPerson());
-			talkingEntity1.setUnitPrice(talkingEntity.getUnitPrice());
 			talkingEntity1.setState(talkingEntity.getState());
 			talkingEntity1.setFinca(talkingEntity.getFinca());
 //			talkingEntity1.setLstReserve(talkingEntity.getLstReserve());

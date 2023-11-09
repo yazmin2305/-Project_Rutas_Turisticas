@@ -28,11 +28,22 @@ public class FestivalServiceImpl implements IFestivalService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public GenericPageableResponse findAllFestival(Pageable pageable) {
-		Page<Festival> festivalesPage = this.iFestivalRepository.findAll(pageable);
-		if (festivalesPage.isEmpty())
-			return GenericPageableResponse.emptyResponse("Festivales no encontrados");
-		return this.validatePageList(festivalesPage);
+	public Response<List<FestivalQueryDTO>> findAllFestival() {
+		List<Festival> festivalEntity = iFestivalRepository.findAll();
+		Response<List<FestivalQueryDTO>> response = new Response<>();
+		if(festivalEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("Festivales no encontrados");
+			response.setMoreInfo("http://localhost:8080/festival/ConsultAllFestival");
+			response.setData(null);
+		}else {
+			List<FestivalQueryDTO> festivalDTO = festivalEntity.stream().map(festival -> modelMapper.map(festival, FestivalQueryDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Festivales encontrados con éxito");
+			response.setMoreInfo("http://localhost:8080/festival/ConsultAllFestival");
+			response.setData(festivalDTO);
+		}
+		return response;
 	}
 
 	@Override
