@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.FestivalCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Command.RutaCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.FestivalQueryDTO;
 import com.ruta.sanJuanDePuelenje.services.IFestivalService;
 import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
@@ -35,8 +36,17 @@ public class FestivalController {
 		return this.iFestivalService.findAllFestival();
 	}
 
+	// Consultar todos los festivales por ruta
+	@GetMapping("/ConsultAllFestivalesByRuta")
+	@Secured("ADMIN")
+	public ResponseEntity<GenericPageableResponse> ConsultAllFestivalByRuta(RutaCommandDTO ruta, @RequestParam Integer page,
+			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(this.iFestivalService.findAllFestivalBytRuta(ruta, pageable));
+	}
+
 	// Consultar festival por id
-	// las consultas por id para que rol son?
 	@Secured({ "ADMIN", "USER" })
 	@GetMapping("/ConsultById/{id}")
 	public Response<FestivalQueryDTO> ConsultFestivalById(@PathVariable Integer id) {

@@ -1,6 +1,7 @@
 package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -46,6 +47,25 @@ public class FincaServiceImpl implements IFincaService{
 		return response;
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public Response<List<FincaQueryDTO>> findAllFincasBytRuta(Integer rutaId) {
+		List<Finca> fincaEntity = iFincaRepository.findAllFincasByRuta(rutaId);
+		Response<List<FincaQueryDTO>> response = new Response<>();
+		if(fincaEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("Fincas no encontradas");
+			response.setMoreInfo("http://localhost:8080/finca/ConsultAllFincaByRuta/{rutaId}");
+			response.setData(null);
+		}else {
+			List<FincaQueryDTO> fincaDTO = fincaEntity.stream().map(finca -> modelMapper.map(finca, FincaQueryDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Fincas encontradas con éxito");
+			response.setMoreInfo("http://localhost:8080/finca/ConsultAllFincaByRuta/{rutaId}");
+			response.setData(fincaDTO);
+		}
+		return response;
+	}
 
 	@Override
 	@Transactional(readOnly = true)
@@ -93,18 +113,14 @@ public class FincaServiceImpl implements IFincaService{
 	@Transactional
 	public Response<FincaQueryDTO> updateFinca(Integer fincaId, FincaCommandDTO finca) {
 		Response<FincaQueryDTO> response = new Response<>();
-		if(finca != null && fincaId != null) {
+		Optional<Finca> optionalFinca = this.iFincaRepository.findById(fincaId);
+		if(optionalFinca.isPresent()) {
+			Finca fincaEntity1 = optionalFinca.get();
 			Finca fincaEntity = this.modelMapper.map(finca, Finca.class);
-			Finca fincaEntity1 = this.iFincaRepository.findById(fincaId).get();
 			fincaEntity1.setName(fincaEntity.getName());
 			fincaEntity1.setDescription(fincaEntity.getDescription());
 			fincaEntity1.setLocation(fincaEntity.getLocation());
 			fincaEntity1.setState(fincaEntity.getState());
-//			fincaEntity1.setLstTalking(fincaEntity.getLstTalking());
-//			fincaEntity1.setLstWorkshop(fincaEntity.getLstWorkshop());
-//			fincaEntity1.setLstRecreation(fincaEntity.getLstRecreation());
-//			fincaEntity1.setLstLodging(fincaEntity.getLstLodging());
-//			fincaEntity1.setLstFestival(fincaEntity.getLstFestival());
 			this.iFincaRepository.save(fincaEntity1);
 			FincaQueryDTO fincaDTO = this.modelMapper.map(fincaEntity1, FincaQueryDTO.class);
 			response.setStatus(200);
@@ -113,7 +129,7 @@ public class FincaServiceImpl implements IFincaService{
 			response.setData(fincaDTO);
 		}else {
 			response.setStatus(500);
-			response.setUserMessage("Error al actualizar la finca");
+			response.setUserMessage("La finca que desea actualizar no se encuentra");
 			response.setMoreInfo("http://localhost:8080/finca/UpdateFinca/{id}");
 			response.setData(null);
 		}

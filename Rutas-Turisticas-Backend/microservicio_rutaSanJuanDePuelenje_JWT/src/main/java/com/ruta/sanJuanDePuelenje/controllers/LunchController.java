@@ -31,8 +31,14 @@ public class LunchController {
 		return this.iLunchService.findAllLunch();
 	}
 
+	// Consultar todos los almuerzos que esten asociados a una ruta en especifico
+	@GetMapping("/ConsultAllLunchByRuta/{rutaId}")
+	public Response<List<LunchQueryDTO>> ConsultAllLunchByRuta(@PathVariable Integer rutaId) {
+		return this.iLunchService.findAllLunchByRuta(rutaId);
+	}
+
 	// Consultar un almuerzo por id
-	@Secured({"ADMIN", "USER"})
+	@Secured({ "ADMIN", "USER" })
 	@GetMapping("/ConsultById/{id}")
 	public Response<LunchQueryDTO> ConsultLunchById(@PathVariable Integer id) {
 		return this.iLunchService.findByLunchId(id);
@@ -58,7 +64,7 @@ public class LunchController {
 	public Response<Boolean> DisableLunch(@PathVariable Integer id) {
 		return this.iLunchService.disableLunch(id);
 	}
-	
+
 	// Habilitar un almuerzo registrado en el sistema
 	@Secured("ADMIN")
 	@PatchMapping("/EnableLunch/{id}")
@@ -67,10 +73,11 @@ public class LunchController {
 	}
 
 	// Consultar los almuerzos dependiento su estado: activado - desactivado
-	@Secured({"ADMIN", "USER"})
+	@Secured({ "ADMIN", "USER" })
 	@GetMapping("ConsultAllLunchByState/{state}")
 	public ResponseEntity<GenericPageableResponse> ConsultAllLunchByState(@RequestParam Integer page,
-			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order, @PathVariable Boolean state) {
+			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order,
+			@PathVariable Boolean state) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
 		return ResponseEntity.status(HttpStatus.OK).body(this.iLunchService.findAllLunchBytState(state, pageable));
 	}

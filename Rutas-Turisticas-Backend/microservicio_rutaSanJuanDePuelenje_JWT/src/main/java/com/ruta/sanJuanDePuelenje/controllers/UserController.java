@@ -82,7 +82,7 @@ public class UserController {
 	
 	//Cambiar el rol de un usuario normal a administrador
 	@Secured("SUPER")
-	@PutMapping("/changeRolUser/{id}")
+	@PatchMapping("/changeRolUser/{id}")
 	public Response<Boolean> changeRolUser(@PathVariable Integer id, @RequestBody RoleCommandDTO role) {
 		return this.iUserService.changeRolUser(id, role);
 	}

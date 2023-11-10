@@ -1,6 +1,7 @@
 package com.ruta.sanJuanDePuelenje.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -20,7 +21,7 @@ public class Finca {
 	@Column(nullable = false, length = 200)
 	private String description;
 	
-	@Column(nullable = false, length = 200)
+	@Column(nullable = false, unique = true, length = 200)
 	private String location;
 	
 	@Column(nullable = true)
@@ -44,5 +45,6 @@ public class Finca {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ruta_id")
+	@NotNull
 	private Ruta ruta;
 }

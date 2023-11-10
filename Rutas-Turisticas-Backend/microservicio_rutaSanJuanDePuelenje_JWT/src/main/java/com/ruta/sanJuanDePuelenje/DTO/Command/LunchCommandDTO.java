@@ -1,7 +1,5 @@
 package com.ruta.sanJuanDePuelenje.DTO.Command;
 
-import java.awt.geom.Arc2D.Double;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

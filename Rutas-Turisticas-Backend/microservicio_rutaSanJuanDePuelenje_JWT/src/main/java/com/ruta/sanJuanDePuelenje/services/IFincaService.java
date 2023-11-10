@@ -24,4 +24,6 @@ public interface IFincaService {
 	public Response<Boolean> enableFinca(Integer fincaId);
 	
 	public GenericPageableResponse findAllFincaBytState(boolean state, Pageable pageable);
+	
+	public Response<List<FincaQueryDTO>> findAllFincasBytRuta(Integer rutaId);
 }

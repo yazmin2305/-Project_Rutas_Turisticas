@@ -12,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.FestivalCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Command.RutaCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.FestivalQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Festival;
+import com.ruta.sanJuanDePuelenje.models.Ruta;
 import com.ruta.sanJuanDePuelenje.repository.IFestivalRepository;
 import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 import com.ruta.sanJuanDePuelenje.util.PageableUtils;
@@ -31,19 +33,30 @@ public class FestivalServiceImpl implements IFestivalService {
 	public Response<List<FestivalQueryDTO>> findAllFestival() {
 		List<Festival> festivalEntity = iFestivalRepository.findAll();
 		Response<List<FestivalQueryDTO>> response = new Response<>();
-		if(festivalEntity.isEmpty()) {
+		if (festivalEntity.isEmpty()) {
 			response.setStatus(404);
 			response.setUserMessage("Festivales no encontrados");
 			response.setMoreInfo("http://localhost:8080/festival/ConsultAllFestival");
 			response.setData(null);
-		}else {
-			List<FestivalQueryDTO> festivalDTO = festivalEntity.stream().map(festival -> modelMapper.map(festival, FestivalQueryDTO.class)).collect(Collectors.toList());
+		} else {
+			List<FestivalQueryDTO> festivalDTO = festivalEntity.stream()
+					.map(festival -> modelMapper.map(festival, FestivalQueryDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Festivales encontrados con éxito");
 			response.setMoreInfo("http://localhost:8080/festival/ConsultAllFestival");
 			response.setData(festivalDTO);
 		}
 		return response;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public GenericPageableResponse findAllFestivalBytRuta(RutaCommandDTO ruta, Pageable pageable) {
+		Ruta rutaEntity = modelMapper.map(ruta, Ruta.class);
+		Page<Festival> festivalesPage = this.iFestivalRepository.findAllFestivalesByRuta(rutaEntity.getId(), pageable);
+		if (festivalesPage.isEmpty())
+			return GenericPageableResponse.emptyResponse("No se encuentran festivales");
+		return this.validatePageList(festivalesPage);
 	}
 
 	@Override

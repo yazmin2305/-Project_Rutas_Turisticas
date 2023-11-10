@@ -8,6 +8,7 @@ import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Query.FestivalQueryDTO;
 import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 import com.ruta.sanJuanDePuelenje.DTO.Command.FestivalCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Command.RutaCommandDTO;
 public interface IFestivalService {
 	
 	public Response<List<FestivalQueryDTO>> findAllFestival();
@@ -23,4 +24,6 @@ public interface IFestivalService {
 	public Response<Boolean> enableFestival(Integer festivalId);
 	
 	public GenericPageableResponse findAllFestivalBytState(boolean state, Pageable pageable);
+	
+	public GenericPageableResponse findAllFestivalBytRuta(RutaCommandDTO ruta, Pageable pageable);
 }

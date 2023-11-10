@@ -34,6 +34,13 @@ public class FincaController {
 		return this.iFincaService.findAllFincas();
 	}
 
+	// Consultar todas las fincas por ruta
+	@Secured({ "ADMIN", "USER" })
+	@GetMapping("ConsultAllFincaByRuta/{rutaId}")
+	public Response<List<FincaQueryDTO>> ConsultAllFincaByRuta(@PathVariable Integer rutaId) {
+		return this.iFincaService.findAllFincasBytRuta(rutaId);
+	}
+
 	// Consultar finca por id
 	@Secured({ "ADMIN", "USER" })
 	@GetMapping("/ConsultById/{id}")

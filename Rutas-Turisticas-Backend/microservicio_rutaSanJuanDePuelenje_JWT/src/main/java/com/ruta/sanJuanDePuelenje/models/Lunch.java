@@ -3,6 +3,7 @@ package com.ruta.sanJuanDePuelenje.models;
 import java.util.List;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -25,13 +26,14 @@ public class Lunch {
 	
 	@Column(nullable = true)
 	private Boolean state;
-	
+
 	
 	@ManyToMany(mappedBy = "LstLunch")
 	private List<Reserve> LstReserve ;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ruta_id")
+	@NotNull
 	private Ruta ruta;
 	
 }

@@ -1,6 +1,7 @@
 package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -45,7 +46,26 @@ public class LunchServiceImpl implements ILunchService{
 		}
 		return response;
 	}
-
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Response<List<LunchQueryDTO>> findAllLunchByRuta(Integer rutaId) {
+		List<Lunch> lunchEntity = iLunchRepository.findAllLunchByRuta(rutaId);
+		Response<List<LunchQueryDTO>> response = new Response<>();
+		if(lunchEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("Menú no encontrado");
+			response.setMoreInfo("http://localhost:8080/lunch/ConsultAllLunch");
+			response.setData(null);
+		}else {
+			List<LunchQueryDTO> lunchDTOs = lunchEntity.stream().map(lunch -> modelMapper.map(lunch, LunchQueryDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Menú encontrado con éxito");
+			response.setMoreInfo("http://localhost:8080/lunch/ConsultAllLunch");
+			response.setData(lunchDTOs);
+		}
+		return response;
+	}
 
 	@Override
 	@Transactional(readOnly = true)
@@ -54,7 +74,7 @@ public class LunchServiceImpl implements ILunchService{
 		Response<LunchQueryDTO> response = new Response<>();
 		if(lunch == null) {
 			response.setStatus(404);
-			response.setUserMessage("Item de menú no encontrado");
+			response.setUserMessage("Menú no encontrado");
 			response.setMoreInfo("http://localhost:8080/lunch/ConsultById/{id}");
 			response.setData(null);
 		}else {
@@ -93,9 +113,10 @@ public class LunchServiceImpl implements ILunchService{
 	@Transactional
 	public Response<LunchQueryDTO> updateLunch(Integer lunchId, LunchCommandDTO lunch) {
 		Response<LunchQueryDTO> response = new Response<>();
-		if(lunch != null && lunchId != null) {
+		Optional<Lunch> optionalLunch = this.iLunchRepository.findById(lunchId);
+		if(optionalLunch.isPresent()) {
+			Lunch lunchEntity1 = optionalLunch.get();
 			Lunch lunchEntity = this.modelMapper.map(lunch, Lunch.class);
-			Lunch lunchEntity1 = this.iLunchRepository.findById(lunchId).get();
 			lunchEntity1.setMenu(lunchEntity.getMenu());
 			lunchEntity1.setUnitPrice(lunchEntity.getUnitPrice());
 			lunchEntity1.setState(lunchEntity.getState());
@@ -107,7 +128,7 @@ public class LunchServiceImpl implements ILunchService{
 			response.setData(lunchDTO);
 		}else {
 			response.setStatus(500);
-			response.setUserMessage("Error al actualizar item del menú");
+			response.setUserMessage("El almuerzo que desea actualizar no se encuentra");
 			response.setMoreInfo("http://localhost:8080/lunch/UpdateLunch/{id}");
 			response.setData(null);
 		}
