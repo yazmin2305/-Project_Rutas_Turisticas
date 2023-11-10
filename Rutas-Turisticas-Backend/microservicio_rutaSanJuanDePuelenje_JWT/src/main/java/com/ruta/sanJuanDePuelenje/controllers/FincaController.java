@@ -35,7 +35,7 @@ public class FincaController {
 	}
 
 	// Consultar todas las fincas por ruta
-	@Secured({ "ADMIN", "USER" })
+	@Secured({ "ADMIN", "SUPER" })
 	@GetMapping("ConsultAllFincaByRuta/{rutaId}")
 	public Response<List<FincaQueryDTO>> ConsultAllFincaByRuta(@PathVariable Integer rutaId) {
 		return this.iFincaService.findAllFincasBytRuta(rutaId);
@@ -77,12 +77,19 @@ public class FincaController {
 	}
 
 	// Consultar las fincas dependiento su estado: activado - desactivado
-	@Secured({ "ADMIN", "USER" })
+	@Secured({ "SUPER" })
 	@GetMapping("ConsultAllFincaByState/{state}")
 	public ResponseEntity<GenericPageableResponse> ConsultAllFincaByState(@RequestParam Integer page,
 			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order,
 			@PathVariable Boolean state) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
 		return ResponseEntity.status(HttpStatus.OK).body(this.iFincaService.findAllFincaBytState(state, pageable));
+	}
+
+	// Consultar las fincas dependiento su estado: activado - desactivado y dependiendo la ruta con la que esten relacionadas
+	@Secured({ "ADMIN", "SUPER" })
+	@GetMapping("ConsultAllFincaByStateByRuta/{state}/{idRuta}")
+	public Response<List<FincaQueryDTO>> ConsultAllFincaByStateByRuta(@PathVariable Boolean state, @PathVariable Integer rutaId) {
+		return this.iFincaService.findAllFincaBytStateByRuta(state, rutaId);
 	}
 }

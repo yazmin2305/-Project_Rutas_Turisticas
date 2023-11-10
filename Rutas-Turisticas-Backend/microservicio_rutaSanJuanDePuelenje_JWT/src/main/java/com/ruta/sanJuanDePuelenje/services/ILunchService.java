@@ -25,6 +25,8 @@ public interface ILunchService {
 	
 	public GenericPageableResponse findAllLunchBytState(boolean state, Pageable pageable);
 	
+	public Response<List<LunchQueryDTO>> findAllLunchBytStateByRuta(boolean state, Integer rutaId);
+	
 	public Response<List<LunchQueryDTO>> findAllLunchByRuta(Integer rutaId);
 	
 }

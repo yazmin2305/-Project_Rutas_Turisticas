@@ -12,10 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.FestivalCommandDTO;
-import com.ruta.sanJuanDePuelenje.DTO.Command.RutaCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.FestivalQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Festival;
-import com.ruta.sanJuanDePuelenje.models.Ruta;
 import com.ruta.sanJuanDePuelenje.repository.IFestivalRepository;
 import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 import com.ruta.sanJuanDePuelenje.util.PageableUtils;
@@ -51,12 +49,23 @@ public class FestivalServiceImpl implements IFestivalService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public GenericPageableResponse findAllFestivalBytRuta(RutaCommandDTO ruta, Pageable pageable) {
-		Ruta rutaEntity = modelMapper.map(ruta, Ruta.class);
-		Page<Festival> festivalesPage = this.iFestivalRepository.findAllFestivalesByRuta(rutaEntity.getId(), pageable);
-		if (festivalesPage.isEmpty())
-			return GenericPageableResponse.emptyResponse("No se encuentran festivales");
-		return this.validatePageList(festivalesPage);
+	public Response<List<FestivalQueryDTO>> findAllFestivalBytRuta(Integer rutaId) {
+		List<Festival> festivalEntity = this.iFestivalRepository.findAllFestivalesByRuta(rutaId);
+		Response<List<FestivalQueryDTO>> response = new Response<>();
+		if (festivalEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("Festivales no encontrados");
+			response.setMoreInfo("http://localhost:8080/festival/ConsultAllFestival");
+			response.setData(null);
+		} else {
+			List<FestivalQueryDTO> festivalDTO = festivalEntity.stream()
+					.map(festival -> modelMapper.map(festival, FestivalQueryDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Festivales encontrados con éxito");
+			response.setMoreInfo("http://localhost:8080/festival/ConsultAllFestival");
+			response.setData(festivalDTO);
+		}
+		return response;
 	}
 
 	@Override
@@ -183,6 +192,27 @@ public class FestivalServiceImpl implements IFestivalService {
 		if (festivalesPage.isEmpty())
 			return GenericPageableResponse.emptyResponse("No se encuentran festivales relacionados a este estado");
 		return this.validatePageList(festivalesPage);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Response<List<FestivalQueryDTO>> findFestivalByStateByRuta(boolean state, Integer rutaId) {
+		List<Festival> festivalEntity = iFestivalRepository.findFestivalByStateByRuta(state, rutaId);
+		Response<List<FestivalQueryDTO>> response = new Response<>();
+		if (festivalEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("Festivales no encontrados");
+			response.setMoreInfo("http://localhost:8080/festival/ConsultAllFestivalByStateByRuta/{state}/{idRuta}");
+			response.setData(null);
+		} else {
+			List<FestivalQueryDTO> festivalDTO = festivalEntity.stream()
+					.map(festival -> modelMapper.map(festival, FestivalQueryDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Festivales encontrados con éxito");
+			response.setMoreInfo("http://localhost:8080/festival/ConsultAllFestivalByStateByRuta/{state}/{idRuta}");
+			response.setData(festivalDTO);
+		}
+		return response;
 	}
 
 	private GenericPageableResponse validatePageList(Page<Festival> festivalPage) {

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.FestivalCommandDTO;
-import com.ruta.sanJuanDePuelenje.DTO.Command.RutaCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.FestivalQueryDTO;
 import com.ruta.sanJuanDePuelenje.services.IFestivalService;
 import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
@@ -37,13 +36,10 @@ public class FestivalController {
 	}
 
 	// Consultar todos los festivales por ruta
-	@GetMapping("/ConsultAllFestivalesByRuta")
 	@Secured("ADMIN")
-	public ResponseEntity<GenericPageableResponse> ConsultAllFestivalByRuta(RutaCommandDTO ruta, @RequestParam Integer page,
-			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order) {
-		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(this.iFestivalService.findAllFestivalBytRuta(ruta, pageable));
+	@GetMapping("/ConsultAllFestivalesByRuta/{id}")
+	public Response<List<FestivalQueryDTO>> ConsultAllFestivalByRuta(@RequestParam Integer rutaId) {
+		return this.iFestivalService.findAllFestivalBytRuta(rutaId);
 	}
 
 	// Consultar festival por id
@@ -83,7 +79,7 @@ public class FestivalController {
 	}
 
 	// Consultar los festivales dependiento su estado: activado - desactivado
-	@Secured({ "ADMIN", "USER" })
+	@Secured({ "ADMIN", "SUPER" })
 	@GetMapping("ConsultAllFestivalByState/{state}")
 	public ResponseEntity<GenericPageableResponse> ConsultAllFestivalByState(@RequestParam Integer page,
 			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order,
@@ -91,5 +87,12 @@ public class FestivalController {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(this.iFestivalService.findAllFestivalBytState(state, pageable));
+	}
+
+	// Consultar los festivales dependiento su estado: activado - desactivado
+	@Secured({ "ADMIN", "SUPER" })
+	@GetMapping("ConsultAllFestivalByStateByRuta/{state}/{idRuta}")
+	public Response<List<FestivalQueryDTO>> ConsultAllFestivalByStateByRuta(@PathVariable Boolean state, @RequestParam Integer rutaId) {
+		return this.iFestivalService.findFestivalByStateByRuta(state, rutaId);
 	}
 }

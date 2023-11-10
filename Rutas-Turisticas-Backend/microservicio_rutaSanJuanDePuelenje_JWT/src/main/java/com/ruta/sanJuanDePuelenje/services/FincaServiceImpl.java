@@ -192,6 +192,26 @@ public class FincaServiceImpl implements IFincaService{
 		return this.validatePageList(fincaPage);
 	}
 	
+	@Override
+	@Transactional(readOnly = true)
+	public Response<List<FincaQueryDTO>> findAllFincaBytStateByRuta(boolean state, Integer rutaId) {
+		List<Finca> fincaEntity = this.iFincaRepository.LstFincaByStateByRuta(state, rutaId);
+		Response<List<FincaQueryDTO>> response = new Response<>();
+		if(fincaEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("Fincas no encontradas");
+			response.setMoreInfo("http://localhost:8080/finca/ConsultAllFincaByStateByRuta/{state}/{idRuta}");
+			response.setData(null);
+		}else {
+			List<FincaQueryDTO> fincaDTO = fincaEntity.stream().map(finca -> modelMapper.map(finca, FincaQueryDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Fincas encontradas con éxito");
+			response.setMoreInfo("http://localhost:8080/finca/ConsultAllFincaByStateByRuta/{state}/{idRuta}");
+			response.setData(fincaDTO);
+		}
+		return response;
+	}
+	
 	private GenericPageableResponse validatePageList(Page<Finca> fincaPage){
         List<FincaQueryDTO> fincaDTOS = fincaPage.stream().map(x->modelMapper.map(x, FincaQueryDTO.class)).collect(Collectors.toList());
         return PageableUtils.createPageableResponse(fincaPage, fincaDTOS);

@@ -16,7 +16,7 @@ public interface IFincaRepository extends JpaRepository<Finca, Integer> {
 
 	// query para listar las fincas por su estado y por la ruta a la cual se encuentran asociadas
 	@Query(value = "SELECT f FROM Finca f WHERE f.state = ?1 AND f.ruta.id=?2", nativeQuery = false)
-	List<Finca> LstFincaByState(boolean state, Integer idRuta);
+	List<Finca> LstFincaByStateByRuta(boolean state, Integer idRuta);
 
 	// query para consultar todos los festivales a partir de la ruta asociada
 	@Query(value = "SELECT f FROM Finca f WHERE f.ruta.id = ?1", nativeQuery = false)
