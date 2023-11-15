@@ -27,14 +27,21 @@ public class RecreationController {
 
 	// Consultar todos las actividades de recreación
 	@GetMapping("/ConsultAllRecreation")
-	public Response<List<RecreationQueryDTO>> ConsultAllRecreation() {
+	public Response<List<RecreationCommandDTO>> ConsultAllRecreation() {
 		return this.iRecreationService.findAllRecreation();
 	}
 
+	// Consultar todos los festivales por ruta
+	@Secured({ "ADMIN", "SUPER" })
+	@GetMapping("/ConsultAllRecreationByRuta/{rutaId}")
+	public Response<List<RecreationQueryDTO>> ConsultAllRecreationByRuta(@PathVariable Integer rutaId) {
+		return this.iRecreationService.findRecreationBytRuta(rutaId);
+	}
+
 	// Consultar una actividad recreativa por su id
-	@Secured({ "ADMIN", "USER" })
+	@Secured({ "ADMIN", "SUPER" })
 	@GetMapping("/ConsultById/{id}")
-	public Response<RecreationQueryDTO> ConsultRecreationById(@PathVariable Integer id) {
+	public Response<RecreationCommandDTO> ConsultRecreationById(@PathVariable Integer id) {
 		return this.iRecreationService.findByRecreationId(id);
 	}
 
@@ -67,9 +74,8 @@ public class RecreationController {
 		return this.iRecreationService.enableRecreation(id);
 	}
 
-	// Consultar las actividades de recreacion dependiento su estado: activado -
-	// desactivado
-	@Secured({ "ADMIN", "USER" })
+	// Consultar las actividades de recreacion dependiento su estado: activado - desactivado
+	@Secured("SUPER")
 	@GetMapping("ConsultAllRecreationByState/{state}")
 	public ResponseEntity<GenericPageableResponse> ConsultAllRecreationByState(@RequestParam Integer page,
 			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order,
@@ -77,5 +83,12 @@ public class RecreationController {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(this.iRecreationService.findAllRecreationBytState(state, pageable));
+	}
+
+	// Consultar todos las actividades de recreacion dependiento su estado: activado - desactivado y dependiendo la ruta con la que esten relacionadas
+	@Secured({ "ADMIN", "SUPER" })
+	@GetMapping("/ConsultAllRecreationByRutaByState/{state}/{rutaId}")
+	public Response<List<RecreationQueryDTO>> ConsultAllRecreationByRutaByState(@PathVariable Boolean state, @PathVariable Integer rutaId) {
+		return this.iRecreationService.findRecreationByStateByRuta(state, rutaId);
 	}
 }

@@ -11,9 +11,9 @@ import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 public interface ILunchService {
 	
-	public Response<List<LunchQueryDTO>> findAllLunch();
+	public Response<List<LunchCommandDTO>> findAllLunch();
 	
-	public Response<LunchQueryDTO> findByLunchId(Integer lunchId);
+	public Response<LunchCommandDTO> findByLunchId(Integer lunchId);
 	
 	public Response<LunchCommandDTO> saveLunch(LunchCommandDTO lunch);
 	

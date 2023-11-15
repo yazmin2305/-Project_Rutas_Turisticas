@@ -3,11 +3,6 @@ package com.ruta.sanJuanDePuelenje.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +10,6 @@ import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.WorkshopTypeCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.WorkshopTypeQueryDTO;
 import com.ruta.sanJuanDePuelenje.services.IWorkshopTypeService;
-import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 @RestController
 @RequestMapping("/workshopType")
@@ -26,14 +20,14 @@ public class WorkshopTypeController {
 	private IWorkshopTypeService iWorkshopTypeTypeService;
 
 	// Consultar todos los tipos de talleres
-	@Secured({ "ADMIN", "USER" })
+	@Secured({ "ADMIN", "USER", "SUPER" })
 	@GetMapping("/ConsultAllWorkshopType")
 	public Response<List<WorkshopTypeQueryDTO>> ConsultAllWorkshopType() {
 		return this.iWorkshopTypeTypeService.findAllWorkshopTypes();
 	}
 
 	// Consultar un tipo de taller por su id
-	@Secured({ "ADMIN", "USER" })
+	@Secured({ "ADMIN", "SUPER" })
 	@GetMapping("/ConsultById/{id}")
 	public Response<WorkshopTypeQueryDTO> ConsultWorkshopTypeById(@PathVariable Integer id) {
 		return this.iWorkshopTypeTypeService.findByWorkshopTypeId(id);
@@ -69,13 +63,9 @@ public class WorkshopTypeController {
 	}
 
 	// Consultar los tipos talleres dependiento su estado: activado - desactivado
-	@Secured({ "ADMIN", "USER" })
+	@Secured({ "ADMIN", "SUPER" })
 	@GetMapping("ConsultAllWorkshopTypeByState/{state}")
-	public ResponseEntity<GenericPageableResponse> ConsultAllWorkshopTypeByState(@RequestParam Integer page,
-			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order,
-			@PathVariable Boolean state) {
-		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(this.iWorkshopTypeTypeService.findAllWorkshopTypeBytState(state, pageable));
+	public Response<List<WorkshopTypeQueryDTO>> ConsultAllWorkshopTypeByState(@PathVariable Boolean state) {
+		return this.iWorkshopTypeTypeService.findAllWorkshopTypeBytState(state);
 	}
 }

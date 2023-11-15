@@ -11,9 +11,9 @@ import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 public interface IFincaService {
 	
-	public Response<List<FincaQueryDTO>> findAllFincas();
+	public Response<List<FincaCommandDTO>> findAllFincas();
 	
-	public Response<FincaQueryDTO> findByFincaId(Integer fincaId);
+	public Response<FincaCommandDTO> findByFincaId(Integer fincaId);
 	
 	public Response<FincaCommandDTO> saveFinca(FincaCommandDTO fincaDTO);
 	

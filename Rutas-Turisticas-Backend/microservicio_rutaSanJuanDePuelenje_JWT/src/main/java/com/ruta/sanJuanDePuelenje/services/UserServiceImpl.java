@@ -1,6 +1,7 @@
 package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -29,8 +30,8 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	private ModelMapper modelMapper;
-	// añado esta dependencia para que me encripte la contraseña al momento de
-	// guardar en la BD
+	
+	// añado esta dependencia para que me encripte la contraseña al momento de guardar en la BD
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
@@ -96,12 +97,12 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	@Transactional
 	public Response<UserQueryDTO> updateUser(Integer userId, UserCommandDTO user) {
-		User userEntity = this.modelMapper.map(user, User.class);
 		Response<UserQueryDTO> response = new Response<>();
-		if (user != null && userId != null) {
-			User userEntity1 = this.iUserRepository.findById(userId).get();
-			// Si la contraseña ha cambiado entra al condicional para encriptar la nueva
-			// contraseña
+		Optional<User> optionalUser = this.iUserRepository.findById(userId);
+		if (optionalUser.isPresent()) {
+			User userEntity1 = optionalUser.get();
+			User userEntity = this.modelMapper.map(user, User.class);
+			// Si la contraseña ha cambiado entra al condicional para encriptar la nueva contraseña
 			if (!passwordEncoder.matches(userEntity.getPassword(), userEntity1.getPassword())) {
 				userEntity1.setPassword(passwordEncoder.encode(userEntity.getPassword()));
 			}
@@ -110,7 +111,6 @@ public class UserServiceImpl implements IUserService {
 			userEntity1.setLastName(userEntity.getLastName());
 			userEntity1.setPhone(userEntity.getPhone());
 			userEntity1.setEmail(userEntity.getEmail());
-			userEntity1.setState(userEntity.getState());
 			// solo la persona que tiene el rol superusuario puede cambiar el rol de un
 			this.iUserRepository.save(userEntity1);
 			UserQueryDTO userDTO = this.modelMapper.map(userEntity1, UserQueryDTO.class);

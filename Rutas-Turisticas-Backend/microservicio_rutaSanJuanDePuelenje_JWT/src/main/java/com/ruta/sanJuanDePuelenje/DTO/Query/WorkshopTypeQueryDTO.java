@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class WorkshopTypeQueryDTO {
 	private String workshopTypeName;
 	private Boolean WorkshopTypeState;
-//	private List<WorkshopQueryDTO> lstWorkshopDTOs;
 }

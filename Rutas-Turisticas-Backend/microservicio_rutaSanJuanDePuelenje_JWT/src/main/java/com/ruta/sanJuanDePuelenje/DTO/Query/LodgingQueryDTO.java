@@ -13,6 +13,5 @@ public class LodgingQueryDTO {
 	private Integer lodgingBedsAvailable;
 	private Integer lodgingMaxAmountPerson;
 	private Double lodgingUnitPrice;
-	private Integer lodgingNumberNights;
 	private Boolean lodgingState;
 }

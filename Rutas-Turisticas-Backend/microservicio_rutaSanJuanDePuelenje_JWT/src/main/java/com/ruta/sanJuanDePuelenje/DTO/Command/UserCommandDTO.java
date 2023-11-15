@@ -17,6 +17,5 @@ public class UserCommandDTO {
 	private Boolean userState;
 	private String userPassword;
 	private RoleCommandDTO role;
-	//private List<ReserveCommandDTO> lstReserveDTOs;
 	private RutaCommandDTO ruta;
 }

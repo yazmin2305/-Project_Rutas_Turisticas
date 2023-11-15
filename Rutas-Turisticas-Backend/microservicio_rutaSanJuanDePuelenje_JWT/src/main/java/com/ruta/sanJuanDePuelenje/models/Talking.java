@@ -3,6 +3,7 @@ package com.ruta.sanJuanDePuelenje.models;
 import java.util.List;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -26,8 +27,8 @@ public class Talking {
 	@Column(nullable = false)
 	private Integer duration;
 	
-	@Column(nullable = false)
-	private Boolean availability;
+//	@Column(nullable = false)
+//	private Boolean availability;
 	
 	@Column(name = "max_amount_person", nullable = false)
 	private Integer maxAmountPerson;
@@ -40,12 +41,13 @@ public class Talking {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "finca_id")
+	@NotNull
 	private Finca finca;
 	
 	@ManyToMany(mappedBy = "LstTalking")
 	private List<Reserve> LstReserve;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ruta_id")
-	private Ruta ruta;
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "ruta_id")
+//	private Ruta ruta;
 }

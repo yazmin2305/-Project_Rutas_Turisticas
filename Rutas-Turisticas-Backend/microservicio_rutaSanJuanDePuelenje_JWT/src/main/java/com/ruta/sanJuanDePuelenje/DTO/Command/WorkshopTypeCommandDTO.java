@@ -11,5 +11,4 @@ public class WorkshopTypeCommandDTO {
 	private Integer workshopTypeId;
 	private String workshopTypeName;
 	private Boolean WorkshopTypeState;
-//	private List<WorkshopQueryDTO> lstWorkshopDTOs;
 }

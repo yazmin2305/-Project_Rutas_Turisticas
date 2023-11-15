@@ -27,7 +27,7 @@ public class LunchController {
 
 	// Consultar todos los almuerzos
 	@GetMapping("/ConsultAllLunch")
-	public Response<List<LunchQueryDTO>> ConsultAllLunch() {
+	public Response<List<LunchCommandDTO>> ConsultAllLunch() {
 		return this.iLunchService.findAllLunch();
 	}
 
@@ -41,7 +41,7 @@ public class LunchController {
 	// Consultar un almuerzo por id
 	@Secured({ "ADMIN", "USER" })
 	@GetMapping("/ConsultById/{id}")
-	public Response<LunchQueryDTO> ConsultLunchById(@PathVariable Integer id) {
+	public Response<LunchCommandDTO> ConsultLunchById(@PathVariable Integer id) {
 		return this.iLunchService.findByLunchId(id);
 	}
 
@@ -84,7 +84,7 @@ public class LunchController {
 	}
 
 	// Consultar todos los almuerzos
-	@GetMapping("/ConsultAllLunchByStateByRuta/{state}/{idRuta}")
+	@GetMapping("/ConsultAllLunchByStateByRuta/{state}/{rutaId}")
 	public Response<List<LunchQueryDTO>> ConsultAllLunchByStateByRuta(@PathVariable Boolean state, @PathVariable Integer rutaId) {
 		return this.iLunchService.findAllLunchBytStateByRuta(state, rutaId);
 	}

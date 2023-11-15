@@ -26,14 +26,21 @@ public class LodgingController {
 
 	// Consultar todos los hospedajes
 	@GetMapping("/ConsultAllLodging")
-	public Response<List<LodgingQueryDTO>> ConsultAllLodging() {
+	public Response<List<LodgingCommandDTO>> ConsultAllLodging() {
 		return this.iLodgingService.findAllLodging();
 	}
 
+	// Consultar todos los hospedajes por ruta
+	@Secured({ "ADMIN", "SUPER" })
+	@GetMapping("/ConsultAllLodgingByRuta/{rutaId}")
+	public Response<List<LodgingQueryDTO>> ConsultAllLodgingByRuta(@PathVariable Integer rutaId){
+		return this.iLodgingService.findAllLodgingBytRuta(rutaId);
+	}
+
 	// Consultar hospedaje por id
-	@Secured({ "ADMIN", "USER" })
+	@Secured({ "ADMIN", "SUPER" })
 	@GetMapping("/ConsultById/{id}")
-	public Response<LodgingQueryDTO> ConsultLodgingById(@PathVariable Integer id) {
+	public Response<LodgingCommandDTO> ConsultLodgingById(@PathVariable Integer id) {
 		return this.iLodgingService.findByLodgingId(id);
 	}
 
@@ -66,12 +73,18 @@ public class LodgingController {
 	}
 
 	// Consultar los hospedajes dependiento su estado: activado - desactivado
-	@Secured({ "ADMIN", "USER" })
+	@Secured("SUPER")
 	@GetMapping("ConsultAllLodgingByState/{state}")
 	public ResponseEntity<GenericPageableResponse> ConsultAllLodgingByState(@RequestParam Integer page,
 			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order,
 			@PathVariable Boolean state) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
 		return ResponseEntity.status(HttpStatus.OK).body(this.iLodgingService.findAllLodgingBytState(state, pageable));
+	}
+	
+	@Secured({ "ADMIN", "SUPER" })
+	@GetMapping("/ConsulLodgingByStateByRuta/{state}/{rutaId}")
+	public Response<List<LodgingQueryDTO>> ConsultLodgingByStateByRuta(@PathVariable Boolean state, @PathVariable Integer rutaId){
+		return this.iLodgingService.findLodgingByStateByRuta(state, rutaId);
 	}
 }

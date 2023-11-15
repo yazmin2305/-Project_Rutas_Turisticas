@@ -3,6 +3,7 @@ package com.ruta.sanJuanDePuelenje.models;
 import java.util.List;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -36,12 +37,13 @@ public class Lodging {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "finca_id")
+	@NotNull
 	private Finca finca;
 	
 	@ManyToMany(mappedBy = "LstLodging")
 	private List<Reserve> LstReserve ;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "ruta_id")
-	private Ruta ruta;
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(name = "ruta_id")
+//	private Ruta ruta;
 }

@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 public class RecreationQueryDTO {
 	private String recreationName;
 	private Integer recreationDuration;
-	private Boolean recreationAvailability;
-	private Integer recreationMaxAmountP;
+	private Integer recreationMaxAmountPerson;
 	private Double recreationUnitPrice;
 	private Boolean recreationState;
 }

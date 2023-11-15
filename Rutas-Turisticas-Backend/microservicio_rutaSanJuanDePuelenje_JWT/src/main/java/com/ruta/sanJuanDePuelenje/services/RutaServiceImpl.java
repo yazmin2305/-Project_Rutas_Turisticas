@@ -74,6 +74,7 @@ public class RutaServiceImpl implements IRutaService {
 		Response<RutaCommandDTO> response = new Response<>();
 		if (ruta != null) {
 			Ruta rutaEntity = this.modelMapper.map(ruta, Ruta.class);
+			System.out.println("pruebaa: "+ rutaEntity.getName());
 			rutaEntity.setState(true);
 			Ruta objRuta = this.iRutaRepository.save(rutaEntity);
 			RutaCommandDTO rutaDTO = this.modelMapper.map(objRuta, RutaCommandDTO.class);
@@ -99,7 +100,6 @@ public class RutaServiceImpl implements IRutaService {
 			Ruta rutaEntity1 = optionalRuta.get();
 			Ruta rutaEntity = this.modelMapper.map(ruta, Ruta.class);
 			rutaEntity1.setName(rutaEntity.getName());
-			rutaEntity1.setState(rutaEntity.getState());
 			this.iRutaRepository.save(rutaEntity1);
 			RutaCommandDTO rutaDTO = this.modelMapper.map(rutaEntity1, RutaCommandDTO.class);
 			response.setStatus(200);

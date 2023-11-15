@@ -14,11 +14,13 @@ public interface IReserveRepository extends JpaRepository<Reserve, Integer>{
 	@Query(value = "SELECT * FROM reserve WHERE user_id = ?1", nativeQuery = true )
 	List<Reserve> reservasUsuario(Integer id);
 	
+	//r.ruta.ruta_id
+	
 	//Query que obtiene todos los usuarios que han hecho reservas en una determinada ruta
-	@Query(value = "SELECT r.user FROM reserve r WHERE r.ruta.ruta_id =? 1", nativeQuery = true)
+	@Query(value = "SELECT r.user FROM reserve r WHERE r.ruta_id =? 1", nativeQuery = true)
 	public List<User> LstUserByRuta(Integer idRuta);
 	
 	//Query que permite a un administrador consultar solo las reservas que se han realizado en su ruta
-	@Query(value = "SELECT * FROM reserve WHERE r.ruta.ruta_id = ?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM reserve WHERE r.ruta_id = ?1", nativeQuery = true)
 	public List<Reserve> LstReserveByRuta(Integer idRuta);
 }

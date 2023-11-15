@@ -11,11 +11,9 @@ public class RecreationCommandDTO {
 	private Integer recreationId;
 	private String recreationName;
 	private Integer recreationDuration;
-	private Boolean recreationAvailability;
-	private Integer recreationMaxAmountP;
+	private String recreationDescription;
+	private Integer recreationMaxAmountPerson;
 	private Double recreationUnitPrice;
 	private Boolean recreationState;
 	private FincaCommandDTO finca;
-	//private List<ReserveCommandDTO> lstReserveDTOs;
-	private RutaCommandDTO ruta;
 }

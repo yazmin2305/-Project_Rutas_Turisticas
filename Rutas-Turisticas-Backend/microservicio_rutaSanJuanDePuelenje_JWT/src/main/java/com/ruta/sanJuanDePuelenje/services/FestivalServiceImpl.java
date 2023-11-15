@@ -1,6 +1,7 @@
 package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -28,17 +29,17 @@ public class FestivalServiceImpl implements IFestivalService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<FestivalQueryDTO>> findAllFestival() {
+	public Response<List<FestivalCommandDTO>> findAllFestival() {
 		List<Festival> festivalEntity = iFestivalRepository.findAll();
-		Response<List<FestivalQueryDTO>> response = new Response<>();
+		Response<List<FestivalCommandDTO>> response = new Response<>();
 		if (festivalEntity.isEmpty()) {
 			response.setStatus(404);
 			response.setUserMessage("Festivales no encontrados");
 			response.setMoreInfo("http://localhost:8080/festival/ConsultAllFestival");
 			response.setData(null);
 		} else {
-			List<FestivalQueryDTO> festivalDTO = festivalEntity.stream()
-					.map(festival -> modelMapper.map(festival, FestivalQueryDTO.class)).collect(Collectors.toList());
+			List<FestivalCommandDTO> festivalDTO = festivalEntity.stream()
+					.map(festival -> modelMapper.map(festival, FestivalCommandDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Festivales encontrados con éxito");
 			response.setMoreInfo("http://localhost:8080/festival/ConsultAllFestival");
@@ -70,16 +71,16 @@ public class FestivalServiceImpl implements IFestivalService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<FestivalQueryDTO> findByFestivalId(Integer festivalId) {
+	public Response<FestivalCommandDTO> findByFestivalId(Integer festivalId) {
 		Festival festival = iFestivalRepository.findById(festivalId).orElse(null);
-		Response<FestivalQueryDTO> response = new Response<>();
+		Response<FestivalCommandDTO> response = new Response<>();
 		if (festival == null) {
 			response.setStatus(404);
 			response.setUserMessage("Festival no encontrado");
 			response.setMoreInfo("http://localhost:8080/festival/ConsultFestivalById/{id}");
 			response.setData(null);
 		} else {
-			FestivalQueryDTO festivalDTO = modelMapper.map(festival, FestivalQueryDTO.class);
+			FestivalCommandDTO festivalDTO = modelMapper.map(festival, FestivalCommandDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Festival encontrado con éxito");
 			response.setMoreInfo("http://localhost:8080/festival/ConsultFestivalById/{id}");
@@ -115,14 +116,13 @@ public class FestivalServiceImpl implements IFestivalService {
 	@Transactional
 	public Response<FestivalQueryDTO> updateFestival(Integer festivalId, FestivalCommandDTO festival) {
 		Response<FestivalQueryDTO> response = new Response<>();
-		if (festival != null && festivalId != null) {
+		Optional<Festival> optionalFestival = this.iFestivalRepository.findById(festivalId); 
+		if (optionalFestival.isPresent()) {
+			Festival festivalEntity1 = optionalFestival.get();
 			Festival festivalEntity = this.modelMapper.map(festival, Festival.class);
-			Festival festivalEntity1 = this.iFestivalRepository.findById(festivalId).get();
 			festivalEntity1.setName(festivalEntity.getName());
 			festivalEntity1.setDescription(festivalEntity.getDescription());
 			festivalEntity1.setDate(festivalEntity.getDate());
-			festivalEntity1.setFinca(festivalEntity.getFinca());
-			festivalEntity1.setState(festivalEntity.getState());
 			festivalEntity1.setFinca(festivalEntity.getFinca());
 			this.iFestivalRepository.save(festivalEntity1);
 			FestivalQueryDTO festivalDTO = this.modelMapper.map(festivalEntity1, FestivalQueryDTO.class);
@@ -216,7 +216,7 @@ public class FestivalServiceImpl implements IFestivalService {
 	}
 
 	private GenericPageableResponse validatePageList(Page<Festival> festivalPage) {
-		List<FestivalQueryDTO> festivalDTOS = festivalPage.stream().map(x -> modelMapper.map(x, FestivalQueryDTO.class))
+		List<FestivalCommandDTO> festivalDTOS = festivalPage.stream().map(x -> modelMapper.map(x, FestivalCommandDTO.class))
 				.collect(Collectors.toList());
 		return PageableUtils.createPageableResponse(festivalPage, festivalDTOS);
 	}

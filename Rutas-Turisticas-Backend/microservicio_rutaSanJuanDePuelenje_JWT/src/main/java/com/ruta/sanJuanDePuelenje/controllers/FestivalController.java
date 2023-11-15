@@ -30,22 +30,22 @@ public class FestivalController {
 
 	// Consultar todos los festivales
 	@PermitAll
-	@GetMapping("/ConsultAllFestival")
-	public Response<List<FestivalQueryDTO>> ConsultAllFestival() {
+	@GetMapping("/ConsultAllFestivales")
+	public Response<List<FestivalCommandDTO>> ConsultAllFestival() {
 		return this.iFestivalService.findAllFestival();
 	}
 
 	// Consultar todos los festivales por ruta
 	@Secured("ADMIN")
-	@GetMapping("/ConsultAllFestivalesByRuta/{id}")
-	public Response<List<FestivalQueryDTO>> ConsultAllFestivalByRuta(@RequestParam Integer rutaId) {
+	@GetMapping("/ConsultAllFestivalesByRuta/{rutaId}")
+	public Response<List<FestivalQueryDTO>> ConsultAllFestivalByRuta(@PathVariable Integer rutaId) {
 		return this.iFestivalService.findAllFestivalBytRuta(rutaId);
 	}
 
 	// Consultar festival por id
-	@Secured({ "ADMIN", "USER" })
+	@Secured({ "ADMIN", "SUPER" })
 	@GetMapping("/ConsultById/{id}")
-	public Response<FestivalQueryDTO> ConsultFestivalById(@PathVariable Integer id) {
+	public Response<FestivalCommandDTO> ConsultFestivalById(@PathVariable Integer id) {
 		return this.iFestivalService.findByFestivalId(id);
 	}
 
@@ -79,7 +79,7 @@ public class FestivalController {
 	}
 
 	// Consultar los festivales dependiento su estado: activado - desactivado
-	@Secured({ "ADMIN", "SUPER" })
+	@Secured("SUPER")
 	@GetMapping("ConsultAllFestivalByState/{state}")
 	public ResponseEntity<GenericPageableResponse> ConsultAllFestivalByState(@RequestParam Integer page,
 			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order,
@@ -91,8 +91,8 @@ public class FestivalController {
 
 	// Consultar los festivales dependiento su estado: activado - desactivado
 	@Secured({ "ADMIN", "SUPER" })
-	@GetMapping("ConsultAllFestivalByStateByRuta/{state}/{idRuta}")
-	public Response<List<FestivalQueryDTO>> ConsultAllFestivalByStateByRuta(@PathVariable Boolean state, @RequestParam Integer rutaId) {
+	@GetMapping("ConsultAllFestivalByStateByRuta/{state}/{rutaId}")
+	public Response<List<FestivalQueryDTO>> ConsultAllFestivalByStateByRuta(@PathVariable Boolean state, @PathVariable Integer rutaId) {
 		return this.iFestivalService.findFestivalByStateByRuta(state, rutaId);
 	}
 }

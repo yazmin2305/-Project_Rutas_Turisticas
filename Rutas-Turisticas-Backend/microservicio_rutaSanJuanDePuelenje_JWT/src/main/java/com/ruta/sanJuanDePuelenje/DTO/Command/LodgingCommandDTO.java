@@ -14,9 +14,6 @@ public class LodgingCommandDTO {
 	private Integer lodgingBedsAvailable;
 	private Integer lodgingMaxAmountPerson;
 	private Double lodgingUnitPrice;
-	private Integer lodgingNumberNights;
 	private Boolean lodgingState;
 	private FincaCommandDTO finca;
-	//private List<ReserveCommandDTO> lstReserveDTOs;
-	private RutaCommandDTO ruta;
 }

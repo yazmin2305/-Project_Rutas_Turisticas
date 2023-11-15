@@ -21,20 +21,27 @@ import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 @RequestMapping("/talking")
 @CrossOrigin("*")
 public class TalkingController {
-	
+
 	@Autowired
 	private ITalkingService iTalkingService;
 
 	// Consultar todas las charlas
 	@GetMapping("/ConsultAllTalking")
-	public Response<List<TalkingQueryDTO>> ConsultAllTalking() {
+	public Response<List<TalkingCommandDTO>> ConsultAllTalking() {
 		return this.iTalkingService.findAllTalking();
 	}
 
+	// Consultar todas las charlas por ruta
+	@Secured({ "ADMIN", "SUPER" })
+	@GetMapping("/ConsultAllTalkingByRuta/{rutaId}")
+	public Response<List<TalkingQueryDTO>> ConsultAllTalkingByRuta(@PathVariable Integer rutaId) {
+		return this.iTalkingService.findAllTalkingBytRuta(rutaId);
+	}
+
 	// Consultar una charla por su id
-	@Secured({"ADMIN", "USER"})
+	@Secured({ "ADMIN", "SUPER" })
 	@GetMapping("/ConsultById/{id}")
-	public Response<TalkingQueryDTO> ConsultTalkingById(@PathVariable Integer id) {
+	public Response<TalkingCommandDTO> ConsultTalkingById(@PathVariable Integer id) {
 		return this.iTalkingService.findByTalkingId(id);
 	}
 
@@ -58,30 +65,30 @@ public class TalkingController {
 	public Response<Boolean> DisableTalking(@PathVariable Integer id) {
 		return this.iTalkingService.disableTalking(id);
 	}
-	
+
 	// Habilitar una charla registrada en el sistema
 	@Secured("ADMIN")
 	@PatchMapping("/EnableTalking/{id}")
 	public Response<Boolean> EnableTalking(@PathVariable Integer id) {
 		return this.iTalkingService.enableTalking(id);
 	}
-	
-	//Consultar todas las charlas deshabilitadas
-	@Secured({"ADMIN", "USER"})
-	@GetMapping("ConsultAllTalkingDisabled")
-	public ResponseEntity<GenericPageableResponse> ConsultAllTalkingDisabled(@RequestParam Integer page,
-			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order){
-		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
-		return ResponseEntity.status(HttpStatus.OK).body(this.iTalkingService.findAllTalkingDisabled(pageable));
-	}
-	
-	//Consultar las charlas dependiento su estado: activado - desactivado
-	@Secured({"ADMIN", "USER"})
+
+	// Consultar las charlas dependiento su estado: activado - desactivado
+	@Secured("SUPER")
 	@GetMapping("ConsultAllTalkingByState/{state}")
 	public ResponseEntity<GenericPageableResponse> ConsultAllTalkingByState(@RequestParam Integer page,
-			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order, @PathVariable Boolean state){
+			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order,
+			@PathVariable Boolean state) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
 		return ResponseEntity.status(HttpStatus.OK).body(this.iTalkingService.findAllTalkingBytState(state, pageable));
 	}
-	
+
+	// Consultar todas las charlas por ruta
+	@Secured({ "ADMIN", "SUPER" })
+	@GetMapping("/ConsultAllTalkingByStateByRuta/{state}/{rutaId}")
+	public Response<List<TalkingQueryDTO>> ConsultAllTalkingByStateByRuta(@PathVariable Boolean state,
+			@PathVariable Integer rutaId) {
+		return this.iTalkingService.findTalkingByStateByRuta(state, rutaId);
+	}
+
 }

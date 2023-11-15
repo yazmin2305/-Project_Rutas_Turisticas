@@ -13,10 +13,5 @@ public class FincaCommandDTO {
 	private String fincaDescription;
 	private String fincaLocation;
 	private Boolean fincaState;
-//	private List<TalkingQueryDTO> lstTalkingDTOs;
-//	private List<WorkshopQueryDTO> lstWorkshopDTOs;
-//	private List<RecreationQueryDTO> lstRecreationDTOs;
-//	private List<LodgingQueryDTO> lstLodgingDTOs;
-//	private List<FestivalQueryDTO> lstFestivalDTOs;
 	private RutaCommandDTO ruta;
 }

@@ -16,6 +16,5 @@ public class FestivalCommandDTO {
 	private Date festivalDate;
 	private Boolean festivalState;
 	private FincaCommandDTO finca;
-	private RutaCommandDTO ruta;
 }
  

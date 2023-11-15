@@ -11,9 +11,9 @@ import com.ruta.sanJuanDePuelenje.DTO.Command.FestivalCommandDTO;
 
 public interface IFestivalService {
 	
-	public Response<List<FestivalQueryDTO>> findAllFestival();
+	public Response<List<FestivalCommandDTO>> findAllFestival();
 	
-	public Response<FestivalQueryDTO> findByFestivalId(Integer festivalId);
+	public Response<FestivalCommandDTO> findByFestivalId(Integer festivalId);
 	
 	public Response<FestivalCommandDTO> saveFestival(FestivalCommandDTO festival);
 	

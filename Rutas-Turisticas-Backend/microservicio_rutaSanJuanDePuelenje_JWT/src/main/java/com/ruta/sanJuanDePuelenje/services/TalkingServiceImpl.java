@@ -1,6 +1,7 @@
 package com.ruta.sanJuanDePuelenje.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -28,16 +29,16 @@ public class TalkingServiceImpl implements ITalkingService{
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<TalkingQueryDTO>> findAllTalking() {
+	public Response<List<TalkingCommandDTO>> findAllTalking() {
 		List<Talking> talkingEntity = iTalkingRepository.findAll();
-		Response<List<TalkingQueryDTO>> response = new Response<>();
+		Response<List<TalkingCommandDTO>> response = new Response<>();
 		if(talkingEntity.isEmpty()) {
 			response.setStatus(404);
 			response.setUserMessage("Charlas no encontradas");
 			response.setMoreInfo("http://localhost:8080/talking/ConsultAllTalking");
 			response.setData(null);
 		}else {
-			List<TalkingQueryDTO> talkingDTOs = talkingEntity.stream().map(talking -> modelMapper.map(talking, TalkingQueryDTO.class)).collect(Collectors.toList());
+			List<TalkingCommandDTO> talkingDTOs = talkingEntity.stream().map(talking -> modelMapper.map(talking, TalkingCommandDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Charlas encontradas con éxito");
 			response.setMoreInfo("http://localhost:8080/talking/ConsultAllTalking");
@@ -45,19 +46,39 @@ public class TalkingServiceImpl implements ITalkingService{
 		}
 		return response;
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Response<List<TalkingQueryDTO>> findAllTalkingBytRuta(Integer rutaId) {
+		List<Talking> talkingEntity = iTalkingRepository.findAllTalkingByRuta(rutaId);
+		Response<List<TalkingQueryDTO>> response = new Response<>();
+		if(talkingEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("Charlas no encontradas");
+			response.setMoreInfo("http://localhost:8080/talking/ConsultAllTalkingBytRuta/{rutaId}");
+			response.setData(null);
+		}else {
+			List<TalkingQueryDTO> talkingDTOs = talkingEntity.stream().map(talking -> modelMapper.map(talking, TalkingQueryDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Charlas encontradas con éxito");
+			response.setMoreInfo("http://localhost:8080/talking/ConsultAllTalkingBytRuta/{rutaId}");
+			response.setData(talkingDTOs);
+		}
+		return response;
+	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<TalkingQueryDTO> findByTalkingId(Integer talkingId) {
+	public Response<TalkingCommandDTO> findByTalkingId(Integer talkingId) {
 		Talking talking = iTalkingRepository.findById(talkingId).orElse(null);
-		Response<TalkingQueryDTO> response = new Response<>();
+		Response<TalkingCommandDTO> response = new Response<>();
 		if(talking == null) {
 			response.setStatus(404);
 			response.setUserMessage("Charla no encontrada");
 			response.setMoreInfo("http://localhost:8080/talking/ConsultById/{id}");
 			response.setData(null);
 		}else {
-			TalkingQueryDTO talkingDTO = modelMapper.map(talking, TalkingQueryDTO.class);
+			TalkingCommandDTO talkingDTO = modelMapper.map(talking, TalkingCommandDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Charla encontrada con éxito");
 			response.setMoreInfo("http://localhost:8080/talking/ConsultById/{id}");
@@ -92,17 +113,15 @@ public class TalkingServiceImpl implements ITalkingService{
 	@Transactional
 	public Response<TalkingQueryDTO> updateTalking(Integer talkingId, TalkingCommandDTO talking) {
 		Response<TalkingQueryDTO> response = new Response<>();
-		if(talking != null && talkingId != null) {
+		Optional<Talking> optionalTalking = this.iTalkingRepository.findById(talkingId);
+		if(optionalTalking.isPresent()) {
+			Talking talkingEntity1 = optionalTalking.get();
 			Talking talkingEntity = this.modelMapper.map(talking, Talking.class);
-			Talking talkingEntity1 = this.iTalkingRepository.findById(talkingId).get();
 			talkingEntity1.setName(talkingEntity.getName());
 			talkingEntity1.setDescription(talkingEntity.getDescription());
 			talkingEntity1.setDuration(talkingEntity.getDuration());
-			talkingEntity1.setAvailability(talkingEntity.getAvailability());
 			talkingEntity1.setMaxAmountPerson(talkingEntity.getMaxAmountPerson());
-			talkingEntity1.setState(talkingEntity.getState());
 			talkingEntity1.setFinca(talkingEntity.getFinca());
-//			talkingEntity1.setLstReserve(talkingEntity.getLstReserve());
 			this.iTalkingRepository.save(talkingEntity1);
 			TalkingQueryDTO talkingDTO = this.modelMapper.map(talkingEntity1, TalkingQueryDTO.class);
 			response.setStatus(200);
@@ -166,15 +185,6 @@ public class TalkingServiceImpl implements ITalkingService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public GenericPageableResponse findAllTalkingDisabled(Pageable pageable) {
-		Page<Talking> talkingsPage = this.iTalkingRepository.LstTalkingDisabled(pageable);
-		if (talkingsPage.isEmpty())
-			return GenericPageableResponse.emptyResponse("No se encuentran charlas deshabilitadas");
-		return this.validatePageList(talkingsPage);
-	}
-
-	@Override
-	@Transactional(readOnly = true)
 	public GenericPageableResponse findAllTalkingBytState(boolean state, Pageable pageable) {
 		Page<Talking> talkingsPage = this.iTalkingRepository.LstTalkingByState(state, pageable);
 		if (talkingsPage.isEmpty())
@@ -183,8 +193,28 @@ public class TalkingServiceImpl implements ITalkingService{
 	}
 	
 	private GenericPageableResponse validatePageList(Page<Talking> talkingPage){
-        List<TalkingQueryDTO> talkingDTOS = talkingPage.stream().map(x->modelMapper.map(x, TalkingQueryDTO.class)).collect(Collectors.toList());
+        List<TalkingCommandDTO> talkingDTOS = talkingPage.stream().map(x->modelMapper.map(x, TalkingCommandDTO.class)).collect(Collectors.toList());
         return PageableUtils.createPageableResponse(talkingPage, talkingDTOS);
  }
+
+	@Override
+	@Transactional(readOnly = true)
+	public Response<List<TalkingQueryDTO>> findTalkingByStateByRuta(boolean state, Integer rutaId) {
+		List<Talking> talkingEntity = iTalkingRepository.findTalkingByStateByRuta(state, rutaId);
+		Response<List<TalkingQueryDTO>> response = new Response<>();
+		if(talkingEntity.isEmpty()) {
+			response.setStatus(404);
+			response.setUserMessage("Charlas no encontradas");
+			response.setMoreInfo("http://localhost:8080/talking/ConsultAllTalkingByStateByRuta/{state}/{rutaId}");
+			response.setData(null);
+		}else {
+			List<TalkingQueryDTO> talkingDTOs = talkingEntity.stream().map(talking -> modelMapper.map(talking, TalkingQueryDTO.class)).collect(Collectors.toList());
+			response.setStatus(200);
+			response.setUserMessage("Charlas encontradas con éxito");
+			response.setMoreInfo("http://localhost:8080/talking/ConsultAllTalkingByStateByRuta/{state}/{rutaId}");
+			response.setData(talkingDTOs);
+		}
+		return response;
+	}
 
 }

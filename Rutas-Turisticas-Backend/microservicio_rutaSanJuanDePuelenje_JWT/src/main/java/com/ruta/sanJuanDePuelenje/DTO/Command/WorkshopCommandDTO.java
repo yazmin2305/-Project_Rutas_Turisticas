@@ -12,12 +12,9 @@ public class WorkshopCommandDTO {
 	private String workshopName;
 	private String workshopDescription;
 	private Integer workshopDuration;
-	private Boolean workshopAvailability;
 	private Integer workshopMaxAmountPerson;
 	private Double workshopUnitPrice;
 	private Boolean workshopState;
 	private WorkshopTypeCommandDTO workshopType;
 	private FincaCommandDTO finca;
-//	private List<ReserveCommandDTO> lstReserveDTOs;
-	private RutaCommandDTO ruta;
 }

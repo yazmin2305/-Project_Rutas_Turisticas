@@ -27,14 +27,21 @@ public class WorkshopController {
 
 	// Consultar todos los talleres
 	@GetMapping("/ConsultAllWorkshop")
-	public Response<List<WorkshopQueryDTO>> ConsultAllWorkshop() {
+	public Response<List<WorkshopCommandDTO>> ConsultAllWorkshop() {
 		return this.iWorkshopService.findAllWorkshop();
 	}
 
+	// Consultar todos los talleres por ruta
+	@Secured({ "ADMIN", "SUPER" })
+	@GetMapping("/ConsultAllWorkshopByRuta/{rutaId}")
+	public Response<List<WorkshopQueryDTO>> ConsultAllWorkshopByRuta(@PathVariable Integer rutaId) {
+		return this.iWorkshopService.findAllWorkshopBytRuta(rutaId);
+	}
+
 	// Consultar un taller por su id
-	@Secured({ "ADMIN", "USER" })
+	@Secured({ "ADMIN", "SUPER" })
 	@GetMapping("/ConsultById/{id}")
-	public Response<WorkshopQueryDTO> ConsultWorkshopById(@PathVariable Integer id) {
+	public Response<WorkshopCommandDTO> ConsultWorkshopById(@PathVariable Integer id) {
 		return this.iWorkshopService.findByWorkshopId(id);
 	}
 
@@ -68,7 +75,7 @@ public class WorkshopController {
 	}
 
 	// Consultar los talleres dependiento su estado: activado - desactivado
-	@Secured({ "ADMIN", "USER" })
+	@Secured("SUPER")
 	@GetMapping("ConsultAllWorkshopByState/{state}")
 	public ResponseEntity<GenericPageableResponse> ConsultAllWorkshopByState(@RequestParam Integer page,
 			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order,
@@ -76,5 +83,13 @@ public class WorkshopController {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(this.iWorkshopService.findAllWorkshopBytState(state, pageable));
+	}
+
+	// Consultar todos los talleres por ruta
+	@Secured({ "ADMIN", "USER" })
+	@GetMapping("/ConsultAllWorkshopByRutaByState/{state}/{rutaId}")
+	public Response<List<WorkshopQueryDTO>> ConsultAllWorkshopByStateRuta(@PathVariable Boolean state,
+			@PathVariable Integer rutaId) {
+		return this.iWorkshopService.findWorkshopByStateByRuta(false, rutaId);
 	}
 }

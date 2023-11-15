@@ -1,7 +1,6 @@
 package com.ruta.sanJuanDePuelenje.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -11,5 +10,5 @@ public interface IWorkshopTypeRepository extends JpaRepository<WorkshopType, Int
 
 	// query para listar los tipos de talleres por su estado, ya sea activado o desactivado
 	@Query(value = "SELECT * FROM workshoptype WHERE state=?1", nativeQuery = true)
-	Page<WorkshopType> LstWorkshopTypeByState(boolean state, Pageable pageable);
+	List<WorkshopType> LstWorkshopTypeByState(boolean state);
 }

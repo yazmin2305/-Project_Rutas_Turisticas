@@ -36,7 +36,7 @@ public class UserController {
 	}
 
 	// Consultar usuario por id
-	@Secured("ADMIN")
+	@Secured("SUPER")
 	@GetMapping("/ConsultById/{id}")
 	public Response<UserQueryDTO> ConsultUserById(@PathVariable Integer id) {
 		return this.iUserService.findByUserId(id);
@@ -50,28 +50,28 @@ public class UserController {
 	}
 
 	// Actualizar usuario
-	@Secured({ "ADMIN", "USER" })
+	@Secured({ "SUPER", "USER" })
 	@PatchMapping("/UpdateUser/{id}")
 	public Response<UserQueryDTO> UpdateUser(@RequestBody UserCommandDTO user, @PathVariable Integer id) {
 		return this.iUserService.updateUser(id, user);
 	}
 
 	// Desabilitar un usuario registrado en el sistema
-	@Secured("ADMIN")
+	@Secured("SUPER")
 	@PatchMapping("/DisableUser/{id}")
 	public Response<Boolean> DisableUser(@PathVariable Integer id) {
 		return this.iUserService.disableUser(id);
 	}
 
 	// Habilitar un usuario registrado en el sistema
-	@Secured("ADMIN")
+	@Secured("SUPER")
 	@PatchMapping("/EnableUser/{id}")
 	public Response<Boolean> EnableUser(@PathVariable Integer id) {
 		return this.iUserService.enableUser(id);
 	}
 
 	// Consultar los usuarios dependiento su estado: activado - desactivado
-	@Secured("ADMIN")
+	@Secured("SUPER")
 	@GetMapping("ConsultAllUsersByState/{state}")
 	public ResponseEntity<GenericPageableResponse> ConsultAllUsersByState(@RequestParam Integer page,
 			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order,

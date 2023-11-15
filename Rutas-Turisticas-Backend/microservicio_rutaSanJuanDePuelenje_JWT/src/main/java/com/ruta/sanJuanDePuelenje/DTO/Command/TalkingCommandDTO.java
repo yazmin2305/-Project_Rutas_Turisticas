@@ -12,11 +12,8 @@ public class TalkingCommandDTO {
 	private String talkingName;
 	private String talkingDescription;
 	private Integer talkingDuration;
-	private Boolean talkingAvailability;
 	private Integer talkingMaxAmountPerson;
 	private Double talkingUnitPrice;
 	private Boolean talkingState;
 	private FincaCommandDTO finca;
-//	private List<ReserveCommandDTO> lstReserveDTOs;
-	private RutaCommandDTO ruta;
 }

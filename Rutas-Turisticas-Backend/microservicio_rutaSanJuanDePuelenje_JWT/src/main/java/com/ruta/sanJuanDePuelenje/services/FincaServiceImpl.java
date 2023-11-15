@@ -29,16 +29,16 @@ public class FincaServiceImpl implements IFincaService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<FincaQueryDTO>> findAllFincas() {
+	public Response<List<FincaCommandDTO>> findAllFincas() {
 		List<Finca> fincaEntity = iFincaRepository.findAll();
-		Response<List<FincaQueryDTO>> response = new Response<>();
+		Response<List<FincaCommandDTO>> response = new Response<>();
 		if(fincaEntity.isEmpty()) {
 			response.setStatus(404);
 			response.setUserMessage("Fincas no encontradas");
 			response.setMoreInfo("http://localhost:8080/finca/ConsultAllFincas");
 			response.setData(null);
 		}else {
-			List<FincaQueryDTO> fincaDTO = fincaEntity.stream().map(finca -> modelMapper.map(finca, FincaQueryDTO.class)).collect(Collectors.toList());
+			List<FincaCommandDTO> fincaDTO = fincaEntity.stream().map(finca -> modelMapper.map(finca, FincaCommandDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Fincas encontradas con éxito");
 			response.setMoreInfo("http://localhost:8080/finca/ConsultAllFincas");
@@ -69,16 +69,16 @@ public class FincaServiceImpl implements IFincaService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<FincaQueryDTO> findByFincaId(Integer fincaId) {
+	public Response<FincaCommandDTO> findByFincaId(Integer fincaId) {
 		Finca finca = iFincaRepository.findById(fincaId).orElse(null);
-		Response<FincaQueryDTO> response = new Response<>();
+		Response<FincaCommandDTO> response = new Response<>();
 		if(finca == null) {
 			response.setStatus(404);
 			response.setUserMessage("Finca no encontrada");
 			response.setMoreInfo("http://localhost:8080/finca/ConsultById/{id}");
 			response.setData(null);
 		}else {
-			FincaQueryDTO fincaDTO = modelMapper.map(finca, FincaQueryDTO.class);
+			FincaCommandDTO fincaDTO = modelMapper.map(finca, FincaCommandDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Finca encontrada con éxito");
 			response.setMoreInfo("http://localhost:8080/finca/ConsultById/{id}");
@@ -120,7 +120,6 @@ public class FincaServiceImpl implements IFincaService{
 			fincaEntity1.setName(fincaEntity.getName());
 			fincaEntity1.setDescription(fincaEntity.getDescription());
 			fincaEntity1.setLocation(fincaEntity.getLocation());
-			fincaEntity1.setState(fincaEntity.getState());
 			this.iFincaRepository.save(fincaEntity1);
 			FincaQueryDTO fincaDTO = this.modelMapper.map(fincaEntity1, FincaQueryDTO.class);
 			response.setStatus(200);
@@ -213,7 +212,7 @@ public class FincaServiceImpl implements IFincaService{
 	}
 	
 	private GenericPageableResponse validatePageList(Page<Finca> fincaPage){
-        List<FincaQueryDTO> fincaDTOS = fincaPage.stream().map(x->modelMapper.map(x, FincaQueryDTO.class)).collect(Collectors.toList());
+        List<FincaCommandDTO> fincaDTOS = fincaPage.stream().map(x->modelMapper.map(x, FincaCommandDTO.class)).collect(Collectors.toList());
         return PageableUtils.createPageableResponse(fincaPage, fincaDTOS);
 	}
 	

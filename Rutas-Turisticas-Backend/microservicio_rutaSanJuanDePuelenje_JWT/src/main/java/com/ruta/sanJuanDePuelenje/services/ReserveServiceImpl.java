@@ -108,7 +108,6 @@ public class ReserveServiceImpl implements IReserveService{
 			reserveEntity1.setTotalPriceRecreation(reserveEntity.getTotalPriceRecreation());
 			reserveEntity1.setTotalPriceTalking(reserveEntity.getTotalPriceTalking());
 			reserveEntity1.setTotalPriceWorkshop(reserveEntity.getTotalPriceWorkshop());
-			reserveEntity1.setState(reserveEntity.getState());
 			reserveEntity1.setDate(reserveEntity.getDate());
 			reserveEntity1.setUser(reserveEntity.getUser());
 			reserveEntity1.setLstWorkshop(reserveEntity.getLstWorkshop());

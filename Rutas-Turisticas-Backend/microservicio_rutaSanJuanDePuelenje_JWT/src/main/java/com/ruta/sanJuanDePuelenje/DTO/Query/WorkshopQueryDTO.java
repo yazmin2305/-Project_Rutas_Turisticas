@@ -11,7 +11,7 @@ public class WorkshopQueryDTO {
 	private String workshopName;
 	private String workshopDescription;
 	private Integer workshopDuration;
-	private Boolean workshopAvailability;
+//	private Boolean workshopAvailability;
 	private Integer workshopMaxAmountPerson;
 	private Double workshopUnitPrice;
 	private Boolean workshopState;

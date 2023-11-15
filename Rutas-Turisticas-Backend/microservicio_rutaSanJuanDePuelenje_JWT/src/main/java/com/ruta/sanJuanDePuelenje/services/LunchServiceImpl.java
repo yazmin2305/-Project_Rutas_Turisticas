@@ -29,16 +29,16 @@ public class LunchServiceImpl implements ILunchService{
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<LunchQueryDTO>> findAllLunch() {
+	public Response<List<LunchCommandDTO>> findAllLunch() {
 		List<Lunch> lunchEntity = iLunchRepository.findAll();
-		Response<List<LunchQueryDTO>> response = new Response<>();
+		Response<List<LunchCommandDTO>> response = new Response<>();
 		if(lunchEntity.isEmpty()) {
 			response.setStatus(404);
 			response.setUserMessage("Menú no encontrado");
 			response.setMoreInfo("http://localhost:8080/lunch/ConsultAllLunch");
 			response.setData(null);
 		}else {
-			List<LunchQueryDTO> lunchDTOs = lunchEntity.stream().map(lunch -> modelMapper.map(lunch, LunchQueryDTO.class)).collect(Collectors.toList());
+			List<LunchCommandDTO> lunchDTOs = lunchEntity.stream().map(lunch -> modelMapper.map(lunch, LunchCommandDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Menú encontrado con éxito");
 			response.setMoreInfo("http://localhost:8080/lunch/ConsultAllLunch");
@@ -69,16 +69,16 @@ public class LunchServiceImpl implements ILunchService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public Response<LunchQueryDTO> findByLunchId(Integer lunchId) {
+	public Response<LunchCommandDTO> findByLunchId(Integer lunchId) {
 		Lunch lunch = iLunchRepository.findById(lunchId).orElse(null);
-		Response<LunchQueryDTO> response = new Response<>();
+		Response<LunchCommandDTO> response = new Response<>();
 		if(lunch == null) {
 			response.setStatus(404);
 			response.setUserMessage("Menú no encontrado");
 			response.setMoreInfo("http://localhost:8080/lunch/ConsultById/{id}");
 			response.setData(null);
 		}else {
-			LunchQueryDTO lunchDTO = modelMapper.map(lunch, LunchQueryDTO.class);
+			LunchCommandDTO lunchDTO = modelMapper.map(lunch, LunchCommandDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Menú encontrado con éxito");
 			response.setMoreInfo("http://localhost:8080/lunch/ConsultById/{id}");
@@ -119,7 +119,6 @@ public class LunchServiceImpl implements ILunchService{
 			Lunch lunchEntity = this.modelMapper.map(lunch, Lunch.class);
 			lunchEntity1.setMenu(lunchEntity.getMenu());
 			lunchEntity1.setUnitPrice(lunchEntity.getUnitPrice());
-			lunchEntity1.setState(lunchEntity.getState());
 			this.iLunchRepository.save(lunchEntity1);
 			LunchQueryDTO lunchDTO = this.modelMapper.map(lunchEntity1, LunchQueryDTO.class);
 			response.setStatus(200);
@@ -211,7 +210,7 @@ public class LunchServiceImpl implements ILunchService{
 	}
 	
 	private GenericPageableResponse validatePageList(Page<Lunch> lunchPage){
-        List<LunchQueryDTO> lunchDTOS = lunchPage.stream().map(x->modelMapper.map(x, LunchQueryDTO.class)).collect(Collectors.toList());
+        List<LunchCommandDTO> lunchDTOS = lunchPage.stream().map(x->modelMapper.map(x, LunchCommandDTO.class)).collect(Collectors.toList());
         return PageableUtils.createPageableResponse(lunchPage, lunchDTOS);
 	}
 }

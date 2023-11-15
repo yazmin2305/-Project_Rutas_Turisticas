@@ -30,7 +30,7 @@ public class FincaController {
 	// Consultar todas las fincas
 	@PermitAll
 	@GetMapping("/ConsultAllFincas")
-	public Response<List<FincaQueryDTO>> ConsultAllFincas() {
+	public Response<List<FincaCommandDTO>> ConsultAllFincas() {
 		return this.iFincaService.findAllFincas();
 	}
 
@@ -42,9 +42,9 @@ public class FincaController {
 	}
 
 	// Consultar finca por id
-	@Secured({ "ADMIN", "USER" })
+	@Secured({ "ADMIN", "SUPER" })
 	@GetMapping("/ConsultById/{id}")
-	public Response<FincaQueryDTO> ConsultFincaById(@PathVariable Integer id) {
+	public Response<FincaCommandDTO> ConsultFincaById(@PathVariable Integer id) {
 		return this.iFincaService.findByFincaId(id);
 	}
 
@@ -88,7 +88,7 @@ public class FincaController {
 
 	// Consultar las fincas dependiento su estado: activado - desactivado y dependiendo la ruta con la que esten relacionadas
 	@Secured({ "ADMIN", "SUPER" })
-	@GetMapping("ConsultAllFincaByStateByRuta/{state}/{idRuta}")
+	@GetMapping("ConsultAllFincaByStateByRuta/{state}/{rutaId}")
 	public Response<List<FincaQueryDTO>> ConsultAllFincaByStateByRuta(@PathVariable Boolean state, @PathVariable Integer rutaId) {
 		return this.iFincaService.findAllFincaBytStateByRuta(state, rutaId);
 	}

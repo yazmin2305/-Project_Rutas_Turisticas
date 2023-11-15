@@ -16,10 +16,10 @@ public interface IFestivalRepository extends JpaRepository<Festival, Integer> {
 	Page<Festival> LstFestivalByState(boolean state, Pageable pageable);
 
 	// query para listar los festivales por su estado y por la ruta a la cual se encuentran asociados
-	@Query(value = "SELECT * FROM festival f WHERE f.state=?1 AND f.ruta.ruta_id?2", nativeQuery = true)
+	@Query(value = "SELECT f FROM Festival f WHERE f.state = ?1 AND f.finca.ruta.id = ?2", nativeQuery = false)
 	List<Festival> findFestivalByStateByRuta(boolean state, Integer idRuta);
 	
 	// query para consultar todos los festivales a partir de la ruta asociada
-	@Query(value = "SELECT * FROM festival f WHERE f.ruta.ruta_id?1", nativeQuery = true)
+	@Query(value = "SELECT f FROM Festival f WHERE f.finca.ruta.id = ?1", nativeQuery = false)
 	List<Festival> findAllFestivalesByRuta(Integer idRuta);
 }
