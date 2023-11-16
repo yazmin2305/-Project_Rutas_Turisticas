@@ -7,6 +7,7 @@ import java.util.Set;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -99,6 +100,7 @@ public class Reserve {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ruta_id")
+	@NotNull
 	private Ruta ruta;
 
 }

@@ -34,27 +34,33 @@ public class ReserveServiceImpl implements IReserveService {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	/**
+	 * Servicio que me retorna todas las reservas que se han realizado en determinada ruta
+	 */
 	@Override
 	@Transactional(readOnly = true)
-	public Response<List<ReserveQueryDTO>> findAllReserve(Integer rutaId) {
+	public Response<List<ReserveQueryDTO>> findAllReserveByRuta(Integer rutaId) {
 		List<Reserve> reserveEntity = iReserveRepository.LstReserveByRuta(rutaId);
 		Response<List<ReserveQueryDTO>> response = new Response<>();
 		if (reserveEntity.isEmpty()) {
 			response.setStatus(404);
 			response.setUserMessage("No se encontraron reservas");
-			response.setMoreInfo("http://localhost:8080/reserve/ConsultAllReserve");
+			response.setMoreInfo("http://localhost:8080/reserve/ConsultAllReserveByRuta/{rutaId}");
 			response.setData(null);
 		} else {
 			List<ReserveQueryDTO> reserveDTOs = reserveEntity.stream()
 					.map(reserve -> modelMapper.map(reserve, ReserveQueryDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Reservas encontradas con éxito");
-			response.setMoreInfo("http://localhost:8080/reserve/ConsultAllReserve");
+			response.setMoreInfo("http://localhost:8080/reserve/ConsultAllReserveByRuta/{rutaId}");
 			response.setData(reserveDTOs);
 		}
 		return response;
 	}
 
+	/**
+	 * Servicio que me retorna una reserva por su Id
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Response<ReserveQueryDTO> findByReserveId(Integer reserveId) {
@@ -65,12 +71,13 @@ public class ReserveServiceImpl implements IReserveService {
 			response.setUserMessage("No se encontró la reserva");
 			response.setMoreInfo("http://localhost:8080/user/ConsultById/{id}");
 			response.setData(null);
+		}else {
+			ReserveQueryDTO reserveDTO = modelMapper.map(reserve, ReserveQueryDTO.class);
+			response.setStatus(200);
+			response.setUserMessage("Reserva encontrada con éxito");
+			response.setMoreInfo("http://localhost:8080/user/ConsultById/{id}");
+			response.setData(reserveDTO);
 		}
-		ReserveQueryDTO reserveDTO = modelMapper.map(reserve, ReserveQueryDTO.class);
-		response.setStatus(200);
-		response.setUserMessage("Reserva encontrada con éxito");
-		response.setMoreInfo("http://localhost:8080/user/ConsultById/{id}");
-		response.setData(reserveDTO);
 		return response;
 	}
 
@@ -99,7 +106,7 @@ public class ReserveServiceImpl implements IReserveService {
 					iReserveLunchRepository.save(reserveLunchEntity);
 				}
 				// Actualizar la reserva con la asociación a ReserveLunch
-		        this.iReserveRepository.save(savedReserve);
+				this.iReserveRepository.save(savedReserve);
 			}
 
 			ReserveCommandDTO savedreserveDTO = this.modelMapper.map(savedReserve, ReserveCommandDTO.class);
@@ -123,11 +130,8 @@ public class ReserveServiceImpl implements IReserveService {
 		if (reserve != null && reserveId != null) {
 			Reserve reserveEntity = this.modelMapper.map(reserve, Reserve.class);
 			Reserve reserveEntity1 = this.iReserveRepository.findById(reserveId).get();
-			// double totalPrice = calculateTotalPrice2(reserve);
 			reserveEntity1 = calculateTotalPrice2(reserve);
 			reserveEntity1.setAmountPersons(reserveEntity.getAmountPersons());
-//			reserveEntity1.setFechaInicio(reserveEntity.getFechaInicio());
-//			reserveEntity1.setFechaFin(reserveEntity.getFechaFin());
 			reserveEntity1.setNumberNights(reserveEntity.getNumberNights());
 			reserveEntity1.setTotalPriceLodging(reserveEntity.getTotalPriceLodging());
 			reserveEntity1.setTotalPriceLunch(reserveEntity.getTotalPriceLunch());
@@ -141,7 +145,6 @@ public class ReserveServiceImpl implements IReserveService {
 			reserveEntity1.setLstRecreation(reserveEntity.getLstRecreation());
 			reserveEntity1.setLstLodging(reserveEntity.getLstLodging());
 			// reserveEntity1.setLstLunch(reserveEntity.getLstLunch());
-			// reserveEntity1.setTotalPriceReserve(totalPrice);
 			this.iReserveRepository.save(reserveEntity1);
 			ReserveQueryDTO reserveDTO = this.modelMapper.map(reserveEntity1, ReserveQueryDTO.class);
 			response.setStatus(200);
@@ -200,6 +203,9 @@ public class ReserveServiceImpl implements IReserveService {
 		return response;
 	}
 
+	/**
+	 * Servicio que me retorna todas las reservas que ha realizado un usuario
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Response<List<ReserveQueryDTO>> findReservesByUser(Integer reserveId) {
@@ -241,9 +247,12 @@ public class ReserveServiceImpl implements IReserveService {
 		}
 		return response;
 	}
-
-	// se calcula el precio total de la reserva y el precio total por cada item que
-	// el usuario selecciona
+	
+	/***
+	 * Funcion que calcula el precio total de la reserva y el precio total de cada una de las actividades reservadas
+	 * @param reserve Objeto de tipo reserva
+	 * @return objeto de tipo reserva con los campos de precios agregados
+	 */
 	private Reserve calculateTotalPrice2(ReserveCommandDTO reserve) {
 		Reserve reserveEntity = this.modelMapper.map(reserve, Reserve.class);
 		double totalPrice = 0;

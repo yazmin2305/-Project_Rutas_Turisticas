@@ -9,7 +9,7 @@ import com.ruta.sanJuanDePuelenje.DTO.Query.UserQueryDTO;
 
 public interface IReserveService {
 	
-	public Response<List<ReserveQueryDTO>> findAllReserve(Integer rutaId);
+	public Response<List<ReserveQueryDTO>> findAllReserveByRuta(Integer rutaId);
 	
 	public Response<ReserveQueryDTO> findByReserveId(Integer reserveId);
 	
