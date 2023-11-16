@@ -35,14 +35,14 @@ public class ReserveController {
 	}
 
 	// Guardar una reserva
-	@Secured("ADMIN")
+	@Secured("USER")
 	@PostMapping("/SaveReserve")
 	public Response<ReserveCommandDTO> SaveReserve(@RequestBody ReserveCommandDTO Reserve) {
 		return this.iReserveService.saveReserve(Reserve);
 	}
 
 	// Actualizar una reserva
-	@Secured("ADMIN")
+	@Secured({"ADMIN", "USER"})
 	@PatchMapping("/UpdateReserve/{id}")
 	public Response<ReserveQueryDTO> UpdateReserve(@RequestBody ReserveCommandDTO Reserve, @PathVariable Integer id) {
 		return this.iReserveService.updateReserve(id, Reserve);

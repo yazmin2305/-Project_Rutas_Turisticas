@@ -9,7 +9,6 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor 
-
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,9 +48,6 @@ public class User {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "rol_id", nullable = true)
 	private Role role;
-	
-//	@OneToMany(mappedBy = "user")
-//	private List<Reserve> LstReserve ;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ruta_id")

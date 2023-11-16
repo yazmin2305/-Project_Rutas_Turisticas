@@ -27,9 +27,6 @@ public class Workshop {
 	@Column(nullable = false)
 	private Integer duration;
 	
-//	@Column(nullable = false)
-//	private Boolean availability;
-	
 	@Column(name = "max_amount_person", nullable = false)
 	private Integer maxAmountPerson;
 	
@@ -50,8 +47,4 @@ public class Workshop {
 	
 	@ManyToMany(mappedBy = "LstWorkshop")
 	private List<Reserve> LstReserve ;
-	
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "ruta_id")
-//	private Ruta ruta;
 }

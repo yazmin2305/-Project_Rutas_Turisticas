@@ -10,36 +10,43 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.ReserveCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Command.ReserveLunchCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.ReserveQueryDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.UserQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Lodging;
+import com.ruta.sanJuanDePuelenje.models.Lunch;
 import com.ruta.sanJuanDePuelenje.models.Recreation;
 import com.ruta.sanJuanDePuelenje.models.Reserve;
+import com.ruta.sanJuanDePuelenje.models.ReserveLunch;
 import com.ruta.sanJuanDePuelenje.models.Talking;
 import com.ruta.sanJuanDePuelenje.models.User;
 import com.ruta.sanJuanDePuelenje.models.Workshop;
+import com.ruta.sanJuanDePuelenje.repository.IReserveLunchRepository;
 import com.ruta.sanJuanDePuelenje.repository.IReserveRepository;
 
 @Service
-public class ReserveServiceImpl implements IReserveService{
+public class ReserveServiceImpl implements IReserveService {
 
 	@Autowired
 	private IReserveRepository iReserveRepository;
 	@Autowired
+	private IReserveLunchRepository iReserveLunchRepository;
+	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public Response<List<ReserveQueryDTO>> findAllReserve(Integer rutaId) {
 		List<Reserve> reserveEntity = iReserveRepository.LstReserveByRuta(rutaId);
 		Response<List<ReserveQueryDTO>> response = new Response<>();
-		if(reserveEntity.isEmpty()) {
+		if (reserveEntity.isEmpty()) {
 			response.setStatus(404);
 			response.setUserMessage("No se encontraron reservas");
 			response.setMoreInfo("http://localhost:8080/reserve/ConsultAllReserve");
 			response.setData(null);
-		}else {
-			List<ReserveQueryDTO> reserveDTOs = reserveEntity.stream().map(reserve -> modelMapper.map(reserve, ReserveQueryDTO.class)).collect(Collectors.toList());
+		} else {
+			List<ReserveQueryDTO> reserveDTOs = reserveEntity.stream()
+					.map(reserve -> modelMapper.map(reserve, ReserveQueryDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Reservas encontradas con éxito");
 			response.setMoreInfo("http://localhost:8080/reserve/ConsultAllReserve");
@@ -53,7 +60,7 @@ public class ReserveServiceImpl implements IReserveService{
 	public Response<ReserveQueryDTO> findByReserveId(Integer reserveId) {
 		Reserve reserve = iReserveRepository.findById(reserveId).orElse(null);
 		Response<ReserveQueryDTO> response = new Response<>();
-		if(reserve == null) {
+		if (reserve == null) {
 			response.setStatus(404);
 			response.setUserMessage("No se encontró la reserva");
 			response.setMoreInfo("http://localhost:8080/user/ConsultById/{id}");
@@ -69,20 +76,38 @@ public class ReserveServiceImpl implements IReserveService{
 
 	@Override
 	@Transactional
-	public Response<ReserveCommandDTO> saveReserve(ReserveCommandDTO reserve) {
+	public Response<ReserveCommandDTO> saveReserve(ReserveCommandDTO reserveDTO) {
 		Response<ReserveCommandDTO> response = new Response<>();
-		if(reserve != null) {
-			Reserve reserveEntity  = this.modelMapper.map(reserve, Reserve.class);
+		if (reserveDTO != null) {
+			Reserve reserveEntity = this.modelMapper.map(reserveDTO, Reserve.class);
 			reserveEntity.setState(true);
-			double totalPrice = calculateTotalPrice2(reserve);
-			reserveEntity.setTotalPriceReserve(totalPrice);
-			Reserve objReserve = this.iReserveRepository.save(reserveEntity);
-			ReserveCommandDTO reserveDTO = this.modelMapper.map(objReserve, ReserveCommandDTO.class);
+			reserveEntity = calculateTotalPrice2(reserveDTO);
+
+			Reserve savedReserve = this.iReserveRepository.save(reserveEntity);
+			if (reserveDTO.getReserveLunch() != null && !reserveDTO.getReserveLunch().isEmpty()) {
+				for (ReserveLunchCommandDTO reserveLunchDTO : reserveDTO.getReserveLunch()) {
+					Lunch lunchEntity = this.modelMapper.map(reserveLunchDTO.getLunch(), Lunch.class);
+					ReserveLunch reserveLunchEntity = new ReserveLunch();
+					reserveLunchEntity.setCantidad(reserveLunchDTO.getCantidad());
+					reserveLunchEntity.setLunch(lunchEntity);
+					reserveLunchEntity.setReserve(savedReserve);
+
+					// Agregar ReserveLunch a la colección en Reserve
+					savedReserve.getReserveLunch().add(reserveLunchEntity);
+
+					// Guardar ReserveLunch
+					iReserveLunchRepository.save(reserveLunchEntity);
+				}
+				// Actualizar la reserva con la asociación a ReserveLunch
+		        this.iReserveRepository.save(savedReserve);
+			}
+
+			ReserveCommandDTO savedreserveDTO = this.modelMapper.map(savedReserve, ReserveCommandDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Reserva creada con éxito");
 			response.setMoreInfo("http://localhost:8080/reserve/SaveReserve");
-			response.setData(reserveDTO);
-		}else {
+			response.setData(savedreserveDTO);
+		} else {
 			response.setStatus(500);
 			response.setUserMessage("Error al crear la reserva");
 			response.setMoreInfo("http://localhost:8080/reserve/SaveReserve");
@@ -95,10 +120,11 @@ public class ReserveServiceImpl implements IReserveService{
 	@Transactional
 	public Response<ReserveQueryDTO> updateReserve(Integer reserveId, ReserveCommandDTO reserve) {
 		Response<ReserveQueryDTO> response = new Response<>();
-		if(reserve != null && reserveId != null) {
+		if (reserve != null && reserveId != null) {
 			Reserve reserveEntity = this.modelMapper.map(reserve, Reserve.class);
 			Reserve reserveEntity1 = this.iReserveRepository.findById(reserveId).get();
-			double totalPrice = calculateTotalPrice2(reserve);
+			// double totalPrice = calculateTotalPrice2(reserve);
+			reserveEntity1 = calculateTotalPrice2(reserve);
 			reserveEntity1.setAmountPersons(reserveEntity.getAmountPersons());
 //			reserveEntity1.setFechaInicio(reserveEntity.getFechaInicio());
 //			reserveEntity1.setFechaFin(reserveEntity.getFechaFin());
@@ -114,15 +140,15 @@ public class ReserveServiceImpl implements IReserveService{
 			reserveEntity1.setLstTalking(reserveEntity.getLstTalking());
 			reserveEntity1.setLstRecreation(reserveEntity.getLstRecreation());
 			reserveEntity1.setLstLodging(reserveEntity.getLstLodging());
-			reserveEntity1.setLstLunch(reserveEntity.getLstLunch());
-			reserveEntity1.setTotalPriceReserve(totalPrice);
+			// reserveEntity1.setLstLunch(reserveEntity.getLstLunch());
+			// reserveEntity1.setTotalPriceReserve(totalPrice);
 			this.iReserveRepository.save(reserveEntity1);
 			ReserveQueryDTO reserveDTO = this.modelMapper.map(reserveEntity1, ReserveQueryDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Reserva actualizada con éxito");
 			response.setMoreInfo("http://localhost:8080/reserve/UpdateReserve/{id}");
 			response.setData(reserveDTO);
-		}else {
+		} else {
 			response.setStatus(500);
 			response.setUserMessage("Error al actualizar la reserva");
 			response.setMoreInfo("http://localhost:8080/reserve/UpdateReserve/{id}");
@@ -136,15 +162,15 @@ public class ReserveServiceImpl implements IReserveService{
 	public Response<Boolean> disableReserve(Integer reserveId) {
 		Reserve reserveEntity = this.iReserveRepository.findById(reserveId).get();
 		Response<Boolean> response = new Response<>();
-		if(reserveEntity != null){
-			if(reserveEntity.getState() == true){
+		if (reserveEntity != null) {
+			if (reserveEntity.getState() == true) {
 				reserveEntity.setState(false);
 				this.iReserveRepository.save(reserveEntity);
 				response.setStatus(200);
 				response.setUserMessage("Reserva deshabilitada con éxito");
 				response.setMoreInfo("http://localhost:8080/reserve/DisableReserve/{id}");
 				response.setData(true);
-			}else {
+			} else {
 				response.setStatus(500);
 				response.setUserMessage("La reserva ya está deshabilitada");
 				response.setMoreInfo("http://localhost:8080/reserve/DisableReserve/{id}");
@@ -159,13 +185,13 @@ public class ReserveServiceImpl implements IReserveService{
 	public Response<Boolean> deleteReserve(Integer reserveId) {
 		Reserve reserveEntity = this.iReserveRepository.findById(reserveId).get();
 		Response<Boolean> response = new Response<>();
-		if(reserveEntity != null){
+		if (reserveEntity != null) {
 			iReserveRepository.deleteById(reserveId);
 			response.setStatus(200);
 			response.setUserMessage("Reserva eliminada con éxito");
 			response.setMoreInfo("http://localhost:8080/reserve/DeleteReserve/{id}");
 			response.setData(true);
-		}else {
+		} else {
 			response.setStatus(500);
 			response.setUserMessage("Error al eliminar la reserva");
 			response.setMoreInfo("http://localhost:8080/reserve/DeleteReserve/{id}");
@@ -179,13 +205,14 @@ public class ReserveServiceImpl implements IReserveService{
 	public Response<List<ReserveQueryDTO>> findReservesByUser(Integer reserveId) {
 		List<Reserve> reserveEntity = iReserveRepository.reservasUsuario(reserveId);
 		Response<List<ReserveQueryDTO>> response = new Response<>();
-		if(!reserveEntity.isEmpty()) {
-			List<ReserveQueryDTO> reserveDTO = reserveEntity.stream().map(reserve -> modelMapper.map(reserve, ReserveQueryDTO.class)).collect(Collectors.toList());
+		if (!reserveEntity.isEmpty()) {
+			List<ReserveQueryDTO> reserveDTO = reserveEntity.stream()
+					.map(reserve -> modelMapper.map(reserve, ReserveQueryDTO.class)).collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Reservas encontradas con éxito");
 			response.setMoreInfo("http://localhost:8080/reserve/ConsultAllReserveUser");
 			response.setData(reserveDTO);
-		}else {
+		} else {
 			response.setStatus(500);
 			response.setUserMessage("No se encuentran reservas relacionadas a este estado");
 			response.setMoreInfo("http://localhost:8080/reserve/ConsultAllReserveUser");
@@ -193,19 +220,20 @@ public class ReserveServiceImpl implements IReserveService{
 		}
 		return response;
 	}
-	
+
 	@Transactional(readOnly = true)
 	@Override
 	public Response<List<UserQueryDTO>> findAllUsersByRuta(Integer rutaId) {
 		List<User> userEntity = this.iReserveRepository.LstUserByRuta(rutaId);
 		Response<List<UserQueryDTO>> response = new Response<>();
-		if(userEntity.isEmpty()) {
+		if (userEntity.isEmpty()) {
 			response.setStatus(404);
 			response.setUserMessage("No se encontraron usuarios");
 			response.setMoreInfo("http://localhost:8080/reserve/ConsultAllUsersByRuta/{id}");
 			response.setData(null);
-		}else {
-			List<UserQueryDTO> userDTOs = userEntity.stream().map(user -> modelMapper.map(user, UserQueryDTO.class)).collect(Collectors.toList());
+		} else {
+			List<UserQueryDTO> userDTOs = userEntity.stream().map(user -> modelMapper.map(user, UserQueryDTO.class))
+					.collect(Collectors.toList());
 			response.setStatus(200);
 			response.setUserMessage("Usuarios encontrados con éxito");
 			response.setMoreInfo("http://localhost:8080/reserve/ConsultAllUsersByRuta/{id}");
@@ -213,48 +241,49 @@ public class ReserveServiceImpl implements IReserveService{
 		}
 		return response;
 	}
-	
-	//se calcula el precio total de la reserva y el precio total por cada item que el usuario selecciona
-	private Double calculateTotalPrice2(ReserveCommandDTO reserve) {
+
+	// se calcula el precio total de la reserva y el precio total por cada item que
+	// el usuario selecciona
+	private Reserve calculateTotalPrice2(ReserveCommandDTO reserve) {
 		Reserve reserveEntity = this.modelMapper.map(reserve, Reserve.class);
 		double totalPrice = 0;
-		if(reserveEntity.getLstTalking() != null) {
+		if (reserveEntity.getLstTalking() != null) {
 			double totalPriceTalking = 0;
-			for(Talking talking : reserveEntity.getLstTalking()) {
-				totalPriceTalking += reserveEntity.getAmountPersons() * talking.getUnitPrice();   
+			for (Talking talking : reserveEntity.getLstTalking()) {
+				totalPriceTalking += reserveEntity.getAmountPersons() * talking.getUnitPrice();
 			}
 			reserveEntity.setTotalPriceTalking(totalPriceTalking);
-			totalPrice = reserveEntity.getTotalPriceTalking();
-		}if(reserveEntity.getLstWorkshop() != null) {
+			totalPrice += reserveEntity.getTotalPriceTalking();
+		}
+		if (reserveEntity.getLstWorkshop() != null) {
 			double totalPriceWorkshop = 0;
-			for(Workshop workshop : reserveEntity.getLstWorkshop()) {
-				totalPriceWorkshop += reserveEntity.getAmountPersons() * workshop.getUnitPrice(); 
+			for (Workshop workshop : reserveEntity.getLstWorkshop()) {
+				totalPriceWorkshop += reserveEntity.getAmountPersons() * workshop.getUnitPrice();
 			}
 			reserveEntity.setTotalPriceWorkshop(totalPriceWorkshop);
-			totalPrice = reserveEntity.getTotalPriceWorkshop();
-		}if(reserveEntity.getLstLodging() != null) {
+			totalPrice += reserveEntity.getTotalPriceWorkshop();
+		}
+		if (reserveEntity.getLstLodging() != null) {
 			double totalPriceLodging = 0;
-			for(Lodging lodging : reserveEntity.getLstLodging()) {
+			for (Lodging lodging : reserveEntity.getLstLodging()) {
 				totalPriceLodging += reserveEntity.getAmountPersons() * lodging.getUnitPrice();
 			}
 			reserveEntity.setTotalPriceLodging(totalPriceLodging);
-			totalPrice = reserveEntity.getTotalPriceLodging();
-		}if(reserveEntity.getLstRecreation() != null) {
+			totalPrice += reserveEntity.getTotalPriceLodging();
+		}
+		if (reserveEntity.getLstRecreation() != null) {
 			double totalPriceRecreation = 0;
-			for(Recreation recreation : reserveEntity.getLstRecreation()) {
+			for (Recreation recreation : reserveEntity.getLstRecreation()) {
 				totalPriceRecreation += reserveEntity.getAmountPersons() * recreation.getUnitPrice();
 			}
 			reserveEntity.setTotalPriceRecreation(totalPriceRecreation);
-			totalPrice = reserveEntity.getTotalPriceRecreation();
-		}if(reserveEntity.getLstLunch() != null) {
-			/* Con el fin de que se pueda reservar diferentes menus para un grupo de personas,
-			 * se realiza el cálculo total y se envia directamente*/
-			reserveEntity.setTotalPriceLunch(reserveEntity.getTotalPriceLunch());
-			
-		}
-		return totalPrice;
+			totalPrice += reserveEntity.getTotalPriceRecreation();
+		} // if(reserveEntity.getLstLunch() != null) {
+//			reserveEntity.setTotalPriceLunch(reserveEntity.getTotalPriceLunch());
+//			
+//		}
+		reserveEntity.setTotalPriceReserve(totalPrice);
+		return reserveEntity;
 	}
-
-	
 
 }

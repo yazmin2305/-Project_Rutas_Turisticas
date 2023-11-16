@@ -11,7 +11,6 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Talking {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
