@@ -1,8 +1,6 @@
 package com.ruta.sanJuanDePuelenje.models;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.List;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -27,12 +25,11 @@ public class Lunch {
 	@Column(nullable = true)
 	private Boolean state;
 
-	
 //	@ManyToMany(mappedBy = "LstLunch")
 //	private List<Reserve> LstReserve ;
 	
 	@OneToMany(mappedBy = "lunch" , cascade = CascadeType.MERGE)
-    private Set<ReserveLunch> reserveLunch = new HashSet<>();
+    private List<ReserveLunch> reserveLunch ;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ruta_id")

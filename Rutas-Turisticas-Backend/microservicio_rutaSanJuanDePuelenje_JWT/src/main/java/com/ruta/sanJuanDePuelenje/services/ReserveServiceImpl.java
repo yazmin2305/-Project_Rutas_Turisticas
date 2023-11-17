@@ -63,7 +63,7 @@ public class ReserveServiceImpl implements IReserveService {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public Response<ReserveQueryDTO> findByReserveId(Integer reserveId) {
+	public Response<ReserveQueryDTO> findReserveById(Integer reserveId) {
 		Reserve reserve = iReserveRepository.findById(reserveId).orElse(null);
 		Response<ReserveQueryDTO> response = new Response<>();
 		if (reserve == null) {
@@ -89,26 +89,20 @@ public class ReserveServiceImpl implements IReserveService {
 			Reserve reserveEntity = this.modelMapper.map(reserveDTO, Reserve.class);
 			reserveEntity.setState(true);
 			reserveEntity = calculateTotalPrice2(reserveDTO);
-
 			Reserve savedReserve = this.iReserveRepository.save(reserveEntity);
 			if (reserveDTO.getReserveLunch() != null && !reserveDTO.getReserveLunch().isEmpty()) {
 				for (ReserveLunchCommandDTO reserveLunchDTO : reserveDTO.getReserveLunch()) {
+					
 					Lunch lunchEntity = this.modelMapper.map(reserveLunchDTO.getLunch(), Lunch.class);
 					ReserveLunch reserveLunchEntity = new ReserveLunch();
 					reserveLunchEntity.setCantidad(reserveLunchDTO.getCantidad());
 					reserveLunchEntity.setLunch(lunchEntity);
 					reserveLunchEntity.setReserve(savedReserve);
 
-					// Agregar ReserveLunch a la colección en Reserve
-					savedReserve.getReserveLunch().add(reserveLunchEntity);
-
 					// Guardar ReserveLunch
 					iReserveLunchRepository.save(reserveLunchEntity);
 				}
-				// Actualizar la reserva con la asociación a ReserveLunch
-				this.iReserveRepository.save(savedReserve);
 			}
-
 			ReserveCommandDTO savedreserveDTO = this.modelMapper.map(savedReserve, ReserveCommandDTO.class);
 			response.setStatus(200);
 			response.setUserMessage("Reserva creada con éxito");
@@ -144,7 +138,6 @@ public class ReserveServiceImpl implements IReserveService {
 			reserveEntity1.setLstTalking(reserveEntity.getLstTalking());
 			reserveEntity1.setLstRecreation(reserveEntity.getLstRecreation());
 			reserveEntity1.setLstLodging(reserveEntity.getLstLodging());
-			// reserveEntity1.setLstLunch(reserveEntity.getLstLunch());
 			this.iReserveRepository.save(reserveEntity1);
 			ReserveQueryDTO reserveDTO = this.modelMapper.map(reserveEntity1, ReserveQueryDTO.class);
 			response.setStatus(200);
@@ -287,9 +280,10 @@ public class ReserveServiceImpl implements IReserveService {
 			}
 			reserveEntity.setTotalPriceRecreation(totalPriceRecreation);
 			totalPrice += reserveEntity.getTotalPriceRecreation();
-		} // if(reserveEntity.getLstLunch() != null) {
-//			reserveEntity.setTotalPriceLunch(reserveEntity.getTotalPriceLunch());
-//			
+		}  if(reserveEntity.getReserveLunch() != null) {
+			System.out.println("HOLAAAAAAAAAAAA ");
+		}
+		
 //		}
 		reserveEntity.setTotalPriceReserve(totalPrice);
 		return reserveEntity;

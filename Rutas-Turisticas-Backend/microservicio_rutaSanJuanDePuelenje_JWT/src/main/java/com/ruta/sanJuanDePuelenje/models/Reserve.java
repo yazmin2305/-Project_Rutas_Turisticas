@@ -1,13 +1,10 @@
 package com.ruta.sanJuanDePuelenje.models;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -96,11 +93,10 @@ public class Reserve {
 //	private List<Lunch> LstLunch;
 
 	@OneToMany(mappedBy = "reserve", cascade = CascadeType.MERGE)
-	private Set<ReserveLunch> reserveLunch = new HashSet<>();
+	private List<ReserveLunch> reserveLunch;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ruta_id")
-	@NotNull
 	private Ruta ruta;
 
 }

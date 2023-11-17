@@ -29,9 +29,9 @@ public class ReserveController {
 
 	// Consultar una reserva por su id
 	@Secured({ "ADMIN", "SUPER" })
-	@GetMapping("/ConsultById/{id}")
+	@GetMapping("/ConsultReserveById/{id}")
 	public Response<ReserveQueryDTO> ConsultReserveById(@PathVariable Integer id) {
-		return this.iReserveService.findByReserveId(id);
+		return this.iReserveService.findReserveById(id);
 	}
 
 	// Guardar una reserva

@@ -11,7 +11,7 @@ public interface IReserveService {
 	
 	public Response<List<ReserveQueryDTO>> findAllReserveByRuta(Integer rutaId);
 	
-	public Response<ReserveQueryDTO> findByReserveId(Integer reserveId);
+	public Response<ReserveQueryDTO> findReserveById(Integer reserveId);
 	
 	public Response<ReserveCommandDTO> saveReserve(ReserveCommandDTO reserve);
 	

@@ -2,7 +2,6 @@ package com.ruta.sanJuanDePuelenje.DTO.Query;
 
 import java.util.Date;
 import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,5 +25,5 @@ public class ReserveQueryDTO {
 	private List<RecreationQueryDTO> LstRecreation;
 	private List<LodgingQueryDTO> LstLodging;
 	private List<FestivalQueryDTO> LstFestival;
-	private List<LunchQueryDTO> ListLunch;
+	private List<ReserveLunchQueryDTO> reserveLunch;
 }

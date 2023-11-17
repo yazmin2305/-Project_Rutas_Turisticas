@@ -12,16 +12,16 @@ public class ReserveLunch {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	
+	@Column(name = "cantidadP")
+	private Integer cantidad;
+	//@JsonIgnore
     @ManyToOne
     @JoinColumn(name = "reserve_id")
     private Reserve reserve;
-
+    
     @ManyToOne
     @JoinColumn(name = "lunch_id")
     private Lunch lunch;
-
-    @Column(name = "cantidadP")
-    private Integer cantidad;
 
 }
