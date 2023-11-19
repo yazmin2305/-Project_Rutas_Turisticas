@@ -13,5 +13,4 @@ public class ReserveLunchQueryDTO {
 	private Long id;
     private LunchCommandDTO lunch;
     private Integer cantidad;
-
 }

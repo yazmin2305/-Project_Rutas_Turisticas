@@ -23,7 +23,7 @@ public interface IFestivalService {
 	
 	public Response<Boolean> enableFestival(Integer festivalId);
 	
-	public GenericPageableResponse findAllFestivalBytState(boolean state, Pageable pageable);
+	public GenericPageableResponse findAllFestivalByState(boolean state, Pageable pageable);
 	
 	public Response<List<FestivalQueryDTO>> findFestivalByStateByRuta(boolean state, Integer rutaId);
 	

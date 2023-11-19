@@ -16,5 +16,4 @@ public class UserQueryDTO {
 	private Boolean userState;
 	private String userPassword;
 	private RoleQueryDTO role;
-	//es necesario que al consultar me regrese el rol? o depende del rol persona que haga la consulta?
 }

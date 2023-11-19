@@ -10,15 +10,15 @@ import com.ruta.sanJuanDePuelenje.models.Finca;
 
 public interface IFincaRepository extends JpaRepository<Finca, Integer> {
 
-	// query para listar las fincas por su estado, ya sea activado o desactivado
+	// Query para listar las fincas por su estado, ya sea activado o desactivado
 	@Query(value = "SELECT * FROM finca WHERE state=?1", nativeQuery = true)
 	Page<Finca> LstFincaByState(boolean state, Pageable pageable);
 
-	// query para listar las fincas por su estado y por la ruta a la cual se encuentran asociadas
+	// Query para listar las fincas por su estado y por la ruta a la cual se encuentran asociadas
 	@Query(value = "SELECT f FROM Finca f WHERE f.state = ?1 AND f.ruta.id=?2", nativeQuery = false)
 	List<Finca> LstFincaByStateByRuta(boolean state, Integer idRuta);
 
-	// query para consultar todos los festivales a partir de la ruta asociada
+	// Query para consultar todos los festivales a partir de la ruta asociada
 	@Query(value = "SELECT f FROM Finca f WHERE f.ruta.id = ?1", nativeQuery = false)
 	List<Finca> findAllFincasByRuta(Integer idRuta);
 

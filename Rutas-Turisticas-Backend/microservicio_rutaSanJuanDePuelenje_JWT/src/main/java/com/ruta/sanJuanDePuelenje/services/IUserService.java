@@ -3,8 +3,8 @@ package com.ruta.sanJuanDePuelenje.services;
 import org.springframework.data.domain.Pageable;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
-import com.ruta.sanJuanDePuelenje.DTO.Command.RoleCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Command.UserCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Command.UserPermissionsDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.UserQueryDTO;
 import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
@@ -13,6 +13,8 @@ public interface IUserService {
 	public GenericPageableResponse findAllUsers(Pageable pageable);
 	
 	public Response<UserQueryDTO> findByUserId(Integer userId);
+	
+	public Response<UserCommandDTO> findUserByEmail(String email);
 	
 	public Response<UserCommandDTO> saveUser(UserCommandDTO user);
 	
@@ -24,5 +26,7 @@ public interface IUserService {
 	
 	public GenericPageableResponse findAllUserBytState(boolean state, Pageable pageable);
 	
-	public Response<Boolean> changeRolUser(Integer userId, RoleCommandDTO role);
+	public Response<Boolean> changePermissions(UserPermissionsDTO userPermissions);
+	
+	public GenericPageableResponse findAllUsersByRuta(Integer rutaId, Pageable pageable);
 }

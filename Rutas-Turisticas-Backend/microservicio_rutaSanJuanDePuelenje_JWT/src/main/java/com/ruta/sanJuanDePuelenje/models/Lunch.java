@@ -24,9 +24,6 @@ public class Lunch {
 	
 	@Column(nullable = true)
 	private Boolean state;
-
-//	@ManyToMany(mappedBy = "LstLunch")
-//	private List<Reserve> LstReserve ;
 	
 	@OneToMany(mappedBy = "lunch" , cascade = CascadeType.MERGE)
     private List<ReserveLunch> reserveLunch ;

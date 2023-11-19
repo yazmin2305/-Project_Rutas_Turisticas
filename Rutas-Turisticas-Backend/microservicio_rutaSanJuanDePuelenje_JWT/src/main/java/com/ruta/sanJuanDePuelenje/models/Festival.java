@@ -32,9 +32,6 @@ public class Festival {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "finca_id")
 	private Finca finca;
-	
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "ruta_id")
-//	private Ruta ruta;
+
 	
 }

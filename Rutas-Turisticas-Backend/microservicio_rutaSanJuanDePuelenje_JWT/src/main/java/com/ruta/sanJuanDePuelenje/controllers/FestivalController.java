@@ -86,7 +86,7 @@ public class FestivalController {
 			@PathVariable Boolean state) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(this.iFestivalService.findAllFestivalBytState(state, pageable));
+				.body(this.iFestivalService.findAllFestivalByState(state, pageable));
 	}
 
 	// Consultar los festivales dependiento su estado: activado - desactivado

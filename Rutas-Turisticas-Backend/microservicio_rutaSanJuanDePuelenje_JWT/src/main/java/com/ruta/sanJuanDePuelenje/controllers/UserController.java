@@ -10,8 +10,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
-import com.ruta.sanJuanDePuelenje.DTO.Command.RoleCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Command.UserCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Command.UserPermissionsDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.UserQueryDTO;
 import com.ruta.sanJuanDePuelenje.services.IUserService;
 import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
@@ -40,6 +40,13 @@ public class UserController {
 	@GetMapping("/ConsultById/{id}")
 	public Response<UserQueryDTO> ConsultUserById(@PathVariable Integer id) {
 		return this.iUserService.findByUserId(id);
+	}
+
+	// Consultar usuario por id
+	@Secured({ "ADMIN", "USER" })
+	@GetMapping("/ConsultUserByEmail/{email}")
+	public Response<UserCommandDTO> ConsultUserByEmail(@PathVariable String email) {
+		return this.iUserService.findUserByEmail(email);
 	}
 
 	// Guardar usuario
@@ -79,11 +86,20 @@ public class UserController {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
 		return ResponseEntity.status(HttpStatus.OK).body(this.iUserService.findAllUserBytState(state, pageable));
 	}
-	
-	//Cambiar el rol de un usuario normal a administrador
+
+	// Cambiar el rol de un usuario normal a administrador
 	@Secured("SUPER")
-	@PatchMapping("/changeRolUser/{id}")
-	public Response<Boolean> changeRolUser(@PathVariable Integer id, @RequestBody RoleCommandDTO role) {
-		return this.iUserService.changeRolUser(id, role);
+	@PatchMapping("/changePermissions")
+	public Response<Boolean> changePermissions(@RequestBody UserPermissionsDTO userPermissionsDTO) {
+		return this.iUserService.changePermissions(userPermissionsDTO);
+	}
+
+	// Consultar los usuarios que hayan realizado reservas en determinada ruta
+	@Secured({ "SUPER", "ADMIN" })
+	@GetMapping("/ConsultAllUsersByRuta/{idRuta}")
+	public GenericPageableResponse ConsultAllUsersByRuta(@PathVariable Integer idRuta,@RequestParam Integer page, @RequestParam Integer size,
+			@RequestParam String sort, @RequestParam String order) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
+		return this.iUserService.findAllUsersByRuta(idRuta, pageable);
 	}
 }

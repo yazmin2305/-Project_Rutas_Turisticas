@@ -30,8 +30,7 @@ public class Reserve {
 //	@Temporal(TemporalType.TIMESTAMP)
 //	private Date fechaFin;
 
-	// si el usuario va a reservar hospedaje debe añadir que tantas noches se va a
-	// quedar
+	// si el usuario va a reservar hospedaje debe añadir que tantas noches se va a quedar
 	@Column(name = "number_nights", nullable = true)
 	private Integer numberNights;
 
@@ -83,14 +82,6 @@ public class Reserve {
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinTable(name = "reserve_lodging", joinColumns = @JoinColumn(name = "reserve_id", referencedColumnName = "reserve_id"), inverseJoinColumns = @JoinColumn(name = "lodging_id", referencedColumnName = "lodging_id"))
 	private List<Lodging> LstLodging;
-
-//	@Nullable
-//	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-//	@JoinTable(
-//			name = "reserve_lunch", joinColumns = @JoinColumn(name = "reserve_id", referencedColumnName = "reserve_id"),
-//			inverseJoinColumns = @JoinColumn(name = "lunch_id", referencedColumnName = "lunch_id")
-//	)
-//	private List<Lunch> LstLunch;
 
 	@OneToMany(mappedBy = "reserve", cascade = CascadeType.MERGE)
 	private List<ReserveLunch> reserveLunch;

@@ -1,15 +1,16 @@
 package com.ruta.sanJuanDePuelenje.services;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
+
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.ReserveCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.ReserveQueryDTO;
-import com.ruta.sanJuanDePuelenje.DTO.Query.UserQueryDTO;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 
 public interface IReserveService {
 	
-	public Response<List<ReserveQueryDTO>> findAllReserveByRuta(Integer rutaId);
+	public GenericPageableResponse findAllReserveByRuta(Integer rutaId, Pageable pageable);
 	
 	public Response<ReserveQueryDTO> findReserveById(Integer reserveId);
 	
@@ -19,10 +20,10 @@ public interface IReserveService {
 	
 	public Response<Boolean> disableReserve(Integer reserveId);
 	
+	public Response<Boolean> enableReserve(Integer reserveId);
+	
 	public Response<Boolean> deleteReserve(Integer reserveId);
 	
-	public Response<List<ReserveQueryDTO>> findReservesByUser(Integer reserveId);
-	
-	public Response<List<UserQueryDTO>> findAllUsersByRuta(Integer rutaId);
+	public GenericPageableResponse findReservesByUser(Integer userId, Pageable pageable);
 
 }

@@ -187,7 +187,7 @@ public class FestivalServiceImpl implements IFestivalService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public GenericPageableResponse findAllFestivalBytState(boolean state, Pageable pageable) {
+	public GenericPageableResponse findAllFestivalByState(boolean state, Pageable pageable) {
 		Page<Festival> festivalesPage = this.iFestivalRepository.LstFestivalByState(state, pageable);
 		if (festivalesPage.isEmpty())
 			return GenericPageableResponse.emptyResponse("No se encuentran festivales relacionados a este estado");

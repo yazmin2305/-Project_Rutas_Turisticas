@@ -15,7 +15,7 @@ public class ReserveLunch {
 	
 	@Column(name = "cantidadP")
 	private Integer cantidad;
-	//@JsonIgnore
+	
     @ManyToOne
     @JoinColumn(name = "reserve_id")
     private Reserve reserve;

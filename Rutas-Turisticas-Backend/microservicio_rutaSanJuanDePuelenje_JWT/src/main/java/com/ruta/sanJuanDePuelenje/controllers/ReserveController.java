@@ -1,16 +1,19 @@
 package com.ruta.sanJuanDePuelenje.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
 import com.ruta.sanJuanDePuelenje.DTO.Command.ReserveCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.ReserveQueryDTO;
-import com.ruta.sanJuanDePuelenje.DTO.Query.UserQueryDTO;
 import com.ruta.sanJuanDePuelenje.services.IReserveService;
+import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
 
 @RestController
 @RequestMapping("/reserve")
@@ -23,8 +26,11 @@ public class ReserveController {
 	// Consultar todos las reservas por ruta
 	@Secured({ "ADMIN", "SUPER" })
 	@GetMapping("/ConsultAllReserveByRuta/{rutaId}")
-	public Response<List<ReserveQueryDTO>> ConsultAllReserveByRuta(@PathVariable Integer rutaId) {
-		return this.iReserveService.findAllReserveByRuta(rutaId);
+	public ResponseEntity<GenericPageableResponse> ConsultAllReserveByRuta(@RequestParam Integer page,
+			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order, @PathVariable Integer rutaId) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(this.iReserveService.findAllReserveByRuta(rutaId, pageable));
 	}
 
 	// Consultar una reserva por su id
@@ -55,6 +61,13 @@ public class ReserveController {
 		return this.iReserveService.disableReserve(id);
 	}
 
+	// Habilitar una reserva registrada en el sistema
+	@Secured("ADMIN")
+	@PatchMapping("/EnableReserve/{id}")
+	public Response<Boolean> EnableReserve(@PathVariable Integer id) {
+		return this.iReserveService.enableReserve(id);
+	}
+
 	// Eliminar una reserva
 	@Secured("ADMIN")
 	@DeleteMapping("/DeleteReserve/{id}")
@@ -65,14 +78,12 @@ public class ReserveController {
 	// Listado de reservas de ha realizado un Usuario
 	@Secured({ "ADMIN", "USER" })
 	@GetMapping("/ConsultAllReserveByUser/{id}")
-	public Response<List<ReserveQueryDTO>> consultReserveUser(@PathVariable Integer id) {
-		return this.iReserveService.findReservesByUser(id);
+	public ResponseEntity<GenericPageableResponse> consultReserveUser(@RequestParam Integer page,
+			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order, @PathVariable Integer id) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(this.iReserveService.findReservesByUser(id, pageable));
 	}
 
-	@Secured("ADMIN")
-	@GetMapping("/ConsultAllUsersByRuta/{id}")
-	public Response<List<UserQueryDTO>> ConsultAllUsersByRuta(@PathVariable Integer id) {
-		return this.iReserveService.findAllUsersByRuta(id);
-	}
 
 }

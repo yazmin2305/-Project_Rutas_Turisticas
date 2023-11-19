@@ -85,7 +85,7 @@ public class WorkshopController {
 				.body(this.iWorkshopService.findAllWorkshopBytState(state, pageable));
 	}
 
-	// Consultar todos los talleres por ruta
+	// Consultar todos los talleres por estado y ruta relacionadas
 	@Secured({ "ADMIN", "USER" })
 	@GetMapping("/ConsultAllWorkshopByRutaByState/{state}/{rutaId}")
 	public Response<List<WorkshopQueryDTO>> ConsultAllWorkshopByStateRuta(@PathVariable Boolean state,

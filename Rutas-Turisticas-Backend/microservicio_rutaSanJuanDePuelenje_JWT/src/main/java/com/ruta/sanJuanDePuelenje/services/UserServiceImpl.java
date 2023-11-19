@@ -13,10 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ruta.sanJuanDePuelenje.DTO.Response;
-import com.ruta.sanJuanDePuelenje.DTO.Command.RoleCommandDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Command.UserCommandDTO;
+import com.ruta.sanJuanDePuelenje.DTO.Command.UserPermissionsDTO;
 import com.ruta.sanJuanDePuelenje.DTO.Query.UserQueryDTO;
 import com.ruta.sanJuanDePuelenje.models.Role;
+import com.ruta.sanJuanDePuelenje.models.Ruta;
 import com.ruta.sanJuanDePuelenje.models.User;
 import com.ruta.sanJuanDePuelenje.repository.IUserRepository;
 import com.ruta.sanJuanDePuelenje.util.GenericPageableResponse;
@@ -30,7 +31,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	// añado esta dependencia para que me encripte la contraseña al momento de guardar en la BD
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -59,6 +60,25 @@ public class UserServiceImpl implements IUserService {
 			response.setStatus(200);
 			response.setUserMessage("Usuario encontrado con éxito");
 			response.setMoreInfo("http://localhost:8080/user/ConsultById/{id}");
+			response.setData(userDTO);
+		}
+		return response;
+	}
+	
+	@Override
+	public Response<UserCommandDTO> findUserByEmail(String email) {
+		User user = iUserRepository.findByEmail(email);
+		Response<UserCommandDTO> response = new Response<>();
+		if (user == null) {
+			response.setStatus(404);
+			response.setUserMessage("Usuario no encontrado");
+			response.setMoreInfo("http://localhost:8080/user/ConsultByEmail{id}");
+			response.setData(null);
+		} else {
+			UserCommandDTO userDTO = modelMapper.map(user, UserCommandDTO.class);
+			response.setStatus(200);
+			response.setUserMessage("Usuario encontrado con éxito");
+			response.setMoreInfo("http://localhost:8080/user/ConsultByEmail/{id}");
 			response.setData(userDTO);
 		}
 		return response;
@@ -111,7 +131,6 @@ public class UserServiceImpl implements IUserService {
 			userEntity1.setLastName(userEntity.getLastName());
 			userEntity1.setPhone(userEntity.getPhone());
 			userEntity1.setEmail(userEntity.getEmail());
-			// solo la persona que tiene el rol superusuario puede cambiar el rol de un
 			this.iUserRepository.save(userEntity1);
 			UserQueryDTO userDTO = this.modelMapper.map(userEntity1, UserQueryDTO.class);
 			response.setStatus(200);
@@ -184,26 +203,37 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	@Transactional
-	public Response<Boolean> changeRolUser(Integer userId, RoleCommandDTO roleDTO) {
-		User userEntity = this.iUserRepository.findById(userId).get();
+	public Response<Boolean> changePermissions(UserPermissionsDTO userPermissions) {
+		User userEntity = this.iUserRepository.findById(userPermissions.getIdUser()).get();
 		Response<Boolean> response = new Response<>();
 		if (userEntity != null) {
-			Role role = this.modelMapper.map(roleDTO, Role.class);
+			Role role = this.modelMapper.map(userPermissions.getRole(), Role.class);
 			if (userEntity.getRole().getName().equals("USER")) {
 				userEntity.setRole(role);
+				userEntity.setRuta(this.modelMapper.map(userPermissions.getRuta(), Ruta.class));
 				this.iUserRepository.save(userEntity);
 				response.setStatus(200);
-				response.setUserMessage("Cambio de rol exitoso");
-				response.setMoreInfo("http://localhost:8080/user/changeRolUser/{id}");
+				response.setUserMessage("Cambio de permisos exitoso");
+				response.setMoreInfo("http://localhost:8080/user/changePermissions/{id}");
 				response.setData(true);
 			} else if (userEntity.getRole().getName().equals("ADMIN")) {
 				response.setStatus(404);
-				response.setUserMessage("El usuario ya tiene rol de administrador");
-				response.setMoreInfo("http://localhost:8080/user/changeRolUser/{id}");
+				response.setUserMessage("El usuario ya tiene permisos asignados");
+				response.setMoreInfo("http://localhost:8080/user/changePermissions/{id}");
 				response.setData(false);
 			}
 		}
 		return response;
+	}
+
+	// Servicio que permite consultar todos los usuarios que han realizado reserva en una ruta
+	@Transactional(readOnly = true)
+	@Override
+	public GenericPageableResponse findAllUsersByRuta(Integer rutaId, Pageable pageable) {
+		Page<User> userPage = this.iUserRepository.LstUserByRuta(rutaId, pageable);
+		if (userPage.isEmpty())
+			return GenericPageableResponse.emptyResponse("No se han identificado usuarios que hayan realizado reservas en esta ruta ");
+		return this.validatePageList(userPage);
 	}
 
 	private GenericPageableResponse validatePageList(Page<User> userPage) {

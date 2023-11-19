@@ -82,6 +82,7 @@ public class LodgingController {
 		return ResponseEntity.status(HttpStatus.OK).body(this.iLodgingService.findAllLodgingBytState(state, pageable));
 	}
 	
+	// Consultar los hospedajes dependiento su estado: activado - desactivado y dependiendo la ruta con la que esten relacionados
 	@Secured({ "ADMIN", "SUPER" })
 	@GetMapping("/ConsulLodgingByStateByRuta/{state}/{rutaId}")
 	public Response<List<LodgingQueryDTO>> ConsultLodgingByStateByRuta(@PathVariable Boolean state, @PathVariable Integer rutaId){

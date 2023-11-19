@@ -42,8 +42,4 @@ public class Lodging {
 	
 	@ManyToMany(mappedBy = "LstLodging")
 	private List<Reserve> LstReserve ;
-	
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "ruta_id")
-//	private Ruta ruta;
 }

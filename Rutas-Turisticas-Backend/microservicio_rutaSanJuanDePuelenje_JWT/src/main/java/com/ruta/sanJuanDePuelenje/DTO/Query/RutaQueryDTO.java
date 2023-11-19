@@ -10,11 +10,4 @@ import lombok.NoArgsConstructor;
 public class RutaQueryDTO {
 	private String rutaName;
 	private String rutaState;
-//	private List<TalkingQueryDTO> LstTalking;
-//	private List<WorkshopQueryDTO> LstWorkshop;
-//	private List<RecreationQueryDTO> LstRecreation;
-//	private List<LodgingQueryDTO> LstLodging;
-//	private List<FestivalQueryDTO> LstFestival;
-//	private List<FincaQueryDTO> LstFinca;
-//	private List<LunchQueryDTO> LstLunch;
 }

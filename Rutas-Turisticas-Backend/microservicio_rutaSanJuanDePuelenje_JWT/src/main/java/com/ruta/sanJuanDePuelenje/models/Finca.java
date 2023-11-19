@@ -27,22 +27,6 @@ public class Finca {
 	@Column(nullable = true)
 	private Boolean state;
 	
-//	@JsonIgnore
-//	@OneToMany(mappedBy = "finca")
-//	private List<Talking> LstTalking;
-	
-//	@OneToMany(mappedBy = "finca")
-//	private List<Workshop> LstWorkshop;
-
-//	@OneToMany(mappedBy = "finca")
-//	private List<Recreation> LstRecreation;
-	
-//	@OneToMany(mappedBy = "finca")
-//	private List<Lodging> LstLodging;
-	
-//	@OneToMany(mappedBy = "finca")
-//	private List<Festival> LstFestival;
-	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ruta_id")
 	@NotNull

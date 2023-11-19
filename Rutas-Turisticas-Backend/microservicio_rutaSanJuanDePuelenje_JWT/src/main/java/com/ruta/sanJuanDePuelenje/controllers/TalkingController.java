@@ -83,7 +83,7 @@ public class TalkingController {
 		return ResponseEntity.status(HttpStatus.OK).body(this.iTalkingService.findAllTalkingBytState(state, pageable));
 	}
 
-	// Consultar todas las charlas por ruta
+	// Consultar todas las charlas su estado y por la ruta a la cual estan relacionadas
 	@Secured({ "ADMIN", "SUPER" })
 	@GetMapping("/ConsultAllTalkingByStateByRuta/{state}/{rutaId}")
 	public Response<List<TalkingQueryDTO>> ConsultAllTalkingByStateByRuta(@PathVariable Boolean state,

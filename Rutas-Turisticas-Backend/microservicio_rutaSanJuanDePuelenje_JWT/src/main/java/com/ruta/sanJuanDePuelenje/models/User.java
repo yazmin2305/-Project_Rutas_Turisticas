@@ -43,8 +43,6 @@ public class User {
 	@Column(nullable = true, length = 50)
 	private String tokenPassword;
 	
-	/*Este campo queda vacio ya que solo se van a crear usuarios con rol USER,
-	 * Esta relacion se cambio por unidireccional ya que no necesito acceser a la lista de usuarios por medio de la entidad Role*/
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "rol_id", nullable = true)
 	private Role role;

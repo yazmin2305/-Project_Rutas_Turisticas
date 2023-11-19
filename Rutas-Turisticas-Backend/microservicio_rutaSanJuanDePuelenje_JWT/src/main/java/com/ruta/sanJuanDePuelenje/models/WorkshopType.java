@@ -20,7 +20,4 @@ public class WorkshopType {
 	@Column(nullable = true)
 	private Boolean state;
 	
-//	@OneToMany(mappedBy = "workshopType")
-//	private List<Workshop> lstWorkshops;
-	
 }

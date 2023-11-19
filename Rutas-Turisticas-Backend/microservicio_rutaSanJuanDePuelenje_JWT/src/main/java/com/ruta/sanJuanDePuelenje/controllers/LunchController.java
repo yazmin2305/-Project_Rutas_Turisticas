@@ -83,7 +83,7 @@ public class LunchController {
 		return ResponseEntity.status(HttpStatus.OK).body(this.iLunchService.findAllLunchBytState(state, pageable));
 	}
 
-	// Consultar todos los almuerzos
+	// Consultar todos los almuerzos por su estado y la ruta a la cual esten relacionados
 	@GetMapping("/ConsultAllLunchByStateByRuta/{state}/{rutaId}")
 	public Response<List<LunchQueryDTO>> ConsultAllLunchByStateByRuta(@PathVariable Boolean state, @PathVariable Integer rutaId) {
 		return this.iLunchService.findAllLunchBytStateByRuta(state, rutaId);
