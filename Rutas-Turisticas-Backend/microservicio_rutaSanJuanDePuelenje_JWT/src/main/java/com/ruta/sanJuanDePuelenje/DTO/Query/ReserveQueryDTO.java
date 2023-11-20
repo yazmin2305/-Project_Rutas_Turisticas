@@ -24,6 +24,5 @@ public class ReserveQueryDTO {
 	private List<TalkingQueryDTO> LstTalking;
 	private List<RecreationQueryDTO> LstRecreation;
 	private List<LodgingQueryDTO> LstLodging;
-	private List<FestivalQueryDTO> LstFestival;
 	private List<ReserveLunchQueryDTO> reserveLunch;
 }

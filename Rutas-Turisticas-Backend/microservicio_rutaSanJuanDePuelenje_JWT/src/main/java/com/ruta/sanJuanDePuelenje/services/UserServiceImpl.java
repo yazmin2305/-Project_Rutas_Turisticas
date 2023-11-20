@@ -204,7 +204,7 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	@Transactional
 	public Response<Boolean> changePermissions(UserPermissionsDTO userPermissions) {
-		User userEntity = this.iUserRepository.findById(userPermissions.getIdUser()).get();
+		User userEntity = this.iUserRepository.findByEmail(userPermissions.getEmail());
 		Response<Boolean> response = new Response<>();
 		if (userEntity != null) {
 			Role role = this.modelMapper.map(userPermissions.getRole(), Role.class);
@@ -222,6 +222,10 @@ public class UserServiceImpl implements IUserService {
 				response.setMoreInfo("http://localhost:8080/user/changePermissions/{id}");
 				response.setData(false);
 			}
+		}else {
+			response.setStatus(500);
+			response.setUserMessage("Usuario no encontrado");
+			response.setMoreInfo("http://localhost:8080/user/changePermissions/{id}");
 		}
 		return response;
 	}

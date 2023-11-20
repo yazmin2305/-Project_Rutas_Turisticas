@@ -43,7 +43,7 @@ public class UserController {
 	}
 
 	// Consultar usuario por id
-	@Secured({ "ADMIN", "USER" })
+	@Secured({ "ADMIN", "USER", "SUPER" })
 	@GetMapping("/ConsultUserByEmail/{email}")
 	public Response<UserCommandDTO> ConsultUserByEmail(@PathVariable String email) {
 		return this.iUserService.findUserByEmail(email);
@@ -80,9 +80,9 @@ public class UserController {
 	// Consultar los usuarios dependiento su estado: activado - desactivado
 	@Secured("SUPER")
 	@GetMapping("ConsultAllUsersByState/{state}")
-	public ResponseEntity<GenericPageableResponse> ConsultAllUsersByState(@RequestParam Integer page,
-			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order,
-			@PathVariable Boolean state) {
+	public ResponseEntity<GenericPageableResponse> ConsultAllUsersByState(@PathVariable Boolean state,
+			@RequestParam Integer page, @RequestParam Integer size, @RequestParam String sort,
+			@RequestParam String order) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
 		return ResponseEntity.status(HttpStatus.OK).body(this.iUserService.findAllUserBytState(state, pageable));
 	}
@@ -97,8 +97,8 @@ public class UserController {
 	// Consultar los usuarios que hayan realizado reservas en determinada ruta
 	@Secured({ "SUPER", "ADMIN" })
 	@GetMapping("/ConsultAllUsersByRuta/{idRuta}")
-	public GenericPageableResponse ConsultAllUsersByRuta(@PathVariable Integer idRuta,@RequestParam Integer page, @RequestParam Integer size,
-			@RequestParam String sort, @RequestParam String order) {
+	public GenericPageableResponse ConsultAllUsersByRuta(@PathVariable Integer idRuta, @RequestParam Integer page,
+			@RequestParam Integer size, @RequestParam String sort, @RequestParam String order) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(order), sort));
 		return this.iUserService.findAllUsersByRuta(idRuta, pageable);
 	}

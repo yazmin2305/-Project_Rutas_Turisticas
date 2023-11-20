@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserPermissionsDTO {
 	/**
-	 * Esta clase va a permitir que cuando el super usuario quiera cambiar el rol de
-	 * un usuario a administrador de una vez le envie la ruta asignada a este usuario
+	 * Esta clase va a permitir al super usuario cambiar el rol de
+	 * un usuario a administrador y de una vez asignarle la respectiva ruta
 	 */
-	private Integer idUser;
+	private String email;
 	private RoleCommandDTO role;
 	private RutaCommandDTO ruta;
 	

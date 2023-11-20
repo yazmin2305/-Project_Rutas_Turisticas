@@ -1,14 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 	<meta charset="UTF-8">
-	<tittle>Title</tittle>
+	<title>Recuperar Contraseña</title>
+	<style>
+		body {
+			font-family: 'Arial', sans-serif;
+			background-color: #f4f4f4;
+			margin: 20px;
+			padding: 20px;
+			text-align: center;
+		}
+
+		h2 {
+			color: #007bff;
+		}
+
+		h3 {
+			color: #555;
+		}
+
+		h4 {
+			color: #555;
+		}
+
+		button {
+			background-color: #007bff;
+			color: #fff;
+			padding: 10px 20px;
+			border: 15px;
+			cursor: pointer;
+			font-size: 16px;
+		}
+	</style>
 </head>
+
 <body>
 
-	<h2>Recuperar Contraseña</h2>
-	<h3><span>Hola </span><span th:text="${userName}"></span></h3>
-	<h4>Haz clic en el siguiente enlace para acceder a tu cuenta</h4>
-	<a th:href="@{${url}}"><button>Ir a mi cuenta</button></a>
+
+	<h2><span>Hola </span><span th:text="${userName}"></span></h2>
+	<h3>Has realizado una solicitud de cambio de contraseña</h3>
+	<h4>Para activar una nueva contraseña haz clic en el siguiente botón</h4>
+	<a th:href="@{${url}}">
+		<button>Ir a mi cuenta</button>
+	</a>
 </body>
+
 </html>
