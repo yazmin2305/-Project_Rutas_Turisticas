@@ -24,7 +24,7 @@ public class ReserveCommandDTO {
 	private List<WorkshopCommandDTO> LstWorkshop;
 	private List<TalkingCommandDTO> LstTalking;
 	private List<RecreationCommandDTO> LstRecreation;
-	private List<LodgingCommandDTO> LstLodging;
+	private List<ReserveLodgingCommandDTO> reserveLodging;
 	private List<FestivalCommandDTO> LstFestival;
 	private List<ReserveLunchCommandDTO> reserveLunch;
 	private RutaCommandDTO ruta;

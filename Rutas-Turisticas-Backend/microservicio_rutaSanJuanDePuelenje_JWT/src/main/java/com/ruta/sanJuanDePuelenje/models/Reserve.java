@@ -78,13 +78,11 @@ public class Reserve {
 	@JoinTable(name = "reserve_recreation", joinColumns = @JoinColumn(name = "reserve_id", referencedColumnName = "reserve_id"), inverseJoinColumns = @JoinColumn(name = "recreation_id", referencedColumnName = "recreation_id"))
 	private List<Recreation> LstRecreation;
 
-	@Nullable
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinTable(name = "reserve_lodging", joinColumns = @JoinColumn(name = "reserve_id", referencedColumnName = "reserve_id"), inverseJoinColumns = @JoinColumn(name = "lodging_id", referencedColumnName = "lodging_id"))
-	private List<Lodging> LstLodging;
-
-	@OneToMany(mappedBy = "reserve", cascade = CascadeType.MERGE)
+	@OneToMany(mappedBy = "reserve", cascade = CascadeType.ALL)
 	private List<ReserveLunch> reserveLunch;
+	
+	@OneToMany(mappedBy = "reserve", cascade = CascadeType.ALL)
+	private List<ReserveLodging> reserveLodging;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ruta_id")

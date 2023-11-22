@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReserveLunchCommandDTO {
+public class ReserveLodgingCommandDTO {
 	private Long id;
-    private LunchCommandDTO lunch;
+    private LodgingCommandDTO lodging;
     private Integer cantidad;
     private ReserveCommandDTO reserve;
 }

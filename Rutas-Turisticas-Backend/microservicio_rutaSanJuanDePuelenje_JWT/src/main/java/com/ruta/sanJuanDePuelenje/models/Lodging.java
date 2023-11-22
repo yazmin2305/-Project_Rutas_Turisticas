@@ -40,6 +40,9 @@ public class Lodging {
 	@NotNull
 	private Finca finca;
 	
-	@ManyToMany(mappedBy = "LstLodging")
-	private List<Reserve> LstReserve ;
+//	@ManyToMany(mappedBy = "LstLodging")
+//	private List<Reserve> LstReserve ;
+	
+	@OneToMany(mappedBy = "lodging" , cascade = CascadeType.MERGE)
+    private List<ReserveLodging> reserveLodging;
 }
