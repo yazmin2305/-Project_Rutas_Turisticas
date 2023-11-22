@@ -43,7 +43,4 @@ public class Talking {
 	@ManyToMany(mappedBy = "LstTalking")
 	private List<Reserve> LstReserve;
 	
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "ruta_id")
-//	private Ruta ruta;
 }

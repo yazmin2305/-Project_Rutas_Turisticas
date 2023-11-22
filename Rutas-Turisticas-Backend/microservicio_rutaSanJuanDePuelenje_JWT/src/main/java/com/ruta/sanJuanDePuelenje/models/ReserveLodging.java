@@ -22,7 +22,7 @@ public class ReserveLodging {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "cantidadP")
+	@Column(name = "cantidadP", nullable = false)
 	private Integer cantidad;
 	
     @ManyToOne
