@@ -1,0 +1,3617 @@
+{
+	"info": {
+		"_postman_id": "7e72eeb9-8cf9-42fa-bced-c67c7744f571",
+		"name": "Rutas-Turisticas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21487045"
+	},
+	"item": [
+		{
+			"name": "SaveUser",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"userIdentification\": \"1061723470\",\r\n    \"userName\": \"erika\",\r\n    \"userLastName\": \"camacho\",\r\n    \"userPhone\": \"3133214344\",\r\n    \"userEmail\": \"erika@gmail.com\",\r\n    \"userPassword\": \"Erika33*\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/SaveUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"SaveUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6ImVpZGVyQGdtYWlsLmNvbSIsImlhdCI6MTY5ODAyMzIwMSwiZXhwIjoxNjk4MDM3MjAxfQ._ZIMDpBm2BhZrrWfhRTZibaMMkQoFtuszH8g44lNeJ6FPPa8zpFKEQpS_H5FQoKi_WBI5UvBNjY5Stu75bThIw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/ConsultById/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"ConsultById",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllUsers",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE3MDAxNDkxNjQsImV4cCI6MTcwMDE2MzE2NH0.84gTEvqlRjjIeYqNOWSBDSs_FqMVuu5o9wEnklrZUFWJr66BrIA_yPusJ9qClwWHTrNMtRx0exzPgOEGjU_H_Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "yyy@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/ConsultAllUsers?page=0&size=2&sort=name&order=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"ConsultAllUsers"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "2"
+						},
+						{
+							"key": "sort",
+							"value": "name"
+						},
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "changeRolUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE3MDA0MDUyMzcsImV4cCI6MTcwMDQxOTIzN30.l352jywjDlQB4GttgcJ3JPwctCLV_oqiu9cEyqsijfgVmakVgN7JBI_XwHgSyxLPq0MYGZQmy1eb7U3Cr-cXCA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"eiderduran@gmail.com\",\n    \"role\":{\n        \"roleId\":1,\n        \"roleName\": \"ADMIN\"\n    },\n    \"ruta\":{\n        \"rutaId\": 2,\n        \"rutaName\": \"Ruta del Maiz\",\n        \"rutaState\": \"true\"\n    }\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/changePermissions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"changePermissions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DisableUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6ImVpZGVyQGdtYWlsLmNvbSIsImlhdCI6MTY5Nzg2MjEzMSwiZXhwIjoxNjk3ODc2MTMxfQ.Z3JEhyr9pIYQbQTWj2PZ4zj0A8Sz6rE4dX9EEIMFjEQ0xGn85ezJV0DJ8zLEUBQW6cBoscKebEBCnaIWslw_iw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/DisableUser/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"DisableUser",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6ImVpZGVyQGdtYWlsLmNvbSIsImlhdCI6MTY5Nzg2MjEzMSwiZXhwIjoxNjk3ODc2MTMxfQ.Z3JEhyr9pIYQbQTWj2PZ4zj0A8Sz6rE4dX9EEIMFjEQ0xGn85ezJV0DJ8zLEUBQW6cBoscKebEBCnaIWslw_iw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userIdentification\": \"1063\",\r\n    \"userName\": \"ruby\",\r\n    \"userLastName\": \"sarria talaga\",\r\n    \"userPhone\": \"313\",\r\n    \"userEmail\": \"ruby@gmail.com\",\r\n    \"userPassword\": \"ruby\",\r\n    \"userstate\": true,\r\n    \"lstReserveDTOs\": null\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/UpdateUser/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"UpdateUser",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SaveRuta",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE2OTk4OTI2NDEsImV4cCI6MTY5OTkwNjY0MX0.WgVYsjIqCERwv7G-sY5Gwdoe3f0BEU1aSJHvWGBM8-sUUmuM-nm7u3ADPweTYxQyv0XYLnibB-NE1X0ofaIz0w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"rutaName\": \"Ruta el hogar\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/ruta/SaveRuta",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ruta",
+						"SaveRuta"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllRutas",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/ruta/ConsultAllRutas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ruta",
+						"ConsultAllRutas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultRutaById/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE2OTk4OTI2NDEsImV4cCI6MTY5OTkwNjY0MX0.WgVYsjIqCERwv7G-sY5Gwdoe3f0BEU1aSJHvWGBM8-sUUmuM-nm7u3ADPweTYxQyv0XYLnibB-NE1X0ofaIz0w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/ruta/ConsultRutaById/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ruta",
+						"ConsultRutaById",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateRuta/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE2OTk4OTg1NDUsImV4cCI6MTY5OTkxMjU0NX0.PwxO_x6YoYsU_uAqRUr-nC6PFbv14yRskNbtTpe48qrZ6KAoWtGcVGrc3fcoGlX1ANFBkxouQxPmu7cRqZe2MQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rutaName\": \"Ruta por el Horizonte\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/ruta/UpdateRuta/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ruta",
+						"UpdateRuta",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllRutasByState/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE2OTk4OTI2NDEsImV4cCI6MTY5OTkwNjY0MX0.WgVYsjIqCERwv7G-sY5Gwdoe3f0BEU1aSJHvWGBM8-sUUmuM-nm7u3ADPweTYxQyv0XYLnibB-NE1X0ofaIz0w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/ruta/ConsultAllRutasByState/1?page=0&size=4&sort=name&order=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ruta",
+						"ConsultAllRutasByState",
+						"1"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "4"
+						},
+						{
+							"key": "sort",
+							"value": "name"
+						},
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DisableRuta/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE2OTk1NjEyNzQsImV4cCI6MTY5OTU3NTI3NH0.7UJ-EqmY-VQezMcrwpKUltKyr23oIC3MVZliGH7vyBx9_rEtM7E1CIlnXnVpfQkLEYELR_MH9Ajx61v3NW5Abg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/ruta/DisableRuta/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ruta",
+						"DisableRuta",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EnableRuta",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE2OTk1NDQ3MTcsImV4cCI6MTY5OTU1ODcxN30.BAl8bMgps1Zjtrg63dyfvcOh3nD_Jc6mD8cqhuThdJjr4i57iKK9aMGco6ZGELC4Q20CSWWzy35vKI9ER5rPpQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/ruta/EnableRuta/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ruta",
+						"EnableRuta",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SaveFinca",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNjk5ODkyOTI3LCJleHAiOjE2OTk5MDY5Mjd9.NqZQ3sVV43kE_tiqpIt2U5Z-gwl8v71YLNfznHgp3b09y_aS7GSgJwKKCqpWC97Y331ePJPoTCkuBq05upNg6w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fincaName\": \"finca Alta Gracia\",\n    \"fincaDescription\": \"la finca tiene avistamiento de aves y mas\",\n    \"fincaLocation\": \"wedfsdf237\",\n    \"ruta\": {\n        \"rutaId\": 3,\n        \"rutaName\": \"Ruta por el Paraiso\",\n        \"rutaState\": \"true\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/finca/SaveFinca",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"finca",
+						"SaveFinca"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllFincas",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"workshopName\" : \"taller del museo\",\n    \"workshopDescription\" : \"en este taller podra conocer sobre nuestro museo\",\n    \"workshopDuration\" : 20,\n    \"workshopAvailability\" : \"true\",\n    \"workshopUnitPrice\" : 20000,\n    \"workshopTotalPrice\" : \"null\",\n    \"workshopState\": true,\n    \"workshopTypeDTO\": null,\n    \"fincaDTO\": null,\n    \"lstReserveDTOs\": null\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/finca/ConsultAllFincas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"finca",
+						"ConsultAllFincas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllFincaByRuta/3",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDA3Mjg2LCJleHAiOjE3MDAwMjEyODZ9.1NN1-LAAKrHFtGhCGTsJQv2hSxJil2LWBq87w78GF3Uyjs0JU_YdQeAJxUwYZF-fU5izpMKWqiExOu2v1cfVkg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/finca/ConsultAllFincaByRuta/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"finca",
+						"ConsultAllFincaByRuta",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "finca/ConsultById/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDA3Mjg2LCJleHAiOjE3MDAwMjEyODZ9.1NN1-LAAKrHFtGhCGTsJQv2hSxJil2LWBq87w78GF3Uyjs0JU_YdQeAJxUwYZF-fU5izpMKWqiExOu2v1cfVkg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/finca/ConsultById/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"finca",
+						"ConsultById",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DisableFinca/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNjk5ODkyOTI3LCJleHAiOjE2OTk5MDY5Mjd9.NqZQ3sVV43kE_tiqpIt2U5Z-gwl8v71YLNfznHgp3b09y_aS7GSgJwKKCqpWC97Y331ePJPoTCkuBq05upNg6w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/finca/DisableFinca/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"finca",
+						"DisableFinca",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EnableFinca/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNjk5ODkyOTI3LCJleHAiOjE2OTk5MDY5Mjd9.NqZQ3sVV43kE_tiqpIt2U5Z-gwl8v71YLNfznHgp3b09y_aS7GSgJwKKCqpWC97Y331ePJPoTCkuBq05upNg6w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/finca/EnableFinca/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"finca",
+						"EnableFinca",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllFincaByState/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE2OTk4OTYxMTYsImV4cCI6MTY5OTkxMDExNn0.kuh6MUJU4MHyQftiZdwTZTkZ2v_HZbjpCUyoosjz2m5NYKVk04rGCycYAnN1SoAcAvFhch4PXudI7a71KUcBcA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/finca/ConsultAllFincaByState/0?page=0&size=2&sort=name&order=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"finca",
+						"ConsultAllFincaByState",
+						"0"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "2"
+						},
+						{
+							"key": "sort",
+							"value": "name"
+						},
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllFincaByStateByRuta/1/3",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDA3Mjg2LCJleHAiOjE3MDAwMjEyODZ9.1NN1-LAAKrHFtGhCGTsJQv2hSxJil2LWBq87w78GF3Uyjs0JU_YdQeAJxUwYZF-fU5izpMKWqiExOu2v1cfVkg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/finca/ConsultAllFincaByStateByRuta/1/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"finca",
+						"ConsultAllFincaByStateByRuta",
+						"1",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateFinca/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNjk5ODk4MjgxLCJleHAiOjE2OTk5MTIyODF9.prllkscfoF-7gLawUhoJY2DYadzuu6xfd4tY33RW5DMQEdKfaELDiQBm38GXXZQbZZxA5_0sH-_7PTnMd8Hyqw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fincaName\": \"finca campo santo\",\r\n    \"fincaDescription\": \"la finca tiene varios atractivos turisticos\",\r\n    \"fincaLocation\": \"wedfsdf234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/finca/UpdateFinca/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"finca",
+						"UpdateFinca",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SaveLunch",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNjk5ODk2NzMxLCJleHAiOjE2OTk5MTA3MzF9.wFZVUDNj0YL0I4TKB9lpLwymqqpu3T6qcepCc98ygCyoHWj3SLr5qBSlx209ArfFLPInm1x8pcqX-wilUfJE3w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"lunchMenu\" : \"Ajiaco\",\n    \"lunchUnitPrice\" : 30000,\n    \"ruta\": {\n        \"rutaId\": 4,\n        \"rutaName\": \"Ruta el hogar\",\n        \"rutaState\": \"true\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lunch/SaveLunch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lunch",
+						"SaveLunch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lunch/ConsultById/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDA3Mjg2LCJleHAiOjE3MDAwMjEyODZ9.1NN1-LAAKrHFtGhCGTsJQv2hSxJil2LWBq87w78GF3Uyjs0JU_YdQeAJxUwYZF-fU5izpMKWqiExOu2v1cfVkg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lunch/ConsultById/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lunch",
+						"ConsultById",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllLunch",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lunch/ConsultAllLunch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lunch",
+						"ConsultAllLunch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DisableLunch/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNjk5NTk0MDE3LCJleHAiOjE2OTk2MDgwMTd9.8wQxSF8wAzXO6Z-sH2BWP3aza0hBRZKI61vfLdTR3xtBXU5UApwBKp9pR2hL86sS2HDTZk5g0x2UT68pdF474A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lunch/DisableLunch/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lunch",
+						"DisableLunch",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EnableLunch/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNjk5NTk0MDE3LCJleHAiOjE2OTk2MDgwMTd9.8wQxSF8wAzXO6Z-sH2BWP3aza0hBRZKI61vfLdTR3xtBXU5UApwBKp9pR2hL86sS2HDTZk5g0x2UT68pdF474A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lunch/EnableLunch/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lunch",
+						"EnableLunch",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllLunchByState/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE2OTk4OTc3OTgsImV4cCI6MTY5OTkxMTc5OH0.2JeEhkScyI0y9Xfnus7g7WpuYDArTiF6bbtq7FWxKVW7HO0HP0IvMgoYfzrlY_UGADxs72ODgBm8_ka2qMSTUw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lunch/ConsultAllLunchByState/0?page=0&size=2&sort=menu&order=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lunch",
+						"ConsultAllLunchByState",
+						"0"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "2"
+						},
+						{
+							"key": "sort",
+							"value": "menu"
+						},
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateLunch/5",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNjk5ODk4MjgxLCJleHAiOjE2OTk5MTIyODF9.prllkscfoF-7gLawUhoJY2DYadzuu6xfd4tY33RW5DMQEdKfaELDiQBm38GXXZQbZZxA5_0sH-_7PTnMd8Hyqw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lunchMenu\" : \"Pescado frito\",\r\n    \"lunchUnitPrice\" : 30000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lunch/UpdateLunch/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lunch",
+						"UpdateLunch",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllLunchByRuta/2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNjk5ODk2ODcwLCJleHAiOjE2OTk5MTA4NzB9.qcvLPelotVmNgVqRo6OPsYyff5dzaHaVA6RjvL1RXudcA9W08-GnvjB70Tb_kJL8IsALxPat0Sp5EfR3k7OxyQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lunch/ConsultAllLunchByRuta/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lunch",
+						"ConsultAllLunchByRuta",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllLunchByStateByRuta/1/2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDA3Mjg2LCJleHAiOjE3MDAwMjEyODZ9.1NN1-LAAKrHFtGhCGTsJQv2hSxJil2LWBq87w78GF3Uyjs0JU_YdQeAJxUwYZF-fU5izpMKWqiExOu2v1cfVkg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lunch/ConsultAllLunchByStateByRuta/1/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lunch",
+						"ConsultAllLunchByStateByRuta",
+						"1",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SaveFestival",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNjk5ODk4Njg1LCJleHAiOjE2OTk5MTI2ODV9.VJ2qAQIPRF_RZ2y0q1ZyFWD2bCUc8UB9LGJHI3KhCwQHqJi14fDY7TJKfl_D97resWf8w3UkxTvVlLiZLcTMDw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"festivalName\": \"festival de la empanada\",\n    \"festivalDescription\": \"en este festival deleitarte con diferentes tipos de empanadas\",\n    \"festivalDate\": \"2023-05-23T10:30:00Z\",\n    \"finca\" : {\n        \"fincaId\": 3,\n        \"fincaName\": \"finca el ensueño\",\n        \"fincaDescription\": \"la finca tiene un museo y mas\",\n        \"fincaLocation\": \"wedfsdf236\",\n        \"fincaState\": true,\n        \"ruta\": {\n            \"rutaId\": 3,\n            \"rutaName\": \"Ruta por el Paraiso\",\n            \"rutaState\": \"true\"\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/festival/SaveFestival",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"festival",
+						"SaveFestival"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllFestivales",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/festival/ConsultAllFestivales",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"festival",
+						"ConsultAllFestivales"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "festival/ConsultById/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDA3Mjg2LCJleHAiOjE3MDAwMjEyODZ9.1NN1-LAAKrHFtGhCGTsJQv2hSxJil2LWBq87w78GF3Uyjs0JU_YdQeAJxUwYZF-fU5izpMKWqiExOu2v1cfVkg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/festival/ConsultById/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"festival",
+						"ConsultById",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllFestivalesByRuta/3",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDA3Mjg2LCJleHAiOjE3MDAwMjEyODZ9.1NN1-LAAKrHFtGhCGTsJQv2hSxJil2LWBq87w78GF3Uyjs0JU_YdQeAJxUwYZF-fU5izpMKWqiExOu2v1cfVkg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/festival/ConsultAllFestivalesByRuta/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"festival",
+						"ConsultAllFestivalesByRuta",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DisableFestival/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNjk5OTAxNDM4LCJleHAiOjE2OTk5MTU0Mzh9.4iggxfbe57pogGDpwbSObS6s8b6bQE69DpHx6-boPbrhA8A3-5OypaaiEimoCLAsJhNJuvO6NlAGHZjTj6dogg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/festival/DisableFestival/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"festival",
+						"DisableFestival",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EnableFestival/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNjk5OTAxNDM4LCJleHAiOjE2OTk5MTU0Mzh9.4iggxfbe57pogGDpwbSObS6s8b6bQE69DpHx6-boPbrhA8A3-5OypaaiEimoCLAsJhNJuvO6NlAGHZjTj6dogg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/festival/EnableFestival/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"festival",
+						"EnableFestival",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllFestivalByStateByRuta/0/2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDA3Mjg2LCJleHAiOjE3MDAwMjEyODZ9.1NN1-LAAKrHFtGhCGTsJQv2hSxJil2LWBq87w78GF3Uyjs0JU_YdQeAJxUwYZF-fU5izpMKWqiExOu2v1cfVkg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/festival/ConsultAllFestivalByStateByRuta/0/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"festival",
+						"ConsultAllFestivalByStateByRuta",
+						"0",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateFestival/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNjk5OTAyNDIwLCJleHAiOjE2OTk5MTY0MjB9.bTJpCJ_eFVhmbHsUVzn8vygJmBSGyKsyOHF8SPqyAJuQJnKb8aSOhenLw9SPu5c8B-fsg878zMKisQKiz12VOw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"festivalName\": \"festival de la mazorca\",\r\n    \"festivalDescription\": \"Podras conocer diferentes productos\",\r\n    \"festivalDate\": \"2023-23-19T12:00:00Z\",\r\n    \"finca\" : {\r\n        \"fincaId\": 1,\r\n        \"fincaName\": \"finca campo santo\",\r\n        \"fincaDescription\": \"la finca tiene varios atractivos turisticos\",\r\n        \"fincaLocation\": \"wedfsdf234\",\r\n        \"fincaState\": false\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/festival/UpdateFestival/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"festival",
+						"UpdateFestival",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllFestivalByState/0",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE2OTk5MDI2NTgsImV4cCI6MTY5OTkxNjY1OH0.UT6f27TQIKQJNnFU7YewiaYbL2kXOelqjP4ki1LWA247qKbgCUJwbIp4F2Ze76sBoaQ0jeuaxwLcaHbIiK9h1Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/festival/ConsultAllFestivalByState/0?page=0&size=2&sort=name&order=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"festival",
+						"ConsultAllFestivalByState",
+						"0"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "2"
+						},
+						{
+							"key": "sort",
+							"value": "name"
+						},
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SaveTalking",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNjk5OTk5ODU0LCJleHAiOjE3MDAwMTM4NTR9.eAxzi5kcN04jQJS4oqdfD8PthMnPcafieV-4dWp2DzQCUNqnLicBtbBs_RtI2Tva-p1FPr_QHH3m2YscoXyJ1Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"talkingName\" : \"charla de apicultura\",\n    \"talkingDescription\" : \"En esta charla podras conocer sobre las avejas\",\n    \"talkingDuration\" : 40,\n    \"talkingMaxAmountPerson\" : 30,\n    \"talkingUnitPrice\" : 35000,\n    \"finca\" : {\n        \"fincaId\": 4,\n        \"fincaName\": \"finca Alta Gracia\",\n        \"fincaDescription\": \"la finca tiene avistamiento de aves y mas\",\n        \"fincaLocation\": \"wedfsdf237\",\n        \"fincaState\": true,\n        \"ruta\": {\n            \"rutaId\": 3,\n            \"rutaName\": \"Ruta por el Paraiso\",\n            \"rutaState\": \"true\"\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/talking/SaveTalking",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"talking",
+						"SaveTalking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultById/2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDA3Mjg2LCJleHAiOjE3MDAwMjEyODZ9.1NN1-LAAKrHFtGhCGTsJQv2hSxJil2LWBq87w78GF3Uyjs0JU_YdQeAJxUwYZF-fU5izpMKWqiExOu2v1cfVkg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/talking/ConsultById/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"talking",
+						"ConsultById",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DisableTalking/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNjk5OTk3OTg5LCJleHAiOjE3MDAwMTE5ODl9.lzh-GJ2pS7xCzqCzZ4L86PY7f1Ui10vW3KOHB-64JfS5dnxtfiGWUMo8ceRTN4lGnZhsWZ_dPrjtlgDa6f4bqg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/talking/DisableTalking/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"talking",
+						"DisableTalking",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EnableTalking/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNjk5OTk3OTg5LCJleHAiOjE3MDAwMTE5ODl9.lzh-GJ2pS7xCzqCzZ4L86PY7f1Ui10vW3KOHB-64JfS5dnxtfiGWUMo8ceRTN4lGnZhsWZ_dPrjtlgDa6f4bqg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/talking/EnableTalking/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"talking",
+						"EnableTalking",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllTalking",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/talking/ConsultAllTalking",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"talking",
+						"ConsultAllTalking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllTalkingByState",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE2OTk5OTg4NDQsImV4cCI6MTcwMDAxMjg0NH0.1B8oX8K_5kVgtLRe7TesiyucSvXSUazhB0JhH7aEv4IcG9ZxE0F5lusvUo2Walls2vb0y6REucWJ0Wyv2uzZvg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/talking/ConsultAllTalkingByState/0?page=0&size=2&sort=name&order=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"talking",
+						"ConsultAllTalkingByState",
+						"0"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "2"
+						},
+						{
+							"key": "sort",
+							"value": "name"
+						},
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllTalkingByRuta/3",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDA3Mjg2LCJleHAiOjE3MDAwMjEyODZ9.1NN1-LAAKrHFtGhCGTsJQv2hSxJil2LWBq87w78GF3Uyjs0JU_YdQeAJxUwYZF-fU5izpMKWqiExOu2v1cfVkg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/talking/ConsultAllTalkingByRuta/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"talking",
+						"ConsultAllTalkingByRuta",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllTalkingByStateByRuta/1/3",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDA3Mjg2LCJleHAiOjE3MDAwMjEyODZ9.1NN1-LAAKrHFtGhCGTsJQv2hSxJil2LWBq87w78GF3Uyjs0JU_YdQeAJxUwYZF-fU5izpMKWqiExOu2v1cfVkg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/talking/ConsultAllTalkingByStateByRuta/0/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"talking",
+						"ConsultAllTalkingByStateByRuta",
+						"0",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateTalking/2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDAwODgzLCJleHAiOjE3MDAwMTQ4ODN9.3IeAAWFlyPQxNg3Ld9QLToWyyjpJZ4MCRxvIhBv2VoodRkqNqiDrRXzQL_Ffdl46_lvdDcI891BvYDALXujS7A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n    \"talkingName\": \"charla del museo religioso\",\r\n    \"talkingDescription\": \"En esta charla podrás aprender de historia\",\r\n    \"talkingDuration\": 25,\r\n    \"talkingMaxAmountPerson\": 35,\r\n    \"talkingUnitPrice\": 20000.0,\r\n    \"finca\": {\r\n        \"fincaId\": 3,\r\n        \"fincaName\": \"finca el ensueño\",\r\n        \"fincaDescription\": \"la finca tiene un museo y mas\",\r\n        \"fincaLocation\": \"wedfsdf236\",\r\n        \"fincaState\": true,\r\n        \"ruta\": {\r\n            \"rutaId\": 3,\r\n            \"rutaName\": \"Ruta por el Paraiso\",\r\n            \"rutaState\": \"true\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/talking/UpdateTalking/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"talking",
+						"UpdateTalking",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SaveRecreation",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDAzMDY2LCJleHAiOjE3MDAwMTcwNjZ9.NK40yyM-oP-vRll72Y20K2RiVeFVZwni5RwRByqHrg7v22Ad5Mg1lYlNXfRPVIceOueo-wrtpGwWWCxmBF1h3A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"recreationName\": \"Piscina\",\r\n    \"recreationDuration\": 120,\r\n    \"recreationMaxAmountPerson\": 35,\r\n    \"recreationDescription\": \"podrás refrescarte y disfrutar de esta actividad\",\r\n    \"recreationUnitPrice\": 15000,\r\n    \"finca\": {\r\n        \"fincaId\": 3,\r\n        \"fincaName\": \"finca el ensueño\",\r\n        \"fincaDescription\": \"la finca tiene un museo y mas\",\r\n        \"fincaLocation\": \"wedfsdf236\",\r\n        \"fincaState\": true,\r\n        \"ruta\": {\r\n            \"rutaId\": 3,\r\n            \"rutaName\": \"Ruta por el Paraiso\",\r\n            \"rutaState\": \"true\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/recreation/SaveRecreation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recreation",
+						"SaveRecreation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DisableRecreation/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDAzMDY2LCJleHAiOjE3MDAwMTcwNjZ9.NK40yyM-oP-vRll72Y20K2RiVeFVZwni5RwRByqHrg7v22Ad5Mg1lYlNXfRPVIceOueo-wrtpGwWWCxmBF1h3A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/recreation/DisableRecreation/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recreation",
+						"DisableRecreation",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EnableRecreation/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDAzMDY2LCJleHAiOjE3MDAwMTcwNjZ9.NK40yyM-oP-vRll72Y20K2RiVeFVZwni5RwRByqHrg7v22Ad5Mg1lYlNXfRPVIceOueo-wrtpGwWWCxmBF1h3A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/recreation/EnableRecreation/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recreation",
+						"EnableRecreation",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultById/9",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDA3OTM3LCJleHAiOjE3MDAwMjE5Mzd9.UAFks5_fsuMR3C5ZytkgONIwvoMZ5Pbs5P70bXSdNFSxVwnH8imFgJwF8pTLNd9KRuBgXcrcGfox8SBewR3Q8w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/recreation/ConsultById/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recreation",
+						"ConsultById",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllRecreation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/recreation/ConsultAllRecreation",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recreation",
+						"ConsultAllRecreation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllRecreationByRuta/3",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDA5MDk4LCJleHAiOjE3MDAwMjMwOTh9.eY-OUrd1I0PsRBXKqrRqeadamuro6pDpj8WGAtDBp14UfGPQfgcZE8hfXWqX8gLEZ6i5FML3R_9cCW7zu18zfQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/recreation/ConsultAllRecreationByRuta/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recreation",
+						"ConsultAllRecreationByRuta",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllRecreationByRutaByState/0/9",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDA5MDk4LCJleHAiOjE3MDAwMjMwOTh9.eY-OUrd1I0PsRBXKqrRqeadamuro6pDpj8WGAtDBp14UfGPQfgcZE8hfXWqX8gLEZ6i5FML3R_9cCW7zu18zfQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/recreation/ConsultAllRecreationByRutaByState/0/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recreation",
+						"ConsultAllRecreationByRutaByState",
+						"0",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllRecreationByState/0",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE3MDAwMTA5NTYsImV4cCI6MTcwMDAyNDk1Nn0.peI6Io42P6hfO0FMtOcgV84fg2r4c9MnRAEgBbgUlf8H8H14CjEDzx8J_KPiasmQZBuDZovEqtzxBiYKfKRD3g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/recreation/ConsultAllRecreationByState/0?page=0&size=2&sort=name&order=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recreation",
+						"ConsultAllRecreationByState",
+						"0"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "2"
+						},
+						{
+							"key": "sort",
+							"value": "name"
+						},
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateRecreation/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDEwNjc0LCJleHAiOjE3MDAwMjQ2NzR9.43SmxR-J27nZTgEIb1-8SktBD3I8cOaCz2xX7yiSyf2n3UjDPqvqlfaa1Zov4N1GE8j7WxsrmsNv2MkWZuFBVg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"recreationName\": \"Bicitaxi\",\r\n    \"recreationDuration\": 25,\r\n    \"recreationDescription\": \"En esta actividad se van a recorrer los lugares mas lindos de la ruta\",\r\n    \"recreationMaxAmountPerson\": 6,\r\n    \"recreationUnitPrice\": 15000.0,\r\n    \"finca\": {\r\n        \"fincaId\": 4,\r\n        \"fincaName\": \"finca Alta Gracia\",\r\n        \"fincaDescription\": \"la finca tiene avistamiento de aves y mas\",\r\n        \"fincaLocation\": \"wedfsdf237\",\r\n        \"fincaState\": true,\r\n        \"ruta\": {\r\n            \"rutaId\": 3,\r\n            \"rutaName\": \"Ruta por el Paraiso\",\r\n            \"rutaState\": \"true\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/recreation/UpdateRecreation/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recreation",
+						"UpdateRecreation",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SaveLodging",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDE1NjI2LCJleHAiOjE3MDAwMjk2MjZ9.8KKoTOCLAFceNzPUZngkcybnHcddzZKzrIvZiPfN932WmEBJ69TmDRVbJIlFFqXNbNEBZs0s0xmmodzqyH1dcQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"lodgingName\": \"hotel manantial\",\n    \"lodgingDescription\": \"hotel con amplias habitaciones\",\n    \"lodgingBedsAvailable\": 40,\n    \"lodgingMaxAmountPerson\": 65,\n    \"lodgingUnitPrice\": 50000,  \n    \"finca\":{\n        \"fincaId\": 3,\n        \"fincaName\": \"finca el ensueño\",\n        \"fincaDescription\": \"la finca tiene un museo y mas\",\n        \"fincaLocation\": \"wedfsdf236\",\n        \"fincaState\": true,\n        \"ruta\": {\n            \"rutaId\": 3,\n            \"rutaName\": \"Ruta por el Paraiso\",\n            \"rutaState\": \"true\"\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lodging/SaveLodging",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lodging",
+						"SaveLodging"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EnableLodging/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDE1NjI2LCJleHAiOjE3MDAwMjk2MjZ9.8KKoTOCLAFceNzPUZngkcybnHcddzZKzrIvZiPfN932WmEBJ69TmDRVbJIlFFqXNbNEBZs0s0xmmodzqyH1dcQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lodging/EnableLodging/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lodging",
+						"EnableLodging",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DisableLodging/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDE1NjI2LCJleHAiOjE3MDAwMjk2MjZ9.8KKoTOCLAFceNzPUZngkcybnHcddzZKzrIvZiPfN932WmEBJ69TmDRVbJIlFFqXNbNEBZs0s0xmmodzqyH1dcQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lodging/DisableLodging/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lodging",
+						"DisableLodging",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultById/9",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDE4NzU4LCJleHAiOjE3MDAwMzI3NTh9.Q0av4FUMJ9udllVjOoZyKphWvitD0B13p5L71ICxrvre5AswKxSK1O0abcEjJyF__TSxYJn7yN6420hOt9bN4Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lodging/ConsultById/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lodging",
+						"ConsultById",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllLodging",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lodging/ConsultAllLodging",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lodging",
+						"ConsultAllLodging"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllLodgingByRuta/3",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDE4NzU4LCJleHAiOjE3MDAwMzI3NTh9.Q0av4FUMJ9udllVjOoZyKphWvitD0B13p5L71ICxrvre5AswKxSK1O0abcEjJyF__TSxYJn7yN6420hOt9bN4Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lodging/ConsultAllLodgingByRuta/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lodging",
+						"ConsultAllLodgingByRuta",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsulLodgingByStateByRuta/1/3",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDE2ODI2LCJleHAiOjE3MDAwMzA4MjZ9.22E8ehVqkCp3bdYV5pxb5jSein0KFOE3xNDZnN_alshRmMoT-WF413DSZJq6XuSRIcBMnifaR873aEkyOB97kg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lodging/ConsulLodgingByStateByRuta/1/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lodging",
+						"ConsulLodgingByStateByRuta",
+						"1",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllLodgingByState/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE3MDAwMTg0MTIsImV4cCI6MTcwMDAzMjQxMn0.PLOWcQxtaQ4u486a0k-fjBnxz8_y5jzndEky_I756kMMNXK5BlugGmsjcb3-ixqqX0HKB_sTpJzMk8zozA0PDA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/lodging/ConsultAllLodgingByState/1?page=0&size=2&sort=name&order=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lodging",
+						"ConsultAllLodgingByState",
+						"1"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "2"
+						},
+						{
+							"key": "sort",
+							"value": "name"
+						},
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateLodging/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDE4NzU4LCJleHAiOjE3MDAwMzI3NTh9.Q0av4FUMJ9udllVjOoZyKphWvitD0B13p5L71ICxrvre5AswKxSK1O0abcEjJyF__TSxYJn7yN6420hOt9bN4Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lodgingName\": \"Green Hostal Epic\",\r\n    \"lodgingDescription\": \"hotel ecologico donde podra disfrutar\",\r\n    \"lodgingBedsAvailable\": 20,\r\n    \"lodgingMaxAmountPerson\": 35,\r\n    \"lodgingUnitPrice\": 35000.0,\r\n    \"finca\": {\r\n        \"fincaId\": 2,\r\n        \"fincaName\": \"finca los pompones\",\r\n        \"fincaDescription\": \"la finca tiene actividades de recreacion\",\r\n        \"fincaLocation\": \"wedfsdf235\",\r\n        \"fincaState\": true,\r\n        \"ruta\": {\r\n            \"rutaId\": 2,\r\n            \"rutaName\": \"Ruta del Maiz\",\r\n            \"rutaState\": \"true\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/lodging/UpdateLodging/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"lodging",
+						"UpdateLodging",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SaveWorkshopType",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDIwMDk2LCJleHAiOjE3MDAwMzQwOTZ9.OeMM3zlpiZB0s0aVoy8OjhdYBPa1S0d1BtsllYiFnqjIfZ36Oc4SQ90jKMkk2f3Qx5-K7aESSWsNVk24cvVQqg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"workshopTypeName\": \"gastronomico\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/workshopType/SaveWorkshopType",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"workshopType",
+						"SaveWorkshopType"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllWorkshopType",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDIwMDk2LCJleHAiOjE3MDAwMzQwOTZ9.OeMM3zlpiZB0s0aVoy8OjhdYBPa1S0d1BtsllYiFnqjIfZ36Oc4SQ90jKMkk2f3Qx5-K7aESSWsNVk24cvVQqg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/workshopType/ConsultAllWorkshopType",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"workshopType",
+						"ConsultAllWorkshopType"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultById/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDIwMDk2LCJleHAiOjE3MDAwMzQwOTZ9.OeMM3zlpiZB0s0aVoy8OjhdYBPa1S0d1BtsllYiFnqjIfZ36Oc4SQ90jKMkk2f3Qx5-K7aESSWsNVk24cvVQqg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/workshopType/ConsultById/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"workshopType",
+						"ConsultById",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateWorkshopType/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDIwMDk2LCJleHAiOjE3MDAwMzQwOTZ9.OeMM3zlpiZB0s0aVoy8OjhdYBPa1S0d1BtsllYiFnqjIfZ36Oc4SQ90jKMkk2f3Qx5-K7aESSWsNVk24cvVQqg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"workshopTypeName\": \"comida tipica\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/workshopType/UpdateWorkshopType/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"workshopType",
+						"UpdateWorkshopType",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DisableWorkshopType/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDIwMDk2LCJleHAiOjE3MDAwMzQwOTZ9.OeMM3zlpiZB0s0aVoy8OjhdYBPa1S0d1BtsllYiFnqjIfZ36Oc4SQ90jKMkk2f3Qx5-K7aESSWsNVk24cvVQqg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/workshopType/DisableWorkshopType/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"workshopType",
+						"DisableWorkshopType",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EnableWorkshopType/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDIwMDk2LCJleHAiOjE3MDAwMzQwOTZ9.OeMM3zlpiZB0s0aVoy8OjhdYBPa1S0d1BtsllYiFnqjIfZ36Oc4SQ90jKMkk2f3Qx5-K7aESSWsNVk24cvVQqg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/workshopType/EnableWorkshopType/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"workshopType",
+						"EnableWorkshopType",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllWorkshopTypeByState/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDIyOTEzLCJleHAiOjE3MDAwMzY5MTN9.AKffdcS0e_UIgn0zYjZFISdl8LvG9hNj1QN6VSLX-tWTrX1NMvTRlqyw7gg8PCkSnSWBgEq0I_AumYns-7wT5g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/workshopType/ConsultAllWorkshopTypeByState/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"workshopType",
+						"ConsultAllWorkshopTypeByState",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SaveWorkshop",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDI1MjYzLCJleHAiOjE3MDAwMzkyNjN9.nfSGrEOxBM1JX71BFgwHjrDCeLKzymZ80VYiYQtvxJxw4KoR784BI2ZGRPsFxLYBIFuXJ10t_khdyfpK1PjNSQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"workshopName\" : \"taller del museo\",\n    \"workshopDescription\" : \"el museo es muy bello \",\n    \"workshopDuration\" : 30,    \n    \"workshopMaxAmountPerson\": 40,\n    \"workshopUnitPrice\": 14000,\n    \"workshopType\": {\n        \"workshopTypeId\": 1,\n        \"workshopTypeName\": \"religioso\",\n        \"workshopTypeState\": true\n    },\n    \"finca\": {\n        \"fincaId\": 1,\n            \"fincaName\": \"finca campo santo\",\n            \"fincaDescription\": \"la finca tiene varios atractivos turisticos\",\n            \"fincaLocation\": \"wedfsdf234\",\n            \"fincaState\": true,\n            \"ruta\": {\n                \"rutaId\": 1,\n                \"rutaName\": \"Ruta San Juan de puelenje\",\n                \"rutaState\": \"true\"\n            }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/workshop/SaveWorkshop",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"workshop",
+						"SaveWorkshop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EnableWorkshop/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDI1Nzg0LCJleHAiOjE3MDAwMzk3ODR9.p5SDK6a_iyYZsXYXo5Rvhd1z_mPuJd6TJwfwSTBh3dPNdKzVEbadO93wtS1904eQ7Gf053eIU9ZGLRJtU0oQXw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/workshop/EnableWorkshop/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"workshop",
+						"EnableWorkshop",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DisableWorkshop/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDI1Nzg0LCJleHAiOjE3MDAwMzk3ODR9.p5SDK6a_iyYZsXYXo5Rvhd1z_mPuJd6TJwfwSTBh3dPNdKzVEbadO93wtS1904eQ7Gf053eIU9ZGLRJtU0oQXw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/workshop/DisableWorkshop/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"workshop",
+						"DisableWorkshop",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultById/9",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE3MDAwMjg0MTUsImV4cCI6MTcwMDA0MjQxNX0.5N7IWDzdpItcy6gm1o9SWx-iNetCOJ002KRBBaAuBk3F5luU6AX-EBnOV5jmPAJdWERYBg1cVve7i_8k09aNiQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/workshop/ConsultById/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"workshop",
+						"ConsultById",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllWorkshop",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/workshop/ConsultAllWorkshop",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"workshop",
+						"ConsultAllWorkshop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllWorkshopByRuta/4",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE3MDAwMjg0MTUsImV4cCI6MTcwMDA0MjQxNX0.5N7IWDzdpItcy6gm1o9SWx-iNetCOJ002KRBBaAuBk3F5luU6AX-EBnOV5jmPAJdWERYBg1cVve7i_8k09aNiQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/workshop/ConsultAllWorkshopByRuta/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"workshop",
+						"ConsultAllWorkshopByRuta",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllWorkshopByRutaByState/0/3",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE3MDAxNDUxMzQsImV4cCI6MTcwMDE1OTEzNH0.1QK4Syi5dnhlLw_GL_jS1rZxgzIYE3H8rY8QwGXtkLPj4z_QoCbgcWK-j9jnYNDA_1c1p5a9Y3oPtziR4lSHeA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/workshop/ConsultAllWorkshopByRutaByState/0/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"workshop",
+						"ConsultAllWorkshopByRutaByState",
+						"0",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllWorkshopByState/0",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE3MDAxNDUxMzQsImV4cCI6MTcwMDE1OTEzNH0.1QK4Syi5dnhlLw_GL_jS1rZxgzIYE3H8rY8QwGXtkLPj4z_QoCbgcWK-j9jnYNDA_1c1p5a9Y3oPtziR4lSHeA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/workshop/ConsultAllWorkshopByState/0?page=0&size=2&sort=name&order=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"workshop",
+						"ConsultAllWorkshopByState",
+						"0"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "2"
+						},
+						{
+							"key": "sort",
+							"value": "name"
+						},
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateWorkshop/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMDI3MjMyLCJleHAiOjE3MDAwNDEyMzJ9.lWCKG6tFpEvjgZbULMrqx0y9ucVWmTnH-NPaWV6_Z1RlhbHESJpB4rXQ9Vp_a03WxUfFWGsN6xCE8ZkSZhP9oA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"workshopName\": \"religioso\",\r\n    \"workshopDescription\": \"el museo es muy bello \",\r\n    \"workshopDuration\": 25,\r\n    \"workshopMaxAmountPerson\": 35,\r\n    \"workshopUnitPrice\": 15000.0,\r\n    \"workshopState\": false,\r\n    \"workshopType\": {\r\n        \"workshopTypeId\": 1,\r\n        \"workshopTypeName\": \"religioso\",\r\n        \"workshopTypeState\": false\r\n    },\r\n    \"finca\": {\r\n        \"fincaId\": 1,\r\n        \"fincaName\": \"finca campo santo\",\r\n        \"fincaDescription\": \"la finca tiene varios atractivos turisticos\",\r\n        \"fincaLocation\": \"wedfsdf234\",\r\n        \"fincaState\": true,\r\n        \"ruta\": {\r\n            \"rutaId\": 1,\r\n            \"rutaName\": \"Ruta San Juan de puelenje\",\r\n            \"rutaState\": \"true\"\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/workshop/UpdateWorkshop/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"workshop",
+						"UpdateWorkshop",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SaveReserve",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlVTRVJcIn1dIiwic3ViIjoiZWlkZXJkdXJhbkBnbWFpbC5jb20iLCJpYXQiOjE3MDAzNjA5NjEsImV4cCI6MTcwMDM3NDk2MX0.64fWomuXBhzURjdmu6lmPv-xwl9UKF_ja86_nolYn0ruq0cuHl7-7Ch0q0gYzdEjnCouLUE7u2du0FEqxbBczg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"reserveAmountPersons\": 10,\n    \"reserveDate\": \"2023-09-19T12:00:00Z\",\n    \"user\":{\n        \"userId\": 5,\n        \"userIdentification\": \"1061723420\",\n        \"userName\": \"eider\",\n        \"userLastName\": \"duran\",\n        \"userPhone\": \"3137856794\",\n        \"userEmail\": \"eiderduran@gmail.com\",\n        \"userState\": true,\n        \"userPassword\": \"$2a$10$V4KNvTyZSCnModvQMYYrRemeoAbzxvqMlvQ.8M01BmCGmOlolxicC\",\n        \"role\": {\n            \"roleName\": \"USER\"\n        }\n    },\n    \"lstWorkshop\":[\n        {\n        \"workshopId\": 1,\n        \"workshopName\": \"religioso\",\n        \"workshopDescription\": \"el museo es muy bello \",\n        \"workshopDuration\": 25,\n        \"workshopMaxAmountPerson\": 35,\n        \"workshopUnitPrice\": 15000.0,\n        \"workshopState\": false,\n        \"workshopType\": {\n            \"workshopTypeId\": 1,\n            \"workshopTypeName\": \"religioso\",\n            \"workshopTypeState\": false\n        },\n        \"finca\": {\n            \"fincaId\": 1,\n            \"fincaName\": \"finca campo santo\",\n            \"fincaDescription\": \"la finca tiene varios atractivos turisticos\",\n            \"fincaLocation\": \"wedfsdf234\",\n            \"fincaState\": true,\n            \"ruta\": {\n                \"rutaId\": 1,\n                \"rutaName\": \"Ruta San Juan de puelenje\",\n                \"rutaState\": \"true\"\n            }\n        }\n        }\n    ],\n    \"reserveLunch\":[\n        {\n            \"id\": 2,\n            \"lunch\":{\n                \"lunchId\": 1,\n                \"lunchMenu\": \"Bandeja Paisa\",\n                \"lunchUnitPrice\": 25000.0,\n                \"lunchState\": true,\n                \"ruta\": {\n                    \"rutaId\": 2,\n                    \"rutaName\": \"Ruta del Maiz\",\n                    \"rutaState\": \"true\"\n                }\n            },\n            \"cantidad\": 2\n        },\n        {\n            \"lunch\":{\n                \"lunchId\": 2,\n                \"lunchMenu\": \"Pescado frito\",\n                \"lunchUnitPrice\": 30000.0,\n                \"lunchState\": true,\n                \"ruta\": {\n                    \"rutaId\": 1,\n                    \"rutaName\": \"Ruta San Juan de puelenje\",\n                    \"rutaState\": \"true\"\n                }\n            },            \n            \"cantidad\":4\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/reserve/SaveReserve",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reserve",
+						"SaveReserve"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllReserveByRuta/3",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwNDIzMjAzLCJleHAiOjE3MDA0MzcyMDN9.A8vDf8-X3ueiSheyu5uRqEgsiIj1rfPRUmDHI3FR_mUOEakxQZCrvVLrjG73N-9ymb18m8o1jbOzdpo_3WHF3g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/reserve/ConsultAllReserveByRuta/3?page=0&size=2&sort=date&order=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reserve",
+						"ConsultAllReserveByRuta",
+						"3"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "2"
+						},
+						{
+							"key": "sort",
+							"value": "date"
+						},
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultReserveById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwNjAyNjkyLCJleHAiOjE3MDA2MTY2OTJ9.RJU6D2oPDm-GIhfz0K6uPJsa8ObE2jZ_1DDVURPrxKsZ7e9P19_AQpPVWEmMua34to2quDpt6FiYK0fvQqJpfw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/reserve/ConsultReserveById/33",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reserve",
+						"ConsultReserveById",
+						"33"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DisableReserve/45",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMzYxNDc1LCJleHAiOjE3MDAzNzU0NzV9.ZsIjQtLzgZyCHPcuo_Bwc2IjPhnzidmDfZHRxrgDNVeuLViwwVpbDiV1xrJujHl7Ru1M-FK9iwOquhuRqn2QYA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/reserve/DisableReserve/45",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reserve",
+						"DisableReserve",
+						"45"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EnableReserve/45",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMzYxNDc1LCJleHAiOjE3MDAzNzU0NzV9.ZsIjQtLzgZyCHPcuo_Bwc2IjPhnzidmDfZHRxrgDNVeuLViwwVpbDiV1xrJujHl7Ru1M-FK9iwOquhuRqn2QYA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/reserve/EnableReserve/45",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reserve",
+						"EnableReserve",
+						"45"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteReserve/31",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwMzYyNTU1LCJleHAiOjE3MDAzNzY1NTV9.eQ07cUXKf5MH6tUaGX9Q0YSRB4-feK5HI36JovjwmiRRBDMQLhh-A4yO4_2Ug3yeNvmCtt4sfrG59UBE1ko9jQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/reserve/DeleteReserve/31",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reserve",
+						"DeleteReserve",
+						"31"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateReserve/32",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwNjIwMDAwLCJleHAiOjE3MDA2MzQwMDB9.-LAjBrd_RDybo_VI24Mma2LSKIgsOuOj2dCGWrPZmfGw2GaPn492ytWRKpp_tXMyiRAjjuWu8Kg-pIFm0LG-Ww",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reserveAmountPersons\": 20,\r\n    \"reserveDate\": \"2023-09-19T12:00:00.000+00:00\",\r\n    \"user\": {\r\n        \"userId\": 5,\r\n        \"userIdentification\": \"1061723420\",\r\n        \"userName\": \"Eider\",\r\n        \"userLastName\": \" Gutierrez Duran\",\r\n        \"userPhone\": \"3137856794\",\r\n        \"userEmail\": \"eiderduran@gmail.com\",\r\n        \"userState\": true,\r\n        \"userPassword\": \"$2a$10$X0HZmtsKs7J1u9/kGFIFqur8J7wr3Qe.XQ3vu.zSRQ.udhrnmDQTq\",\r\n        \"role\": {\r\n            \"roleName\": \"ADMIN\"\r\n        }\r\n    },\r\n    \"lstRecreation\": [\r\n        {\r\n            \"recreationId\": 1,\r\n            \"recreationName\": \"Bicitaxi\",\r\n            \"recreationDuration\": 25,\r\n            \"recreationDescription\": \"En esta actividad se van a recorrer los lugares mas lindos de la ruta\",\r\n            \"recreationMaxAmountPerson\": 6,\r\n            \"recreationUnitPrice\": 15000.0,\r\n            \"recreationState\": true,\r\n            \"finca\": {\r\n                \"fincaId\": 4\r\n            }\r\n        },\r\n        {\r\n            \"recreationId\": 2,\r\n            \"recreationName\": \"Columpio\",\r\n            \"recreationDuration\": 10,\r\n            \"recreationDescription\": \"actividad de adrenalina qe podras disfrutar en nuestra ruta\",\r\n            \"recreationMaxAmountPerson\": 1,\r\n            \"recreationUnitPrice\": 5000.0,\r\n            \"recreationState\": true,\r\n            \"finca\": {\r\n               \"fincaId\": 4\r\n            }\r\n        }\r\n    ],\r\n        \r\n    \"lstTalking\": [\r\n        {\r\n            \"talkingId\": 1,\r\n            \"talkingName\": \"charla del museo religioso\",\r\n            \"talkingDescription\": \"En esta charla podras aprender de historia\",\r\n            \"talkingDuration\": 20,\r\n            \"talkingMaxAmountPerson\": 30,\r\n            \"talkingUnitPrice\": 20000.0,\r\n            \"talkingState\": true,\r\n            \"finca\": {\r\n                \"fincaId\": 1\r\n            }\r\n        }\r\n    ],\r\n    \"reserveLodging\":[\r\n        {\r\n            \"id\": 19,\r\n            \"lodging\":{\r\n                \"lodgingId\": 1,\r\n                \"lodgingName\": \"Green Hostal Epic\",\r\n                \"lodgingDescription\": \"hotel ecologico donde podra disfrutar\",\r\n                \"lodgingBedsAvailable\": 20,\r\n                \"lodgingMaxAmountPerson\": 35,\r\n                \"lodgingUnitPrice\": 35000.0,\r\n                \"lodgingState\": true,\r\n                \"finca\": {\r\n                    \"fincaId\": 2\r\n                }\r\n            },\r\n            \"cantidad\": 2,\r\n            \"reserve\":{\r\n                \"reserveId\":33\r\n            }\r\n        },\r\n        {\r\n            \"id\": 20,\r\n            \"lodging\":{\r\n                \"lodgingId\": 2,\r\n                \"lodgingName\": \"hotel manantial\",\r\n                \"lodgingDescription\": \"hotel con amplias habitaciones\",\r\n                \"lodgingBedsAvailable\": 40,\r\n                \"lodgingMaxAmountPerson\": 65,\r\n                \"lodgingUnitPrice\": 50000.0,\r\n                \"lodgingState\": true,\r\n                \"finca\": {\r\n                    \"fincaId\": 3\r\n                }\r\n            },\r\n            \"cantidad\": 3,\r\n            \"reserve\":{\r\n                \"reserveId\":33\r\n            }\r\n            \r\n        }\r\n    ],\r\n    \"reserveLunch\":[\r\n        {\r\n            \"id\": 41,\r\n            \"lunch\":{\r\n                \"lunchId\": 1,\r\n                \"lunchMenu\": \"Bandeja Paisaa\",\r\n                \"lunchUnitPrice\": 25000.0,\r\n                \"lunchState\": true,\r\n                \"ruta\": {\r\n                    \"rutaId\": 2,\r\n                    \"rutaName\": \"Ruta del Maiz\",\r\n                    \"rutaState\": \"true\"\r\n                }\r\n            },\r\n            \"cantidad\": 24,\r\n            \"reserve\":{\r\n                \"reserveId\":33\r\n            }\r\n        },\r\n        {\r\n            \"id\": 43,\r\n            \"lunch\":{\r\n                \"lunchId\": 2,\r\n                \"lunchMenu\": \"Pescado frito\",\r\n                \"lunchUnitPrice\": 30000.0,\r\n                \"lunchState\": true,\r\n                \"ruta\": {\r\n                    \"rutaId\": 1,\r\n                    \"rutaName\": \"Ruta San Juan de puelenje\",\r\n                    \"rutaState\": \"true\"\r\n                }\r\n            },            \r\n            \"cantidad\":9,\r\n            \"reserve\":{\r\n                \"reserveId\":33\r\n            }\r\n        }\r\n    ],\r\n    \"lstWorkshop\":[\r\n        {\r\n            \"workshopId\": 1,\r\n            \"workshopName\": \"religioso\",\r\n            \"workshopDescription\": \"el museo es muy bello \",\r\n            \"workshopDuration\": 25,\r\n            \"workshopMaxAmountPerson\": 35,\r\n            \"workshopUnitPrice\": 15000.0,\r\n            \"workshopState\": false,\r\n            \"workshopType\": {\r\n                \"workshopTypeId\": 1\r\n            },\r\n            \"finca\": {\r\n                \"fincaId\": 1\r\n            }\r\n        \r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/reserve/UpdateReserve/33",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reserve",
+						"UpdateReserve",
+						"33"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllReserveByUser/6",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwNDA3MDYxLCJleHAiOjE3MDA0MjEwNjF9.AUSnCuIG-ZJs5EFPqklgdnnVMvxJDqfhGiR3x9TvUgyDvOcJ9Yk9s77rqXXJtgkazcFa0tT12tGnRirnz2-T_w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/reserve/ConsultAllReserveByUser/5?page=0&size=3&sort=date&order=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reserve",
+						"ConsultAllReserveByUser",
+						"5"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "3"
+						},
+						{
+							"key": "sort",
+							"value": "date"
+						},
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNjk5OTk3OTg5LCJleHAiOjE3MDAwMTE5ODl9.lzh-GJ2pS7xCzqCzZ4L86PY7f1Ui10vW3KOHB-64JfS5dnxtfiGWUMo8ceRTN4lGnZhsWZ_dPrjtlgDa6f4bqg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"rubytalaga@gmail.com\",\r\n    \"password\": \"Ruby33*\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllUsers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE3MDA0MDcyMjQsImV4cCI6MTcwMDQyMTIyNH0.Rfi8PbIK9_Atq2HXO4F8SpoZG3Hp01rZDCjBJxMBvogKhIaKYFAd2KSaMOtG14TmKtSzEgYWQaZAT8WIjUKjGw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/ConsultAllUsers?page=0&size=2&sort=name&order=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"ConsultAllUsers"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "2"
+						},
+						{
+							"key": "sort",
+							"value": "name"
+						},
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultById/4",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE3MDAzNjg3MDIsImV4cCI6MTcwMDM4MjcwMn0.GBhyQcRb0RqvZndIpvgDiBa_6MNrIOPC0pANV9FiEl0sQIg7KzAu-xDhyKlM9I_RQ8qU2uH7o1KjelXpsQxDmw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/ConsultById/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"ConsultById",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DisableUser/6",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE3MDAzNjg3MDIsImV4cCI6MTcwMDM4MjcwMn0.GBhyQcRb0RqvZndIpvgDiBa_6MNrIOPC0pANV9FiEl0sQIg7KzAu-xDhyKlM9I_RQ8qU2uH7o1KjelXpsQxDmw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/DisableUser/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"DisableUser",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EnableUser/6",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE3MDAzNjg3MDIsImV4cCI6MTcwMDM4MjcwMn0.GBhyQcRb0RqvZndIpvgDiBa_6MNrIOPC0pANV9FiEl0sQIg7KzAu-xDhyKlM9I_RQ8qU2uH7o1KjelXpsQxDmw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/EnableUser/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"EnableUser",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllUsersByState",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE3MDAzNjg3MDIsImV4cCI6MTcwMDM4MjcwMn0.GBhyQcRb0RqvZndIpvgDiBa_6MNrIOPC0pANV9FiEl0sQIg7KzAu-xDhyKlM9I_RQ8qU2uH7o1KjelXpsQxDmw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/ConsultAllUsersByState/0?page=0&size=2&sort=name&order=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"ConsultAllUsersByState",
+						"0"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "2"
+						},
+						{
+							"key": "sort",
+							"value": "name"
+						},
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultAllUsersByRuta/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE3MDAzNzIxMjYsImV4cCI6MTcwMDM4NjEyNn0.d87KmU_MabGS5bl4WHbLBrsRrFLPhoRbuSQrEesJM9JEA1bQirdBfBicOoABLEZbat6ckrA0TgNiFN4WxluM1w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/ConsultAllUsersByRuta/1?page=0&size=2&sort=date&order=asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"ConsultAllUsersByRuta",
+						"1"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "2"
+						},
+						{
+							"key": "sort",
+							"value": "date"
+						},
+						{
+							"key": "order",
+							"value": "asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultUserByEmail/eiderduran@gmail.com",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIkFETUlOXCJ9XSIsInN1YiI6InJ1Ynl0YWxhZ2FAZ21haWwuY29tIiwiaWF0IjoxNzAwNDA2MDc2LCJleHAiOjE3MDA0MjAwNzZ9.SvYUzv6XwgExvvmqTG7OaefataL0xtF7GS5jbXw_j6h6ErMTH5-pdwAyFfM9M7wx_9NQ2azLgkyLnhQr7GR_jg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/ConsultUserByEmail/eiderduran@gmail.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"ConsultUserByEmail",
+						"eiderduran@gmail.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUser/5",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6Ilt7XCJhdXRob3JpdHlcIjpcIlNVUEVSXCJ9XSIsInN1YiI6Inlhem1pbnNhcnJpYUBnbWFpbC5jb20iLCJpYXQiOjE3MDA0MDc0MzEsImV4cCI6MTcwMDQyMTQzMX0._DWzSYj9t_EyPTK1Wd7-kFeDBDkX1_4KgvnUee6-VdpwpBPOo3HZqflQ2ezLBq-kLIhEsN8ra-hKNo224TTEfw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userIdentification\": \"1061723420\",\r\n    \"userName\": \"Eider\",\r\n    \"userLastName\": \" Gutierrez Duran\",\r\n    \"userPhone\": \"3137856794\",\r\n    \"userEmail\": \"eiderduran@gmail.com\",\r\n    \"userPassword\": \"EiderD33*\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/UpdateUser/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"UpdateUser",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/emailPassword/sendEmail",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"emailTo\": \"yazminsarria@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/emailPassword/sendEmail",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"emailPassword",
+						"sendEmail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/emailPassword/changePassword",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\":\"Yazmin333*\",\r\n    \"confirmPassword\":\"Yazmin333*\",\r\n    \"tokenPassword\": \"bd7f289a-db95-4c2b-bf0f-09f885f05d4f\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/emailPassword/changePassword",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"emailPassword",
+						"changePassword"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
