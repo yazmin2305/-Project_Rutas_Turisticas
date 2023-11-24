@@ -3,7 +3,6 @@ package com.ruta.sanJuanDePuelenje.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -26,7 +25,6 @@ import com.ruta.sanJuanDePuelenje.models.ReserveLodging;
 import com.ruta.sanJuanDePuelenje.models.ReserveLunch;
 import com.ruta.sanJuanDePuelenje.models.Talking;
 import com.ruta.sanJuanDePuelenje.models.Workshop;
-import com.ruta.sanJuanDePuelenje.repository.ILodgingRepository;
 import com.ruta.sanJuanDePuelenje.repository.IReserveLodgingRepository;
 import com.ruta.sanJuanDePuelenje.repository.IReserveLunchRepository;
 import com.ruta.sanJuanDePuelenje.repository.IReserveRepository;
@@ -44,9 +42,6 @@ public class ReserveServiceImpl implements IReserveService {
 	
 	@Autowired
 	private IReserveLodgingRepository iReserveLodgingRepository;
-	
-	@Autowired
-	private ILodgingRepository iLodgingRepository;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -90,10 +85,8 @@ public class ReserveServiceImpl implements IReserveService {
 			reserveEntity = calculateTotalPrice(reserveDTO);
 			reserveEntity.setState(true);
 			Reserve savedReserve = this.iReserveRepository.save(reserveEntity);
-			//if (reserveDTO.getReserveLunch() != null && !reserveDTO.getReserveLunch().isEmpty()) {
-				System.out.println("ESNTRASAS");
+			if (reserveDTO.getReserveLunch() != null && !reserveDTO.getReserveLunch().isEmpty()) {
 				for (ReserveLunchCommandDTO reserveLunchDTO : reserveDTO.getReserveLunch()) {
-					System.out.println("ESNTRASA222S");
 					Lunch lunchEntity = this.modelMapper.map(reserveLunchDTO.getLunch(), Lunch.class);
 					ReserveLunch reserveLunchEntity = new ReserveLunch();
 					reserveLunchEntity.setCantidad(reserveLunchDTO.getCantidad());
@@ -102,7 +95,7 @@ public class ReserveServiceImpl implements IReserveService {
 					// Guardar ReserveLunch(entidad intermedia)
 					iReserveLunchRepository.save(reserveLunchEntity);
 				}
-			//}
+			}
 			if (reserveDTO.getReserveLodging() != null && !reserveDTO.getReserveLodging().isEmpty()) {
 				for (ReserveLodgingCommandDTO reserveLodgingDTO : reserveDTO.getReserveLodging()) {
 					Lodging lodgingEntity = this.modelMapper.map(reserveLodgingDTO.getLodging(), Lodging.class);
@@ -306,45 +299,6 @@ public class ReserveServiceImpl implements IReserveService {
 		return PageableUtils.createPageableResponse(reservePage, reserveDTOS);
 	}
 	
-	private void SaveReserveLunch(ReserveCommandDTO reserveDTO, Reserve savedReserve) {
-		if (reserveDTO.getReserveLunch() != null && !reserveDTO.getReserveLunch().isEmpty()) {
-			for (ReserveLunchCommandDTO reserveLunchDTO : reserveDTO.getReserveLunch()) {
-				Lunch lunchEntity = this.modelMapper.map(reserveLunchDTO.getLunch(), Lunch.class);
-				ReserveLunch reserveLunchEntity = new ReserveLunch();
-				reserveLunchEntity.setCantidad(reserveLunchDTO.getCantidad());
-				reserveLunchEntity.setLunch(lunchEntity);
-				reserveLunchEntity.setReserve(savedReserve);
-				// Guardar ReserveLunch(entidad intermedia)
-				iReserveLunchRepository.save(reserveLunchEntity);
-			}
-		}
-	}
-	
-	private void SaveReserveLodging(ReserveCommandDTO reserveDTO, Reserve savedReserve) {
-		if (reserveDTO.getReserveLodging() != null && !reserveDTO.getReserveLodging().isEmpty()) {
-			for (ReserveLodgingCommandDTO reserveLodgingDTO : reserveDTO.getReserveLodging()) {
-				Lodging lodgingEntity = this.modelMapper.map(reserveLodgingDTO.getLodging(), Lodging.class);
-				ReserveLodging reserveLodgingEntity = new ReserveLodging();
-				reserveLodgingEntity.setCantidad(reserveLodgingDTO.getCantidad());
-				reserveLodgingEntity.setLodging(lodgingEntity);
-				reserveLodgingEntity.setReserve(savedReserve);
-				// Guardar ReserveLodging(entidad intermedia)
-				iReserveLodgingRepository.save(reserveLodgingEntity);
-//				for(int i = 0; i < reserveDTO.getReserveLodging().size(); i++ ) {
-//					 //lodging = new Lodging();
-//					 Optional<Lodging> lodging = this.iLodgingRepository.findById(reserveLodgingDTO.getLodging().getLodgingId());
-//					 Lodging lodgingEntity1 = lodging.get();
-//					 lodgingEntity1.setQuantityAvailable(lodgingEntity1.getQuantityAvailable() - reserveLodgingDTO.getCantidad());
-//				}
-				
-				Optional<Lodging> lodging = this.iLodgingRepository.findById(reserveLodgingEntity.getLodging().getId());
-			    lodging.ifPresent(lodgingEnt -> lodgingEnt.setQuantityAvailable(
-			            lodgingEntity.getQuantityAvailable() - reserveLodgingEntity.getCantidad()
-			    ));
-			}
-		}
-	}
-	
 	// Método para actualizar la tabla intermedia entre las entidades Lunch y Reserve 
 	private void UpdateReserveLunch(Reserve reserveEntityExisting, Reserve reserveEntityUpdate) {
 		// Crear una copia de la lista actual de ReserveLunch para evitar la ConcurrentModificationException
@@ -392,26 +346,11 @@ public class ReserveServiceImpl implements IReserveService {
 				iReserveLodgingRepository.delete(existingReserveLodging);
 			}
 		}
-		// Iterar sobre la nueva lista y asociar las instancias con la reserva
-		// actualizada
+		// Iterar sobre la nueva lista y asociar las instancias con la reserva actualizada
 		for (ReserveLodging newReserveLodging : reserveEntityUpdate.getReserveLodging()) {
 			ReserveLodging existingReserveLodging = currentReserveLodgingList.stream()
 					.filter(rl -> Objects.equals(rl.getId(), newReserveLodging.getId())).findFirst().orElse(null);
 			if (existingReserveLodging != null) {
-				// Ya que se va a reservar una cantidad determinada de hospedajes, se deben
-				// restar los hospedajes que se estan reservando para al momento de realizar una
-				// nueva reserva me muestre los que realmente hay
-				int QuantityAvailable = existingReserveLodging.getCantidad();
-				int newQuantityAvailable = newReserveLodging.getCantidad();
-				System.out.println("viejo: " + QuantityAvailable);
-				System.out.println("nuevo: " + newQuantityAvailable);
-				if (QuantityAvailable != newQuantityAvailable) {
-					System.out.println("entra: ");
-					this.iLodgingRepository.findById(newReserveLodging.getLodging().getId()).ifPresent(lodgingEntityLodging -> {
-						lodgingEntityLodging.setQuantityAvailable(lodgingEntityLodging.getQuantityAvailable() - newReserveLodging.getCantidad());
-						iLodgingRepository.save(lodgingEntityLodging);
-					});
-				}
 				// Actualizar las propiedades si es necesario
 				existingReserveLodging.setLodging(newReserveLodging.getLodging());
 				existingReserveLodging.setCantidad(newReserveLodging.getCantidad());

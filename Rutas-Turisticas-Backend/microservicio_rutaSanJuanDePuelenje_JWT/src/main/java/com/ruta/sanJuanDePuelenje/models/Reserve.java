@@ -78,10 +78,10 @@ public class Reserve {
 	@JoinTable(name = "reserve_recreation", joinColumns = @JoinColumn(name = "reserve_id", referencedColumnName = "reserve_id"), inverseJoinColumns = @JoinColumn(name = "recreation_id", referencedColumnName = "recreation_id"))
 	private List<Recreation> LstRecreation;
 
-	@OneToMany(mappedBy = "reserve", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "reserve", cascade = CascadeType.MERGE)
 	private List<ReserveLunch> reserveLunch;
 	
-	@OneToMany(mappedBy = "reserve", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "reserve", cascade = CascadeType.MERGE)
 	private List<ReserveLodging> reserveLodging;
 
 	@ManyToOne(fetch = FetchType.EAGER)
