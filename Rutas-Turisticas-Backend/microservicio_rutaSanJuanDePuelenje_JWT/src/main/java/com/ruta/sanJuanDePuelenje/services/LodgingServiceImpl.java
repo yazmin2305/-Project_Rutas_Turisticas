@@ -115,7 +115,7 @@ public final class LodgingServiceImpl implements ILodgingService {
 			Lodging lodgingEntity = this.modelMapper.map(lodging, Lodging.class);
 			lodgingEntity1.setName(lodgingEntity.getName());
 			lodgingEntity1.setDescription(lodgingEntity.getDescription());
-			lodgingEntity1.setBedsAvailable(lodgingEntity.getBedsAvailable());
+			lodgingEntity1.setQuantityAvailable(lodgingEntity.getQuantityAvailable());
 			lodgingEntity1.setMaxAmountPerson(lodgingEntity.getMaxAmountPerson());
 			lodgingEntity1.setUnitPrice(lodgingEntity.getUnitPrice());
 			lodgingEntity1.setFinca(lodgingEntity.getFinca());

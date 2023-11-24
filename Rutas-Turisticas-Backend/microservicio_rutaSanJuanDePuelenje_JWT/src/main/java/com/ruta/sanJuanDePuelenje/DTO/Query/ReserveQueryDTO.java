@@ -19,10 +19,11 @@ public class ReserveQueryDTO {
 	private Double workshopTotalPrice;
 	private Boolean reserveState;
 	private Date reserveDate;
+	private Integer reserveNumberNights;
 	private UserQueryDTO user;
 	private List<WorkshopQueryDTO> LstWorkshop;
 	private List<TalkingQueryDTO> LstTalking;
 	private List<RecreationQueryDTO> LstRecreation;
-	private List<LodgingQueryDTO> LstLodging;
+	private List<ReserveLodgingQueryDTO> reserveLodging;
 	private List<ReserveLunchQueryDTO> reserveLunch;
 }

@@ -19,7 +19,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import com.ruta.sanJuanDePuelenje.security.filter.JWTAuthenticationFilter;
 import com.ruta.sanJuanDePuelenje.security.filter.JWTAuthorizationFilter;
 import com.ruta.sanJuanDePuelenje.security.service.JWTService;
-import com.ruta.sanJuanDePuelenje.services.JpaUserDetailsService;
+import com.ruta.sanJuanDePuelenje.security.service.JpaUserDetailsService;
 
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @EnableWebSecurity

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class LodgingQueryDTO {
 	private String lodgingName;
 	private String lodgingDescription;
-	private Integer lodgingBedsAvailable;
+	private Integer lodgingQuantityAvailable;
 	private Integer lodgingMaxAmountPerson;
 	private Double lodgingUnitPrice;
 	private Boolean lodgingState;

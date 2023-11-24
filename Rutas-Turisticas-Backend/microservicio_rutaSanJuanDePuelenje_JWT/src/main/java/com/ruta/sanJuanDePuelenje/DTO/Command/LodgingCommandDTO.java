@@ -11,7 +11,7 @@ public class LodgingCommandDTO {
 	private Integer lodgingId;
 	private String lodgingName;
 	private String lodgingDescription;
-	private Integer lodgingBedsAvailable;
+	private Integer lodgingQuantityAvailable;
 	private Integer lodgingMaxAmountPerson;
 	private Double lodgingUnitPrice;
 	private Boolean lodgingState;

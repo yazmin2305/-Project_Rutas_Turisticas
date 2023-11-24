@@ -11,5 +11,5 @@ public class ReserveLunchCommandDTO {
 	private Long id;
     private LunchCommandDTO lunch;
     private Integer cantidad;
-    private ReserveCommandDTO reserve;
+    //private ReserveCommandDTO reserve;
 }

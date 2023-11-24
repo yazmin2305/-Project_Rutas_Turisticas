@@ -1,4 +1,4 @@
-package com.ruta.sanJuanDePuelenje.services;
+package com.ruta.sanJuanDePuelenje.security.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import com.ruta.sanJuanDePuelenje.models.Role;
 import com.ruta.sanJuanDePuelenje.models.User;
 import com.ruta.sanJuanDePuelenje.repository.IUserRepository;
+import com.ruta.sanJuanDePuelenje.security.exception.UserDisabledException;
 
 @Service("JpaUserDetailsService")
 public class JpaUserDetailsService implements UserDetailsService{
@@ -34,6 +35,11 @@ public class JpaUserDetailsService implements UserDetailsService{
         if(user == null) {
         	logger.error("Error en el Login: no existe el usuario registrado con el correo'" + email + "' en el sistema!");
         	throw new UsernameNotFoundException("Correo: " + email + " no existe en el sistema!");
+        }
+        
+        if (!user.getState()) {
+            logger.error("Error en el Login: no existe el usuario '" + email + "' está deshabilitado!");
+            throw new UserDisabledException("El usuario está deshabilitado");
         }
 		
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();

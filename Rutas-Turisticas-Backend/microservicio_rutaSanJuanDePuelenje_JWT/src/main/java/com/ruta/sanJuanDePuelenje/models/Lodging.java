@@ -23,8 +23,8 @@ public class Lodging {
 	@Column(nullable = false, length = 200)
 	private String description;
 	
-	@Column(name = "beds_available" ,nullable = false)
-	private Integer bedsAvailable;
+	@Column(name = "quantity_available" ,nullable = false)
+	private Integer quantityAvailable;
 	
 	@Column(name = "max_amount_person",nullable = true)
 	private Integer maxAmountPerson;

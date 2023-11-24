@@ -2,6 +2,7 @@ package com.ruta.sanJuanDePuelenje.security.filter;
 
 import java.io.IOException;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ruta.sanJuanDePuelenje.models.User;
+import com.ruta.sanJuanDePuelenje.security.exception.UserDisabledException;
 import com.ruta.sanJuanDePuelenje.security.service.JWTService;
 import com.ruta.sanJuanDePuelenje.security.service.JWTServiceImpl;
 
@@ -84,7 +86,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			Authentication authResult) throws IOException, ServletException {
 		// Creamos el token que vamos a retornar al cliente
 		String token = jwtService.create(authResult);
-		
+		//Configuracion de cors
+		response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); // Reemplaza con el origen de tu aplicación React
+		response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+		response.setHeader("Access-Control-Allow-Headers", "*");
+		response.setHeader("Access-Control-Max-Age", "3600");
 		// Guardamos el token en el parametro Authorization, e indicamos el prefijo Bearer
 		response.addHeader(JWTServiceImpl.HEADER_STRING, JWTServiceImpl.TOKEN_PREFIX + token);
 		Map<String, Object> body = new HashMap<String, Object>();
@@ -102,14 +108,20 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException failed) throws IOException, ServletException {
-		Map<String, Object> body = new HashMap<String, Object>();
-		body.put("mensaje","Error de autenticación: username o password incorrecto");
-		body.put("error", failed.getMessage());
-		
-		// ObjectMapper: convertir el objeto map a un objeto de tipo json
-		response.getWriter().write(new ObjectMapper().writeValueAsString(body));
-		response.setStatus(401);
-		response.setContentType("application/json");
+		Map<String, Object> body = new HashMap<>();
+		Throwable cause = failed.getCause();
+		// Verifica si la causa de la excepción es una instancia de la clase UserDisabledException
+	    if (cause instanceof UserDisabledException) {
+	        // Excepción específica para usuario deshabilitado
+	        body.put("mensaje", "El usuario está deshabilitado");
+	        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+	    } else {
+	        // Manejo genérico para otras excepciones
+	        body.put("mensaje", "Error de autenticación: username o password incorrecto");
+	        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+	    }
+	    // ObjectMapper: convertir el objeto map a un objeto de tipo json
+	    response.getWriter().write(new ObjectMapper().writeValueAsString(body));
+	    response.setContentType("application/json");
 	}
-
 }

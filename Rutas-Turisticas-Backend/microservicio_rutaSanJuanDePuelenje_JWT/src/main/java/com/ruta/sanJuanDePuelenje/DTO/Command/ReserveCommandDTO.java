@@ -19,13 +19,13 @@ public class ReserveCommandDTO {
 	private Double recreationTotalPrice;
 	private Double workshopTotalPrice;
 	private Boolean reserveState;
+	private Integer reserveNumberNights;
 	private Date reserveDate;
 	private UserCommandDTO user;
 	private List<WorkshopCommandDTO> LstWorkshop;
 	private List<TalkingCommandDTO> LstTalking;
 	private List<RecreationCommandDTO> LstRecreation;
 	private List<ReserveLodgingCommandDTO> reserveLodging;
-	private List<FestivalCommandDTO> LstFestival;
 	private List<ReserveLunchCommandDTO> reserveLunch;
 	private RutaCommandDTO ruta;
 }
